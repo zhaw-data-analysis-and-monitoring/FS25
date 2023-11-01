@@ -1,0 +1,91 @@
+project: 
+  type: book
+  preview: 
+      port: 5678
+  execute-dir: project
+  pre-render: pre-render.r
+
+lang: de
+
+format: 
+  html:
+    theme:
+      dark: [darkly, custom-dark.scss]
+      light: [flatly, custom-light.scss]
+    css: 
+      - custom.css
+      - theme-custom.scss
+      #- presenter-mode.css
+    bibliography: bibliography.bib
+    number-sections: false
+    code-tools:
+      source: false
+    include-in-header:
+      - script.html
+
+execute:
+  freeze: true
+  error: true
+  message: false
+  warning: false
+
+knitr:
+  opts_chunk: 
+    collapse: true
+    #tidy: true
+    
+book:
+  title: "Research Methods HS23"
+  sidebar: 
+    logo: images/zhaw_sw_neg.png
+    collapse-level: 1
+    style: floating
+  reader-mode: true    
+  # globbing would be cool. Wait for
+  # https://github.com/quarto-dev/quarto-cli/issues/2120 or
+  # https://github.com/quarto-dev/quarto-cli/issues/1917 to be resolved 
+
+  chapters:
+    - index.qmd
+    - part: PrePro.qmd
+      chapters:
+      - prepro/Prepro1_Vorbereitung.qmd
+      - --
+      - prepro/Prepro1_Demo.qmd
+      - prepro/Prepro1_Uebung.qmd
+      - --
+      - prepro/Prepro2_Demo.qmd
+      - prepro/Prepro2_Uebung_A.qmd
+      - prepro/Prepro2_Uebung_B.qmd
+      - --
+      - prepro/Prepro3_Demo.qmd
+      - prepro/Prepro3_Uebung.qmd
+    - part: InfoVis.qmd
+      chapters:
+      - infovis/Infovis1_Vorbereitung.qmd
+      - --
+      - infovis/Infovis1_Demo.qmd
+      - infovis/Infovis1_Uebung.qmd
+      - infovis/Infovis1_Script_eda.qmd
+      - --
+      - infovis/Infovis2_Uebung_A.qmd
+      - infovis/Infovis2_Uebung_B.qmd
+    - part: RaumAn.qmd
+      chapters:
+      - rauman/Rauman0_Vorbereitung.qmd
+      - --
+      - rauman/Rauman1_Uebung_A.qmd
+      - rauman/Rauman1_Uebung_B.qmd
+      - --
+      - rauman/Rauman2_Uebung_A.qmd
+      - rauman/Rauman2_Uebung_B.qmd
+      - --
+      - rauman/Rauman3_Uebung_A.qmd
+      - rauman/Rauman3_Uebung_B.qmd
+      - rauman/Rauman3_Uebung_C.qmd
+      - --
+      - rauman/Rauman4_Uebung_A.qmd
+      - --
+      - rauman/Rauman5_Uebung_A.qmd 
+      - rauman/Rauman5_Uebung_B.qmd 
+    - "References.qmd"
