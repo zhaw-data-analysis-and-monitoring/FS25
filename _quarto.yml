@@ -70,6 +70,9 @@ book:
       - --
       - infovis/Infovis2_Uebung_A.qmd
       - infovis/Infovis2_Uebung_B.qmd
+    - part: statistic.qmd
+      chapters: 
+        - statistic/statistic.qmd
     - part: RaumAn.qmd
       chapters:
       - rauman/Rauman0_Vorbereitung.qmd
