@@ -3,7 +3,6 @@ project:
   preview: 
       port: 5678
   execute-dir: project
-  pre-render: pre-render.r
 
 lang: de
 
