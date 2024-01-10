@@ -72,17 +72,17 @@ book:
     - part: Statistic.qmd
       chapters: 
         - statistic/Statistic.qmd
-    - part: RaumAn.qmd
+    - part: SpatAn.qmd
       chapters:
-      - rauman/Rauman0_Vorbereitung.qmd
+      - spatan/Spatan0_Vorbereitung.qmd
       - --
-      - rauman/Rauman1_Uebung_A.qmd
-      - rauman/Rauman1_Uebung_B.qmd
+      - spatan/Spatan1_Uebung_A.qmd
+      - spatan/Spatan1_Uebung_B.qmd
       - --
-      - rauman/Rauman2_Uebung_A.qmd
-      - rauman/Rauman2_Uebung_B.qmd
+      - spatan/Spatan2_Uebung_A.qmd
+      - spatan/Spatan2_Uebung_B.qmd
       - --
-      - rauman/Rauman3_Uebung_A.qmd
-      - rauman/Rauman3_Uebung_B.qmd
-      - rauman/Rauman3_Uebung_C.qmd
+      - spatan/Spatan3_Uebung_A.qmd
+      - spatan/Spatan3_Uebung_B.qmd
+      - spatan/Spatan3_Uebung_C.qmd
     - "References.qmd"
