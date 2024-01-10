@@ -1,7 +1,7 @@
 ---
 date: 2023-11-27
 lesson: SpatAn1
-topic: preparation
+topic: Preparation
 index: 0
 knitr:
   opts_chunk:

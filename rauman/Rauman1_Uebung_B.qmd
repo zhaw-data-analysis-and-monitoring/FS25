@@ -13,7 +13,7 @@ knitr:
     collapse: true  
 ---
 
-# SpatAn1 1: Exercise B {#sec-rauman1b}
+# SpatAn 1: Exercise B {#sec-rauman1b}
 
 For the upcoming exercise, we will work with the *gruental.gpkg*. data set. Import it into R. We also need the following libraries:
 
