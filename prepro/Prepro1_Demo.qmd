@@ -1,29 +1,29 @@
 ---
 date: 2023-10-10
 lesson: PrePro1
-thema: Datentypen
+thema: Data Types
 index: 1
 knitr:
-  opts_chunk: 
+  opts_chunk:
     collapse: true
 ---
 
 # Prepro 1: Demo
 
-Diese Demo kann auch als [R Script heruntergeladen werden](Prepro1_Demo.R) (Rechtsklick → *Save Target As..*)
+This demo's source code can also [be downloaded as an R Script](Prepro1_Demo.R) (right click → *Save Target As..*)
 
-### Datentypen
+### Data types
 
 #### Numerics
 
-Unter die Kategorie `numeric` fallen in R zwei Datentypen:
+There are two different `numeric` data types in R:
 
--   `double`: Gleitkommazahl (z.B. 10.3, 7.3)
--   `integer`: Ganzzahl (z.B. 10, 7)
+- `double`: floating-point number (e.g. 10.3, 7.3)
+- `integer` (e.g. 10, 7)
 
 ##### Doubles
 
-Folgendermassen wird eine Gleitkommazahl einer Variabel zuweisen:
+A floating point number is assigned to a variable as follows:
 
 ```{r}
 x <- 10.3
@@ -33,14 +33,14 @@ x
 typeof(x)
 ```
 
-Statt `<-` kann auch `=` verwendet werden. Dies funktioniert aber nicht in allen Situationen, und ist zudem leicht mit `==` zu verwechseln.
+Either `<-` or `=` can be used. However, the latter does not work in all situations, and is also easily confused with `==`.
 
 ```{r}
 y = 7.3
 y
 ```
 
-Ohne explizite Zuweisung nimmt R immer den Datentyp `double`an:
+If the numeric data type is not explicitly assigned, R always uses `double`:
 
 ```{r}
 z <- 42
@@ -50,9 +50,9 @@ is.numeric(z)
 is.double(z)
 ```
 
-#### Ganzzahl / Integer
+#### Integer
 
-Erst wenn man eine Zahl explizit als `integer` definiert (mit `as.integer()` oder `L`), wird sie auch als solches abgespeichert.
+A number is only stored as an `integer` if it is explicitly defined as one (using `as.integer()` or `L`).
 
 ```{r}
 a <- as.integer(z)
@@ -71,11 +71,9 @@ is.numeric(a)
 is.integer(a)
 ```
 
+#### Logical queries
 
-
-#### Logische Abfragen
-
-Wird auch auch als boolesch (Eng. **boolean**) bezeichnet.
+Also known as a **Boolean**.
 
 ```{r}
 e <- 3
@@ -84,17 +82,15 @@ f <- 6
 e > f
 
 
-sonnig <- TRUE
-trocken <- FALSE
+sunny <- TRUE
+dry <- FALSE
 
-sonnig & !trocken
+sunny & !dry
 ```
 
+#### Character
 
-
-#### Zeichenketten
-
-Zeichenketten (Eng. **character**) stellen Text dar
+**Character** strings contain text.
 
 ```{r}
 s <- as.character(3.14)
@@ -102,7 +98,7 @@ s
 typeof(s)
 ```
 
-Zeichenketten verbinden / zusammenfügen (Eng. **concatenate**)
+Connecting / concatenating character strings
 
 ```{r}
 fname <- "Andrea"
@@ -115,80 +111,78 @@ fname == fname2
 
 #### Factors
 
-Mit Factors wird in R eine Sammlung von Zeichenketten bezeichnet, die sich wiederholen, z.B. Wochentage (es gibt nur 7 unterschiedliche Werte für "Wochentage").
+Factors in R denote a collection of repeating character strings, e.g. weekdays (there are only 7 different values for "weekdays").
 
 ```{r}
-wochentage <- c("Donnerstag", "Freitag", "Samstag")
+weekdays <- c("Thursday", "Friday", "Saturday")
 
-typeof(wochentage)
+typeof(weekdays)
 
-wochentage_fac <- as.factor(wochentage)
+weekdays_fac <- as.factor(weekdays)
 
-wochentage
-wochentage_fac
+weekdays
+weekdays_fac
 ```
 
-Wie man oben sieht, unterscheiden sich `character vectors` und `factors` v.a. dadurch, dass letztere über sogenannte `levels` verfügt. Diese `levels` entsprechen den eindeutigen Werten.
+As shown in the above example, the main difference between `character vectors` and character `factors` is that factors also have `levels`. These `levels` correspond to the unique values.
 
-Zudem ist fällt auf, dass die Reihenfolge der Wohentag alphabetisch sortiert ist. Eine Ordnung kann man mit dem Befehl `ordered = T` festlegen, dabei muss die Reihenfolge der Werte im Argument `levels =` explizit festgehalten werden[^ordered].
+By default, the order of the days is alphabetical. However, a specific order can be set using `ordered = T`, with the desired order defined in `levels =` [^ordered].
 
-[^ordered]: `ordered = T` kann nur bei der Funktion `factor()` spezifiziert werden, nicht bei `as.factor()`. Ansonsten sind `factor()` und `as.factor()` sehr ähnlich.
+[^ordered]: `ordered = T` can only be specified for the `factor()` function, not for `as.factor()`. Otherwise, `factor()` and `as.factor()` are very similar.
 
 ```{r}
-factor(wochentage, levels = c("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"), ordered = TRUE)
+factor(weekdays, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"), ordered = TRUE)
 ```
 
-Beachtet das `<`-Zeichen zwischen den Levels!
+Note that there is a `<` sign between the levels!
 
+#### Time/Date
 
-#### Zeit/Datum
-
-Um in R mit Datum/Zeit Datentypen umzugehen, müssen sie als `POSIXct` eingelesen werden. Anders als Beispielsweise bei Excel, sollten in R Datum und Uhrzeit immer **zusammen** gespeichert werden (in *einem* Objekt oder *einem* Vektor).
+R requires time/date data types to be read in `POSIXct` format. It should be noted that date and time are always stored **together** in R (in *one object* or *one* vector), unlike in other programs, such as Excel, where these items can be stored separately.
 
 ```{r}
-datum <- "2017-10-01 13:45:10"
+date <- "2017-10-01 13:45:10"
 
-# konvertiert character in POSIXct:
-as.POSIXct(datum)
+# converts character to POSIXct:
+as.POSIXct(date)
 ```
 
-Wenn das die Zeichenkette in dem obigen Format (`Jahr-Monat-Tag Stunde:Minute:Sekunde`) daher kommt, braucht `as.POSIXct`keine weiteren Informationen. 
+If the character string is delivered in the above format (`year-month-day hour:minute:second`), `as.POSIXct` needs no further information.
 
-Sollte das Format von dem aber Abweichen, muss man der Funktion das genaue Schema jedoch mitteilen. Der Syntax dafür kann via `?strptime` nachgeschlagen werden.
+However, if the format is different, the function must be provided with the exact format. The  syntax for the function can be found in`?strptime`.
 
 ```{r}
-datum <- "01.10.2017 13:45"
+date <- "01.10.2017 13:45"
 
-# konvertiert character in POSIXct:
-as.POSIXct(datum, format = "%d.%m.%Y %H:%M")
+# converts character to POSIXct:
+as.POSIXct(date, format = "%d.%m.%Y %H:%M")
 
-datum2 <- as.POSIXct(datum, format = "%d.%m.%Y %H:%M")
+date2 <- as.POSIXct(date, format = "%d.%m.%Y %H:%M")
 ```
 
-Beachtet, dass in den den obigen Beispiel R automatisch eine Zeitzone angenommen hat (`CEST`). R geht davon aus, dass die Zeitzone der **System Timezone** (`Sys.timezone()`) entspricht.
+You can see in the above example that R has automatically set the time zone (`CEST`) to the **system time zone** (`Sys.timezone ()`).
 
-Um nun aus dem Datum wieder Spezifische bestandteile zu extrahieren, kann man theoretisch die gleichen Codes nochmal verwenden.
+Theoretically, the same code can also be used to extract specific components from a date.
 
 ```{r}
-strftime(datum2, format = "%m") # extrahiert den Monat als Zahl
-strftime(datum2, format = "%b") # extrahiert den Monat mit Namen (abgekürzt)
-strftime(datum2, format = "%B") # extrahiert den Monat mit Namen (ausgeschrieben)
+strftime(date2, format = "%m") # extracts the month as a number
+strftime(date2, format = "%b") # extracts the month by name (abbreviated)
+strftime(date2, format = "%B") # extracts the month by name (full)
 ```
 
-Einfacher sind an dieser Stelle aber die Functions aus lubridate:
+However, the functions from lubridate are simpler to use:
 
 ```{r}
 library("lubridate")
 
-month(datum2) # extrahiert den Monat als Zahl
-month(datum2, label = TRUE, abbr = TRUE) # extrahiert den Monat mit Namen (abgekürzt)
-month(datum2, label = TRUE, abbr = FALSE) # extrahiert den Monat mit Namen (ausgeschrieben)
+month(date2) # extracts the month as a number
+month(date2, label = TRUE, abbr = TRUE) # extracts the month by name (abbreviated)
+month(date2, label = TRUE, abbr = FALSE) # extracts the month by name (full)
 ```
-
 
 ### Vectors
 
-Mit `c()` können eine Reihe von Werten vom gleichen Datentyp einer Variabel zugewiesen werden (als `vector`). 
+Using `c()`, a set of values of the same data type can be assigned to a variable (as a `vector`).
 
 ```{r}
 vec <- c(10, 20, 33, 42, 54, 66, 77)
@@ -201,38 +195,34 @@ vec2 <- vec[2:4]
 
 ### Lists
 
-Eine `list` ist eine Sammlung von Objekten, die nicht unbedingt vom gleichen Datentyp sein müssen.
+A `list` is a collection of objects that do not need to be the same data type.
 
 ```{r}
-
 mylist <- list("q", TRUE, 3.14)
 ```
 
-Die einzelnen Elemente einer Liste können auch Namen zugewiesen werden.
+The individual elements in a list can also be assigned names.
 
 ```{r}
-
 mylist2 <- list(fav_letter = "q", fav_boolean = TRUE, fav_number = 3.14)
 
 mylist2
-
 ```
 
+### Data frames and convenience variables
 
-### Data Frames und Conveniance Variabeln
-
-Wenn jeder Eintrag einer Liste gleich lang ist, kann diese Liste auch als Tabelle verstanden werden. Idealerweise sind die Elemente benannt, welche dann als Spaltennamen verwendet werden können.
+If each entry in a list is the same length, this list can also be represented as a table or frame. Ideally, the names of the columns in the frame should also be defined.
 
 ```{r}
 as.data.frame(mylist2)
 ```
 
-Mit der Funktion `data.frame` kann direkt eine Tabelle erstellt werden, ohne zuerst eine Liste zu erstellen.
+The `data.frame` function allows a table to be created without first having to create a list.
 
 ```{r}
 df <- data.frame(
-  Stadt = c("Zürich", "Genf", "Basel", "Bern", "Lausanne"),
-  Ankunft = c(
+  City = c("Zurich", "Geneva", "Basel", "Bern", "Lausanne"),
+  Arrival = c(
     "1.1.2017 10:00", "1.1.2017 14:00",
     "1.1.2017 13:00", "1.1.2017 18:00", "1.1.2017 21:00"
   )
@@ -241,49 +231,46 @@ df <- data.frame(
 str(df)
 ```
 
-Um Daten Abzufragen, nutzt man das `$` Symbol:
+The `$` symbol can be used to query data:
 
 ```{r}
-df$Stadt
+df$City
 ```
 
-So können auch neue Spalten hinzugefügt oder bestehende verändert werden:
+New columns can be added and existing ones can be changed:
 
 ```{r}
-df$Einwohner <- c(400000, 200000, 175000, 14000, 130000)
+df$Residents <- c(400000, 200000, 175000, 14000, 130000)
 
-df$Einwohner <- as.integer(df$Einwohner)
+df$Residents <- as.integer(df$Residents)
 ```
 
-In der obigen `data.frame` wurde die Spalte `Einwohner` als Fliesskommazahl abgespeichert. Dies ist zwar nicht tragisch, aber da wir wissen das es sich hier sicher um Ganzzahlen handelt, können wir das korrigieren. Wichtiger ist aber, dass wir die Ankunftszeit (Spalte`Ankunft`) von einem `Factor` in ein Zeitformat (`POSIXct`) umwandeln.
+In the `data.frame` above, the `Residents` column has been saved as a floating-point number. While this is not a problem, since we know that these are integers, we can change the data type. It is more important, however, that we convert the `Arrival` time (Arrivalcolumn) from a `factor` to a time format (`POSIXct`).
 
 ```{r}
+df$Arrival <- as.POSIXct(df$Arrival, format = "%d.%m.%Y %H:%M")
 
-df$Ankunft <- as.POSIXct(df$Ankunft, format = "%d.%m.%Y %H:%M")
-
-df$Ankunft
+df$Arrival
 ```
 
-
-Diese Spalten können nun helfen, um Hilfsvariablen (**convenience variables**) zu erstellen. Z.B. kann die Ankunftszeit von der Spalte `Ankunft`abgeleitet werden. 
+These columns can now help to create **convenience variables**. E.g., the arrival time can be derived from the `Arrival` column.
 
 ```{r}
-df$Ankunft_stunde <- hour(df$Ankunft)
+df$Arrival_hour <- hour(df$Arrival)
 
-df$Ankunft_stunde
+df$Arrival_hour
 ```
 
-
-Oder aber, wir teilen die Städte in gross, mittel und klein ein.
+We can also divide the cities into large, medium and small.
 
 ```{r}
-df$Groesse <- "keine Angabe"
+df$Size <- "no information"
 
-df$Groesse[df$Einwohner > 300000] <- "gross"
-df$Groesse[df$Einwohner <= 300000 & df$Einwohner > 150000] <- "mittel"
-df$Groesse[df$Einwohner <= 150000] <- "klein"
+df$Size[df$Residents > 300000] <- "large"
+df$Size[df$Residents <= 300000 & df$Residents > 150000] <- "medium"
+df$Size[df$Residents <= 150000] <- "small"
 
-df$Groesse
+df$Size
 ```
 
 ```{r}

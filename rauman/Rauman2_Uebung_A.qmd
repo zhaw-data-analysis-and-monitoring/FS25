@@ -3,23 +3,23 @@ date: 2023-11-28
 lesson: RaumAn2
 thema: Vector Data
 index: 1
-execute: 
-  echo: false   # set to true to show musterlösung
-  output: false # set to true to show musterlösung
+execute:
+  echo: false   # set to true to show sample solution
+  output: false # set to true to show sample solution
 code-fold: true
-code-summary: "Musterlösung"
+code-summary: "Sample Solution"
 knitr:
-  opts_chunk: 
+  opts_chunk:
     collapse: true  
 ---
 
-# Rauman 2: Übung A
+# Rauman 2: Exercise A
 
-In [der letzten Übung](#sec-rauman1b) haben wir einen Spatial Join zwischen Bäumen und Wiesen durchgeführt um herauszufinden, ob sich der Baum in einer Wiese befindet oder nicht. Basis waren dafür die Daten vom Campus Grüental (*gruental.gpkg*)
+In [the last exercise](#sec-rauman1b), we performed a spatial join between trees and meadows to find out whether a tree is in a meadow or not using data from the Grüental campus (*gruental.gpkg*)
 
-Heute gehen wir einen Schritt weiter und wollen folgende Frage beantworten: *Wie viel Wiese befinden sich in einem Umkreis von 20m um jeden Baum?*
+Today we will go a step further and try to answer the following question: *How much meadow is there within 20 metres of each tree?*
 
-Lade dazu die benötigten Libraries und Datensätze in deine Session. Exploriere die Daten visualisiere Sie räumlich.
+To do this, load the required libraries and records into your session. Explore the data and visualize it spatially.
 
 ```{r}
 #| echo: true
@@ -29,18 +29,18 @@ library("dplyr")
 library("sf")
 library("ggplot2")
 
-wiesen <- read_sf("datasets/rauman/gruental.gpkg", "wiesen")
-baeume <- read_sf("datasets/rauman/gruental.gpkg", "baeume")
+meadows <- read_sf("datasets/rauman/gruental.gpkg", "wiesen")
+trees <- read_sf("datasets/rauman/gruental.gpkg", "baeume")
 ```
 
-Um die Übung etwas zu vereinfachen arbeiten wir erstmals mit nur 10 Bäumen. Nutze nachstehenden Code um zufällig 10 Bäume auszuwählen. Wenn ihr den gleichen "Seed" wie ich benutzt (`set.seed(100)`) habt ihr "zufällig" auch die gleichen Bäume wie ich.
+In order to simplify the exercise a little, we will only work with 10 trees at first. Use the code below to randomly select 10 trees. If you use the same "seed" as we have` (set.seed(100)`), you should also "coincidentally" have the same trees as me.
 
 ```{r}
 #| echo: true
 #| code-fold: false
 
 set.seed(100)
-baeume_sample <- sample_n(baeume, 10)
+trees_sample <- sample_n(trees, 10)
 ```
 
 ```{r}
@@ -49,113 +49,113 @@ baeume_sample <- sample_n(baeume, 10)
 #| output: true
 
 ggplot() +
-  geom_sf(data = wiesen) +
-  geom_sf(data = baeume_sample)
+  geom_sf(data = meadows) +
+  geom_sf(data = trees_sample)
 ```
 
-## Aufgabe 1
+## Task 1
 
-Als erster Schritt müssen wir jeden Baum mit einem 20m Puffer verstehen. Nutze dazu `st_buffer` um speichere den Output als `baeume_20m`. Schau dir `baeume_20m` nun genau an. Um welchen Geometrietyp handelt es sich dabei nun?
+As a first step, we need to apply a 20m buffer to each tree. Use `st_buffer` to save the output as `trees_20m`. Now take a close look at `trees_20m`. What type of geometry does it now represent?
 
 ```{r}
-baeume_20m <- st_buffer(baeume_sample, 20)
+trees_20m <- st_buffer(trees_sample, 20)
 ```
 
 ```{r}
 #| output: true
-#| fig-cap: Dargestellt sind die Bäume als Punkte mit einem 20m Puffer, sowie die Wiesen im Hintergrund.
+#| fig-cap: Trees are displayed as points with a 20m buffer. Meadows are displayed in the background.
 #| label: fig-buffer1
 
 ggplot() +
-  geom_sf(data = wiesen) +
-  geom_sf(data = baeume_sample) +
-  geom_sf(data = baeume_20m, fill = NA)
+  geom_sf(data = meadows) +
+  geom_sf(data = trees_sample) +
+  geom_sf(data = trees_20m, fill = NA)
 ```
 
-## Aufgabe 2
+## Task 2
 
-Berechnen nun die Schnittmenge aus `baeume_20m` und `wiesen` mit der Funktion `st_intersection` und speichere den Output als `baeume_wiesen`. Exploriere nun `baeume_wiesen`. Was ist passiert? Überprüfe die Anzahl Zeilen pro Datensatz. Haben die sich verändert? Wenn ja, warum?
+Now calculate the intersection of `trees_20m` and `meadows` with the `st_intersection` function and save the output as `trees_meadows`. Next explore `trees_meadows`. What happened? Check the number of rows per record. Have they changed? If so, why?
 
 ```{r}
 #| output: true
 
-baeume_wiesen <- st_intersection(baeume_20m, wiesen)
+trees_meadows <- st_intersection(trees_20m, meadows)
 
 ggplot() +
-  geom_sf(data = wiesen, fill = "blue", alpha = .2) +
-  geom_sf(data = baeume_20m, fill = "red", alpha = .2) +
-  geom_sf(data = baeume_wiesen, fill = "green", alpha = 0.2)
+  geom_sf(data = meadows, fill = "blue", alpha = .2) +
+  geom_sf(data = trees_20m, fill = "red", alpha = .2) +
+  geom_sf(data = trees_meadows, fill = "green", alpha = 0.2)
 ```
 
-## Aufgabe 3
+## Task 3
 
-Berechnen nun die Flächengrösse pro Geometrie mit der Funktion `st_area()`. Speichere den Output in einer neuen Spalte von `baeume_wiesen` (z.B. mit dem Namen `wiesen_flaeche`). Tipp: Konvertiere den Output aus `st_area` in einen nummerischen Vektor mit `as.numeric()`.
+Now calculate the area per geometry with the `st_area()` function. Save the output in a new column called `trees_meadows` (e.g. with the name `meadow_area`). Tip: Convert the output from `st_area()` to a numeric vector with `as.numeric()`.
 
 ```{r}
-baeume_wiesen$wiesen_flaeche <- as.numeric(st_area(baeume_wiesen))
+trees_meadows$meadows_area <- as.numeric(st_area(trees_meadows))
 ```
 
-## Aufgabe 4 (Optional)
+## Task 4 (Optional)
 
-Berechne nun aus `wiesen_flaeche` den `wiesen_anteil`. Tipp: 100% ist die Kreisfläche aus $r^2\times \pi$, wobei in unserem Fall $r = 20$ entspricht.
+Now calculate the `meadow_share` from `meadow_area`. Tip: The circular area of $r^2\times \pi$ is 100%, whereas in our case, $r = $20.
 
 ```{r}
-kreisflaeche <- 20^2 * pi
-baeume_wiesen$wiesen_anteil <- baeume_wiesen$wiesen_flaeche / kreisflaeche
+area_of_a_circle <- 20^2 * pi
+trees_meadows$meadows_share <- trees_meadows$meadows_area / area_of_a_circle
 ```
 
-Überführe anschliessend die berechneten Anteilswerte in den Datensatz `baeume` mit einem `left_join` zwischen `baeume` und `baeume_wiesen`. Welche Spalte wäre für diesen Join geeignet? Hinweis: Nutze `st_drop_geometry()` um die Geometriespalte in `baeme_wiesen` vor dem Join zu entfernen.
+Then transfer the calculated proportional values to the `trees` dataset with a `left_ join()` between `trees` and `trees_meadows`. Which column would be suitable for this join? Note: Use `st_drop_geometry()` to remove the geometry column in `trees_meadows` before joining.
 
 ```{r}
 #| output: true
 #| label: fig-ggplot-ex4
-#| fig.cap: Nach dieser Übung kannst du das Resultat in dieser Weise visualisieren.
+#| fig.cap: After this exercise, you can visualise the results like this. 
 
-baeume_wiesen_df <- st_drop_geometry(baeume_wiesen)
+trees_meadows_df <- st_drop_geometry(trees_meadows)
 
-baeume_2 <- left_join(baeume_sample, baeume_wiesen_df, by = "baum_id")
+trees_2 <- left_join(trees_sample, trees_meadows_df, by = "baum_id")
 
 ggplot() +
-  geom_sf(data = wiesen) +
-  geom_sf(data = baeume_2, aes(colour = wiesen_anteil)) +
-  scale_color_binned("Wiesen Anteil", low = "blue", high = "red", limits = c(0, 1), label = scales::label_percent()) +
+  geom_sf(data = meadows) +
+  geom_sf(data = trees_2, aes(colour = meadows_share)) +
+  scale_color_binned("meadows share", low = "blue", high = "red", limits = c(0, 1), label = scales::label_percent()) +
   coord_sf(datum = 2056)
 ```
 
-## Aufgabe 5 {#sec-raster-intro1}
+## Task 5 {#sec-raster-intro1}
 
-Nun habt ihr ein paar Vektoroperationen wie `st_buffer()` und `st_intersection()` und `st_area()` durchgeführt. Gewisse Fragen lassen sich aber besser in der Raster-Welt beantworten. Wollen wir beispielsweise für jeden Punkt im Raum wissen, wie weit der nächstgelegene Baum ist, lässt sich das besser in einem Raster darstellen.
+By now you have performed a few vector operations such as `st_buffer()` and `st_intersection()` and `st_area()`. However, certain questions are better answered using the raster format. For example, if we want to know how far the nearest tree is for each point in the room, this can be better represented in a raster.
 
-Bevor wir die Frage aber beantworten können, müssen wir den Vektordatensatz in ein Rasterdatensatz konvertieren. Dafür wiederum braucht es ein Raster "Template", damit R in etwa weiss, wie der Raster Output auszusehen hat. 
+However, before we can answer that question, we have to convert the vector data set into a raster data set. To do this, a raster "template" is needed so that R knows roughly what the raster output should look like.
 
 ```{r}
-# Um mit Raster arbeiten zu können brauchen wir das Package "terra"
+# Use the "terra" package to work with the raster format.
 library("terra")
 
-# Um ein Vektor Datensatz zu vektorieren, brauchen wir ein Template.
-# Für das Template nutzen wir "wiesen" und setzen eine Zellgrösse (resolution)
-template <- rast(wiesen, resolution = 20)
+# We need a template to vectorise data 
+# We will use "meadows" as a template and set the cell size (resolution)
+template <- rast(meadows, resolution = 20)
 
-# Mit rasterize können wir "baeume" in einen Raster konvertieren
-# Nutzt hier wieder alle bäume, nicht baeume_sample
-baeume_rast <- terra::rasterize(baeume, template)
+# When we rasterise, we convert "trees" into a raster format
+# Use all trees, not trees_sample
+trees_rast <- terra::rasterize(trees, template)
 ```
 
-Der Unterschied zwischen Raster und Vektor kann sehr anschaulich dargestellt werden, wenn die beiden Datensätze übereinander gelagert werden.
+The difference between raster and vector can be shown very vividly if the two data sets are stored one on top of the other.
 
 ```{r}
 #| output: true
 
-plot(baeume_rast, col = "grey")
-plot(baeume, add = TRUE, col = "red", pch = "x")
+plot(trees_rast, col = "grey")
+plot(trees, add = TRUE, col = "red", pch = "x")
 ```
 
-Mit `baeume_rast` können wir nun mit der Funktion `distance()` die Distanz zu jedem Baum berechnen:
+ we can now use the function `distance()` with `trees_rast` to calculate the distance to each tree:
 
 ```{r}
 #| output: true
 
-baeume_dist <- distance(baeume_rast)
-plot(baeume_dist)
-plot(baeume, add = TRUE, pch = "x")
+trees_dist <- distance(trees_rast)
+plot(trees_dist)
+plot(trees, add = TRUE, pch = "x")
 ```

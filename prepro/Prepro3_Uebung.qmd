@@ -1,25 +1,25 @@
 ---
 date: 2023-10-17
 lesson: PrePro3
-thema: Split-Apply-Combine
+Topic: Split-Apply-Combine
 index: 2
-execute: 
-  echo: true   # set to true to show musterlösung
-  output: true # set to true to show musterlösung
+execute:
+  echo: false   # set to true to show sample solution
+  output: false # set to true to show sample solution
 code-fold: true
-code-summary: "Musterlösung"
+code-summary: "Sample Solution"
 knitr:
-  opts_chunk: 
+  opts_chunk:
     collapse: true
 ---
 
-# Prepro 3: Übung
+# Prepro 3: Exercise
 
-## Aufgabe 1
+## Task 1
 
-Gegeben sei ein Datensatz *sensors_combined.csv*, mit den Temperaturwerten von drei verschiedenen Sensoren. Importiere ihn als csv in R (als `sensors_combined`). 
+You have a dataset, *sensors_combined.csv*, with temperature values from three different sensors. Import it as a csv into R (as `sensors_combined`).
 
-Formatiere die `Datetime` Spalte in `POSIXct` um. Verwende dazu die Funktion `as.POSIXct` (lies mit `?strftime()` nochmal nach wie du das spezfische Format (die "Schablone") festlegen kannst.
+Reformat the `datetime` column to `POSIXct`. Use the `as.POSIXct` function (read it in using`?strftime())` to determine the specific format (the template).
 
 ```{r}
 library("readr")
@@ -29,31 +29,31 @@ sensors_combined <- read_delim("datasets/prepro/sensors_combined.csv", ",")
 sensors_combined$Datetime <- as.POSIXct(sensors_combined$Datetime, format = "%d%m%Y_%H%M")
 ```
 
-## Aufgabe 2
+## Task 2
 
-Überführe die Tabelle in ein *langes* Format (verwende dazu die Funktion `pivot_longer` aus `tidyr`) und speichere den output als `sensors_long`. 
+Convert the table to a *long* format (use the `pivot_longer` function from `tidyr`) and save the output as `sensors_long`.
 
-Tipp: 
+Tips:
 
-- im Argument `cols` kannst du entweder die Spalten auflisten, die "pivotiert" werden sollen. 
-- Alternativ kannst du (mit vorangestelltem Minuszeichen, `-`) die Spalte, bezeichnen, die *nicht* pivotiert werden soll. 
-- In beiden Fällen musst du die Spalten weder mit Anführungs- und Schlusszeichen noch mit dem `$`-Zeichen versehen.
+- In the `cols` argument, you can list the columns that should be pivoted.
+- Alternatively, you can indicate (by placing a minus sign in front, `-`) the column that should *not* be pivoted.
+- In either case, you do not need to put the columns in quotation marks or end them with the `$`sign.
 
 ```{r}
 library("tidyr")
 
-# Variante 1 (Spalten abwählen)
-sensors_long <- pivot_longer(sensors_combined, -Datetime) 
+# Option 1 (Deselect columns)
+sensors_long <- pivot_longer(sensors_combined, -Datetime)
 
-# Variante 2 (Spalten anwählen)
+# Option 2 (Select columns)
 sensors_long <- pivot_longer(sensors_combined, c(sensor1:sensor3))
 ```
 
-## Aufgabe 3
+## Task 3
 
-Gruppiere `sensors_long` nach der neuen Spalte wo die Sensor-Information enthalten ist (default: `name`) mit `group_by` und berechne die mittlere Temperatur pro Sensor (`summarise`). Hinweis: Beide Funktionen sind Teil des Packages `dplyr`.
+Group `sensors_long` according to the new column where the sensor information is contained (default: `name`) with `group_by` and calculate the average temperature for each sensor (`summarise`). Note: Both functions are part of the `dplyr` package.
 
-Der Output sieht folgendermassen aus: 
+The output will look like this:
 
 ```{r}
 #| output: true
@@ -65,9 +65,9 @@ sensors_long |>
   summarise(temp_mean = mean(value, na.rm = TRUE))
 ```
 
-## Aufgabe 4
+## Task 4
 
-Erstelle für `sensors_long` eine neue *convenience* Variabel `month` welche den Monat beinhaltet (Tipp: verwende dazu die Funktion `month` aus `lubridate`). Gruppiere nun nach `month` *und* Sensor und berechne die mittlere Temperatur. 
+Create a new *convenience* variable, `month`, for `sensors_long` (Tip: use the `month` function from `lubridate`). Now group by `month` *and* sensor and calculate the mean temperature.
 
 ```{r}
 library("lubridate")
@@ -78,17 +78,17 @@ sensors_long |>
   summarise(temp_mean = mean(value, na.rm = TRUE))
 ```
 
-## Aufgabe 5
+## Task 5
 
-Lade jetzt nochmal den Datensatz *weather.csv* (Quelle MeteoSchweiz) herunter und importiere ihn als CSV mit den korrekten Spaltentypen (`stn` als `factor`, `time` als `POSIXct`, `tre200h0` als `double`).
+Now download the *weather.csv* dataset (source MeteoSwiss) and import it as a .csv with the correct column types (`stn` as a `factor`, `time` as `POSIXct`, `tre200h0` as `double`).
 
 ```{r}
 weather <- read_delim("datasets/prepro/weather.csv", col_types = cols(col_factor(), col_datetime("%Y%m%d%H"), col_double()), ",")
 ```
 
-## Aufgabe 6
+## Task 6
 
-Erstelle nun eine *convenience Variable* für die Kalenderwoche pro Messung (`lubridate::isoweek`). Berechne im Anschluss den mittleren Temperaturwert pro Kalenderwoche.
+Now create a *convenience variable* for the calendar week for each measurement (`lubridate::isoweek`). Then calculate the average temperature value for each calendar week.
 
 ```{r}
 weather_summary <- weather |>
@@ -99,7 +99,7 @@ weather_summary <- weather |>
   )
 ```
 
-Visualisiere im Anschluss das Resultat:
+Next visualise the result:
 
 ```{r}
 #| results: asis
@@ -108,9 +108,9 @@ Visualisiere im Anschluss das Resultat:
 plot(weather_summary$week, weather_summary$temp_mean, type = "l")
 ```
 
-## Aufgabe 7
+## Task 7
 
-In der vorherigen Aufgabe haben wir die mittlere Temperatur pro Kalenderwoche über *alle Jahre* (2000 und 2001) berechnet. Wenn wir die Jahre aber miteinander vergleichen wollen, müssen wir das Jahr als zusätzliche *convenience Variable* erstellen und danach gruppieren. Versuche dies mit den Wetterdaten und visualisiere den Output anschliessend.
+In the previous task, we calculated the average temperature per calendar week over *all years* (2000 and 2001). However, if we want to compare the years with each other, we have to create the year as an additional *convenience variable* and group it accordingly. Try this with the weather data and then visualise the output.
 
 ```{r}
 weather_summary2 <- weather |>
@@ -126,15 +126,15 @@ weather_summary2 <- weather |>
 
 ```{r}
 #| label: fig-baseplot-ex7
-#| fig.cap: baseplot mag keine long tables und macht aus den beiden Jahren eine kontinuierliche Linie
+#| fig.cap: Base plot does not like long tables and makes a continuous line out of the two years
 #| output: true
 
 plot(weather_summary2$week, weather_summary2$temp_mean, type = "l")
 ```
 
-## Aufgabe 8
+## Task 8
 
-Überführe den Output aus der letzten Übung in eine *wide table*. Nun lassen sich die beiden Jahre viel besser miteinander vergleichen.
+Transfer the output from the last exercise to a *wide table*. Now the two years can be compared much more easily.
 
 ```{r}
 weather_summary2 <- weather_summary2 |>

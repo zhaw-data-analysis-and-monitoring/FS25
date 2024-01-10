@@ -1,25 +1,25 @@
 ---
 date: 2023-11-28
 lesson: RaumAn2
-thema: Einführung Rasterdaten
+topic: Introducing Raster Data
 index: 2
-execute: 
-  echo: false   # set to true to show musterlösung
-  output: false # set to true to show musterlösung
+execute:
+  echo: false   # set to true to show sample solution
+  output: false # set to true to show sample solution
 code-fold: true
-code-summary: "Musterlösung"
+code-summary: "Sample Solution"
 knitr:
-  opts_chunk: 
+  opts_chunk:
     collapse: true  
 ---
 
-# Rauman 2: Übung B {#sec-raster-intro}
+# Rauman 2: Exercise B {#sec-raster-intro}
 
-In [der letzten Übung](#sec-raster-intro1) habt ihr nun eine erste Erfahrung mit Raster Daten gemacht. Dabei haben wir zuerst einen Vektordatensatz rasterisiert. Häufig arbeiten wir aber mit Geodaten, die bereits im Rasterformat erfast werden. 
+In [the last exercise](#sec-raster-intro1), you had your first experience with raster data. We first rasterised a vector dataset. However, we often work with spatial data that has already been captured in raster format.
 
-## Aufgabe 1
+## Task 1
 
-In dieser Übung werden wir weiter mit `terra` arbeiten, um zu zeigen, wie wir einen Rasterdatensatz importieren, visualisieren und weiter verarbeiten können. In euren Daten findet ihr einen Datensatz namens *dhm250m.tif*, der das "Digitale Höhenmodell" (DHM) des Kantons Schwyz darstellt. Führen Sie den angegebenen Code aus.
+In this exercise, we will continue to work with `terra` to show how we can import, visualise and further process a raster dataset. In your data you will find a dataset called *dhm250m.tif*, which represents the "Digital Elevation Model" (DHM) of the Canton of Schwyz. Execute the specified code.
 
 ```{r}
 #| echo: true
@@ -28,7 +28,7 @@ In dieser Übung werden wir weiter mit `terra` arbeiten, um zu zeigen, wie wir e
 library("terra")
 ```
 
-Importieren Sie Ihr Raster mit der Funktion `rast`
+Import your raster with the `rast()` function
 
 ```{r}
 #| echo: true
@@ -37,7 +37,7 @@ Importieren Sie Ihr Raster mit der Funktion `rast`
 dhm_schwyz <- rast("datasets/rauman/dhm250m.tif")
 ```
 
-Sie erhalten einige wichtige Metadaten über den Rasterdatensatz, wenn Sie den Variablennamen in die Konsole eingeben.  
+You will get some important metadata about the raster data when you enter the variable name in the console.
 
 ```{r}
 #| code-fold: false
@@ -46,7 +46,7 @@ Sie erhalten einige wichtige Metadaten über den Rasterdatensatz, wenn Sie den V
 dhm_schwyz
 ```
 
-Um einen schnellen Überblick eines Rasterdatensatz zu erhalten, können wir einfach die `plot()` Funktion verwenden.
+To get a quick overview of a raster record, we can simply use the `plot()` function.
 
 ```{r}
 #| code-fold: false
@@ -55,9 +55,9 @@ Um einen schnellen Überblick eines Rasterdatensatz zu erhalten, können wir ein
 plot(dhm_schwyz)
 ```
 
-Leider ist das Verwenden von `Rastern` in ggplot nicht sehr einfach. Da `ggplot` ein universelles Plot-Framework ist, stossen wir schnell an die Grenzen des Möglichen, wenn wir etwas so Spezielles wie Karten erstellen. Mit `plot` können wir zwar sehr schnell plotten, aber auch hier stossen wir schnell an Grenzen.
+Unfortunately, using `raster data` in ggplot is not very easy. Since `ggplot()` is a universal plot framework, we quickly reach the limits of what is possible when we create something as special as a map. `Plot` allows us to work very quickly, but again, it has its limits. 
 
-Aus diesem Grund werden wir ein neues Plot-Framework einführen, das auf Karten spezialisiert ist und in einem sehr ähnlichen Design wie ggplot gebaut wurde: `tmap`. Laden Sie dieses Paket jetzt in Ihre Session:
+For this reason, we will introduce a new plot framework that specialises in maps and is built in a very similar design to ggplot: `tmap`. Load this package into your session now:
 
 ```{r}
 #| echo: true
@@ -66,10 +66,10 @@ Aus diesem Grund werden wir ein neues Plot-Framework einführen, das auf Karten 
 library("tmap")
 ```
 
-Genau wie `ggplot` basiert `tmap` auf der Idee von "Ebenen", die durch ein `+` verbunden sind. Jede Ebene hat zwei Komponenten:
+Just like `ggplot()`, `tmap` is based on the idea of "layers" connected by a `+`. Each level has two components:
 
-- eine Datensatzkomponente, die immer `tm_shape(dataset)` ist (ersetzen Sie `dataset` durch Ihre Variable)
-- eine Geometriekomponente, die beschreibt, wie das vorangegangene `tm_shape()` visualisiert werden soll. Dies kann `tm_dots()` für Punkte, `tm_polygons()` für Polygone, `tm_lines()` für Linien usw. sein. Für Einzelbandraster (was bei `dhm_schwyz` der Fall ist) ist es `tm_raster()`
+- a dataset component that is always `tm_shape(dataset)` (replace `dataset` with your variable)
+- a geometry component that describes how the previous `tm_shape()` should be visualised. This can be `tm_dots()` for points, `tm_polygons()` for polygons, `tm_lines()` for lines, etc. For single band raster (which is the case with `dhm_ schwyz`), use `tm_raster()`
 
 ```{r}
 #| output: true
@@ -78,9 +78,9 @@ tm_shape(dhm_schwyz) +
   tm_raster()
 ```
 
-Beachten Sie, dass `tm_shape()` und `tm_raster()` (in diesem Fall) zusammengehören. Das eine kann nicht ohne das andere leben.
+Note that `tm_shape()` and `tm_raster()` (in this case) cannot exist without each other.
 
-Wenn Sie die Hilfe von `?tm_raster` konsultieren, werden Sie eine Vielzahl von Optionen sehen, mit denen Sie die Visualisierung Ihrer Daten verändern können. Zum Beispiel ist der Standardstil von `tm_raster()` die Erstellung von "Bins" mit einer diskreten Farbskala. Wir können dies mit `style = "cont"` ausser Kraft setzen.
+If you consult`?tm_raster`, you will see a variety of options that you can how your data is visualised. For example, the default style of `tm_raster()` creates "bins" with a discrete colour gamut. We can override this with `style = "cont"`.
 
 ```{r}
 #| output: true
@@ -89,7 +89,7 @@ tm_shape(dhm_schwyz) +
   tm_raster(style = "cont")
 ```
 
-Das sieht schon ziemlich toll aus, aber vielleicht wollen wir die Standard-Farbpalette ändern. Glücklicherweise ist das in `tmap` viel einfacher als in `ggplot2`. Um sich die verfügbaren Paletten anzusehen, geben Sie `tmaptools::palette_explorer()` oder `RColorBrewer::display.brewer.all()` in der Konsole ein (für Ersteres müssen Sie möglicherweise zusätzliche Pakete installieren, z.B. `shinyjs`).
+That should look appropriate, but maybe we want to change the default colour palette. Fortunately, this is much easier in `tmap` than in `ggplot2`. To view the available palettes, enter `tmaptools ::palette_explorer()` or `RColorBrewer:: display.brewer.all()` in the console (for the former, you may need to install additional packages, e.g. `shinyjs`).
 
 ```{r}
 #| output: true
@@ -98,22 +98,22 @@ tm_shape(dhm_schwyz) +
   tm_raster(style = "cont", palette = "Spectral")
 ```
 
-Eine grosse Stärke von `tmap` ist die Tatsache, das mit dem gleichen Befehl sowohl statische wie auch interative Plots erstellt werden können. Dafür muss der Modus von statisch auf interaktiv gewechselt werden. 
+One of `tmap`'s great strengths is the fact that both static and interactive plots can be created with the same command. For this, you need to change the mode from static to interactive.
 
 ```{r}
 #| output: true
 
-tmap_mode("view") # wechselt auf interakive Plots
+tmap_mode("view") # changes to interactive Plots
 
 tm_shape(dhm_schwyz) +
   tm_raster(style = "cont", palette = "Spectral")
 
-tmap_mode("plot") # wechselt zurück auf statische Plots
+tmap_mode("plot") # changes back to static plots
 ```
 
-## Aufgabe 2 {#sec-raster-slope}
+## Task 2 {#sec-raster-slope}
 
-Mit `terra` können wir eine Vielzahl von Rasteroperationen über unser Höhenmodell laufen lassen. Eine klassische Rasteroperation ist zum Beispiel das Berechnen der Hangneigung ("slope") oder dessen Orientierung ("aspect"). Nutzen Sie die Funktion `terrain()` aus `terra` um die Hangneigung und Orientierung zu berechnen. Visualisieren Sie die Resultate.
+Using `terra`, we can run a variety of raster operations on our elevation model. A classic raster operation is the calculation of a slope's incline ("slope") or its orientation ("aspect"). Use the `terrain()` function from `terra` to calculate the slope inclination and orientation. Visualise the results.
 
 ```{r}
 #| output: true
@@ -129,9 +129,9 @@ schwyz_aspect <- terrain(dhm_schwyz, "aspect")
 
 plot(schwyz_aspect)
 ```
- 
+
 ::: {.callout-note}
-Bei "aspect" handelt es sich ja um Werte, die von 0 bis 360 reichen. In klassischen Palettes liegen die beiden Extremwerte (in diesem Fall 0 und 360) farblich weit auseinander. Bei Aspect sollten diese aber nahe beieinander liegen (da eine Ausrichtung von 1° nur 2 Grad von einer Ausrichtung von 359° entfernt ist). Um dieser Tatsache Rechnung zu Tragen können wir eine eine eigene Colourpalette erstellen, wo die erste Farbe wiederholt ist.
+"aspect" is a value that ranges from 0 to 360. In classic pallets, the two extreme values (in this case 0 and 360) are far apart in terms of colour. In aspect, however, these should be close together (since an orientation of 1° is only 2 degrees away from an orientation of 359°). To take this fact into account, we can create our own colour palette, where the first colour is repeated.
 :::
 
 ```{r}
@@ -144,15 +144,15 @@ tm_shape(schwyz_aspect) +
   )
 ```
 
-## Aufgabe 3
+## Task 3
 
-Mit Hangneigung und -ausrichtung können wir einen *Hillshading*-Effekt berechnen. Hillshading bedeutet, dass der Schattenwurf des Oberflächenmodells bei gegebenen Einfallswinkel der Sonne (Höhe und Azimut) berechnet wird. Der typische Einfallswinkel liegt bei 45° über dem Horizont und von Nordwesten bei 315°.
+Using slope incline and orientation, we can calculate a *hill shading* effect. Hill shading refers to the shadow cast on the surface model and is calculated at a given angle of the sun (height and azimuth). The typical angle is 45° above the horizon and 315° from the northwest.
 
-Um einen Hillshading Effekt zu erzeugen, berechne zuerst `slope` und `aspect` von `dhm_schwyz` analog der letzten Aufgabe, **achte aber darauf das die Einheit `radians` entspricht**. Nutze diese beiden Objekte in der Funktion `shade()` um den Hillshade zu berechnen. Visualisiere den Output anschliessend mit `plot` oder `tmap`.
+To create a hill shading effect, first calculate `slope` and `aspect` of `dhm_schwyz`, just like in the previous task, **but make sure that the unit corresponds to the `radians`**. Use these two objects in the `shade()` function to calculate the hill shade. Then visualise the output with `plot` or `tmap`.
 
 ```{r}
 #| output: true
-#| fig-cap: Für diese Visualisierung verwende ich `tmap` und als colour palette *cividis*
+#| fig-cap: Use `tmap` for this visualisation along side the *cividis* colour palette
 
 dhm_slope <- terrain(dhm_schwyz, "slope", unit = "radians")
 dhm_aspect <- terrain(dhm_schwyz, "aspect", unit = "radians")

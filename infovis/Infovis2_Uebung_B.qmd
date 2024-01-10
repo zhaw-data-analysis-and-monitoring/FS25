@@ -1,23 +1,23 @@
 ---
 date: 2023-10-24
 lesson: InfoVis2
-thema: Vertiefung ggplot
-index: 2
-execute: 
-  echo: true   # set to true to show musterlösung
-  output: true
+thema: Advanced ggplot
+index: 1
+execute:
+  echo: false   # set to true to show the sample solution
+  output: false # set to true to show the sample solution
 code-fold: true
-code-summary: "Musterlösung"
+code-summary: "Sample Solution"
 knitr:
-  opts_chunk: 
+  opts_chunk:
     collapse: true
 ---
 
-# Infovis 2: Übung optional
+# Infovis 2: Exercise B (Optional)
 
-In dieser Übung bauen wir einige etwas unübliche Plots aus der Vorlesung nach. Dafür verwenden wir Datensätze, die in R bereits integriert sind. Eine Liste dieser Datensätze findet man [hier](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html) oder mit der Hilfe `?datasets`.
+In this exercise, we’ll recreate some of the more advanced or specialised plots from the lecture. For this purpose, we’ll use datasets that are already integrated into R. You can find a list of these datasets [here](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html) or with the help `?datasets`.
 
-Dazu verwenden wir nach wie vor `ggplot2`, aber mit einigen Tricks.
+We’ll continue to use `ggplot2`, but with a few tricks.
 
 ```{r}
 #| echo: true
@@ -28,11 +28,11 @@ library("tidyr")
 library("ggplot2")
 ```
 
-## Aufgabe 1: Parallel coordinate plots
+## Task 1: Parallel Coordinate Plots
 
-Erstelle einen [parallel coordinate plot](https://en.wikipedia.org/wiki/Parallel_coordinates). Dafür eignet sich der integrierte Datensatz [`mtcars`](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html). Extrahiere die Fahrzeugnamen mit `rownames_to_column`. 
+Create a [parallel coordinate plot](https://en.wikipedia.org/wiki/Parallel_coordinates). For this, the integrated dataset [`mtcars`](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/mtcars.html) is suitable. Extract the vehicle names with `rownames_to_column`.
 
-Zudem müssen die Werte jeweiles auf eine gemeinsame Skala normalisiert werden. Hierfür kannst du die Funktion `scales::rescale` verwenden.
+Also, the values need to be normalised to a common scale. For this, you can use the function `scales::rescale`.
 
 ```{r}
 mtcars2 <- mtcars |>
@@ -51,7 +51,7 @@ mtcars2 <- mtcars2 |>
 knitr::kable(head(mtcars))
 ```
 
-So sieht der fertige Plot aus:
+Here’s what the finished plot looks like:
 
 ```{r}
 #| output: true
@@ -60,23 +60,23 @@ mtcars2 <- mtcars2 |>
   group_by(car) |>
   mutate(gear = value[name == "gear"])
 
-ggplot(mtcars2, aes(name, value_scaled, group = car, color = factor(gear))) +
+ggplot(mtcars2, aes(name, value_scaled, group = car, colour = factor(gear))) +
   geom_point() +
   geom_line() +
   theme_minimal() +
   theme(legend.position = "none", axis.title.y = element_blank())
 ```
 
-## Aufgabe 2: Polar Plot mit Biber Daten
+## Task 2: Polar Plot with Beaver Data
 
-Polar Plots eignen sich unter anderem für Daten, die zyklischer Natur sind, wie zum Beispiel zeitlich geprägte Daten (Tages-, Wochen-, oder Jahresrhythmen). Aus den Beispiels-Datensätzen  habe ich zwei Datensätze gefunden, die zeitlich geprägt sind:
+Polar plots are suitable for data of a cyclical nature, such as time-stamped data (daily, weekly, or annual rhythms). From the example datasets, I found two datasets that are time-stamped:
 
-- [`beaver1` und `beaver2`](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/beavers.html)
+- [`beaver1` and `beaver2`](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/beavers.html)
 - [`AirPassenger`](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/AirPassengers.html)
 
-Beide Datensätze müssen noch etwas umgeformt werden, bevor wir sie für einen Radialplot verwenden können. In Aufgabe 2 verwenden wir die Biber-Datensätze, in der nächsten Aufgabe (3) die Passagier-Daten.
+Both datasets need to be reshaped a bit before we can use them for a radial plot. In task 2, we'll use the beaver datasets, and in task 3 we'll use the passenger datasets.
 
-Wenn wir die Daten von beiden Bibern verwenden wollen, müssen wir diese noch zusammenfügen.
+If we want to use the data from both beavers, we need to merge them.
 
 ```{r}
 beaver1_new <- beaver1 |>
@@ -88,26 +88,26 @@ beaver2_new <- beaver2 |>
 beaver_new <- rbind(beaver1_new, beaver2_new)
 ```
 
-Zudem müssen wir die Zeitangabe noch anpassen: Gemäss der [Datenbeschreibung](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/beavers.html) handelt es sich bei der Zeitangabe um ein sehr programmier-unfreundliches Format. 3:30 wird als "0330" notiert. Wir müssen diese Zeitangabe, noch in ein Dezimalsystem umwandeln.
+We also need to make some adjustments to the time data. According to the [dataset’s description](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/beavers.html), time has been recorded in a format that isn’t very intuitive for programming purposes. For instance, 3:30 has been recorded as “0330”. To make this data more manageable, we’ll need to convert this time format into a decimal system.
 
 ```{r}
 beaver_new <- beaver_new |>
   mutate(
-    hour_dec = (time / 100) %/% 1, # Ganze Stunden (mittels ganzzaliger Division)
-    min_dec = (time / 100) %% 1 / 0.6, # Dezimalminuten (15 min wird zu 0.25, via Modulo)
-    hour_min_dec = hour_dec + min_dec # Dezimal-Zeitangabe (03:30 wird zu 3.5)
+    hour_dec = (time / 100) %/% 1, # Whole hours (using whole number division)
+    min_dec = (time / 100) %% 1 / 0.6, # Decimal minutes (15 min becomes 0.25, via modulo)
+    hour_min_dec = hour_dec + min_dec # Decimal time (03:30 becomes 3.5)
   )
 ```
 
-So sieht der fertige Plot aus:
+Here’s what the finished plot should look like:
 
 ```{r}
 #| output: true
 
-# Lösung Aufgabe 2
+# Task 2 Sample Solution
 
 beaver_new |>
-  ggplot(aes(hour_min_dec, temp, color = beaver)) +
+  ggplot(aes(hour_min_dec, temp, colour = beaver)) +
   geom_point() +
   scale_x_continuous(breaks = seq(0, 23, 2)) +
   coord_polar() +
@@ -115,11 +115,11 @@ beaver_new |>
   theme(axis.title = element_blank())
 ```
 
-## Aufgabe 3: Raster Visualisierung mit Flugpassagieren
+## Task 3: Grid Visualisation with Air Passengers
 
-Analog Aufgabe 2, dieses Mal mit dem Datensatz [`AirPassengers`](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/AirPassengers.html)
+Similar to task 2, this time we’ll use the [`AirPassengers`](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/AirPassengers.html) dataset.
 
-`AirPassengers` kommt in einem Format daher, das ich selbst noch gar nicht kannte. Es sieht zwar aus wie ein `data.frame` oder eine `matrix`, ist aber von der Klasse [`ts`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/ts.html).
+The `AirPassengers` dataset is in a unique format. At first glance, it might seem like a `data.frame` or a `matrix`. However, it’s actually a [`ts`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/ts.html) class object
 
 ```{r}
 AirPassengers
@@ -127,7 +127,7 @@ AirPassengers
 class(AirPassengers)
 ```
 
-Damit wir den Datensatz verwenden können, müssen wir ihn zuerst in eine `matrix` umwandeln. Wie das geht habe ich [hier](https://stackoverflow.com/a/5332664/4139249) erfahren.
+To use this dataset, we first need to convert it into a `matrix`. I learned how to do this [here](https://stackoverflow.com/a/5332664/4139249).
 
 ```{r}
 AirPassengers2 <- tapply(AirPassengers, list(year = floor(time(AirPassengers)), month = month.abb[cycle(AirPassengers)]), c)
@@ -135,7 +135,7 @@ AirPassengers2 <- tapply(AirPassengers, list(year = floor(time(AirPassengers)), 
 AirPassengers2
 ```
 
-Aus der `matrix` muss noch ein Dataframe her, zudem müssen wir aus der breiten Tabelle eine lange Tabelle machen.
+We also need to convert the `matrix` into a dataframe, and to transform the wide table into a long table.
 
 ```{r}
 AirPassengers3 <- AirPassengers2 |>
@@ -143,14 +143,14 @@ AirPassengers3 <- AirPassengers2 |>
   tibble::rownames_to_column("year") |>
   pivot_longer(-year, names_to = "month", values_to = "n") |>
   mutate(
-    # ich nutze einen billigen Trick um ausgeschriebene Monate in Nummern umzuwandeln
+    # I use a simple trick to convert spelled-out months into numbers
     month = factor(month, levels = month.abb, ordered = T),
     month_numb = as.integer(month),
     year = as.integer(year)
   )
 ```
 
-So sieht der fertige Plot aus: 
+Here’s what the finished plot looks like:
 
 ```{r}
 #| output: true
@@ -160,7 +160,7 @@ ggplot(AirPassengers3, aes(month, year, fill = n)) +
   scale_y_reverse() +
   scale_fill_viridis_c(guide = guide_colourbar(barwidth = 15, title.position = "top")) +
   theme_minimal() +
-  labs(fill = "Anzahl Passagiere") +
+  labs(fill = "Number of Passengers") +
   coord_equal() +
   theme(axis.title = element_blank(), legend.position = "bottom")
 ```

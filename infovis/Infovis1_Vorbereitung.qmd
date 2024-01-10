@@ -1,16 +1,16 @@
 ---
 date: 2023-10-23
 lesson: InfoVis1
-thema: Vorbereitung
+Topic: Preparation
 index: 0
 knitr:
-  opts_chunk: 
+  opts_chunk:
     collapse: true
 ---
 
-## Vorbereitung {#sec-infovis-vorbereitung}
+## Preparation {#sec-infovis-preparation}
 
-Im Rahmen von InfoVis 1 - 2 werden wir einige R Packages brauchen. Wir empfehlen, diese bereits *vor* der ersten Lektion zu installieren. Analog @sec-prepro-vorbereitung könnt ihr mit nachstehendem Code alle noch nicht installierten packages automatisch installieren.
+As part of InfoVis 1 - 2, we will need several R packages. We recommend installing these *before* the first lesson. Similar to the preparation section in the pre-processing tutorial, you can use the following code to automatically install any packages that are not already installed.
 
 ```{r}
 #| eval: false
@@ -27,4 +27,4 @@ packages <- c("dplyr", "ggplot2", "lubridate", "readr", "scales", "tidyr")
 ipak(packages)
 ```
 
-Zudem könnt ihr die Daten für die Übungen auf [Moodle](https://moodle.zhaw.ch/mod/resource/view.php?id=976901) herunterladen.
+Additionally, you can download the data for the exercises from [Moodle]().

@@ -1,16 +1,16 @@
 ---
 date: 2023-11-27
 lesson: RaumAn1
-thema: Vorbereitung
+topic: preparation
 index: 0
 knitr:
-  opts_chunk: 
+  opts_chunk:
     collapse: true
 ---
 
-## Vorbereitung {#sec-rauman-vorbereitung}
+## Preparation {#sec-rauman-preparation}
 
-Im Rahmen von Rauman 1 - 5 werden wir einige R Packages brauchen. Wir empfehlen, diese bereits *vor* der ersten Lektion zu installieren. Analog [der Vorbereitungsübung in Prepro1](#sec-prepro-vorbereitung) könnt ihr mit nachstehendem Code alle noch nicht installierten packages automatisch installieren.
+As part of Rauman 1 - 3, we will need some R packages. We recommend installing them *before* the first lesson. Similar to the preparation exercise [in Prepro1](#sec-prepro-preparation) you can use the code below to automatically install all packages that have not yet been installed.
 
 ```{r}
 #| eval: false
@@ -30,4 +30,4 @@ packages <- c(
 ipak(packages)
 ```
 
-Zudem könnt ihr die Daten für die Übungen auf [Moodle](https://moodle.zhaw.ch/mod/resource/view.php?id=976917) herunterladen.
+You can also download the data for the exercises on [Moodle]().

@@ -3,25 +3,25 @@ date: 2023-10-23
 lesson: InfoVis1
 thema: Plots & Facets
 index: 3
-execute: 
-  echo: true   # set to true to show musterlösung
-  output: true
+execute:
+  echo: false   # set to true to show sample solution
+  output: false # set to true to show sample solution
 code-fold: true
-code-summary: "Musterlösung"
+code-summary: "Sample Solution"
 knitr:
-  opts_chunk: 
+  opts_chunk:
     collapse: true
 ---
 
-# Infovis 1: Übung
+# Infovis 1: Exercise
 
-In dieser Übung geht es darum, die Grafiken aus dem Blog-post @kovic2014 zu rekonstruieren. Der urspüngliche Blogpost ist nicht mehr verfügbar, wir haben deshalb eine Kopie auf folgender Website gehostet: 
+This exercise involves recreating the graphics from the @kovic2014 blog post. Since the original blog post is no longer available, we’ve hosted a copy on the following website:
 
 <https://researchmethods-zhaw.github.io/blog.tagesanzeiger.ch/>
 
-Schau dir die Grafiken in dem Blogpost durch. Freundlicherweise wurden im Blogbeitrag die `ggplot2` Standardeinstellungen benutzt, was die Rekonstruktion relativ einfach macht. Die Links im Text verweisen auf die Originalgrafik, die eingebetteten Plots sind meine eigenen Rekonstruktionen. 
+Please review the graphics in the blog post. The default settings for `ggplot2` were used in the blog post, which makes recreating the graphics easier. The links in the text refer to the original graphics, while the embedded plots have been recreated.
 
-Importiere als erstes den Datensatz *tagi_data_kanton.csv*.
+First, let’s import the dataset *tagi_data_kanton.csv*.
 
 ```{r}
 #| echo: true
@@ -31,165 +31,165 @@ library("dplyr")
 library("ggplot2")
 library("readr")
 
-kanton <- read_delim("datasets/infovis/tagi_data_kantone.csv", ",")
+canton <- read_delim("datasets/infovis/tagi_data_kantone.csv", ",")
 ```
 
-## Aufgabe 1
+## Task 1
 
-Rekonstrukturiere folgenden Plot aus @kovic2014 mithilfe von ggplot und dem tagi_data_kanton.csv Datensatz:
+Your first task is to recreate the following plot from @kovic2014 using ggplot and the *tagi_data_kanton.csv* dataset:
 
-Tipp:
+Here’s are some tips to get you started:
 
-- Nutze `ggplot(kanton, aes(auslanderanteil, ja_anteil))` um den ggplot zu initiieren. Füge danach ein einen Punkte Layer hinzu (`geom_point()`)
-- Nutze `coord_fixed()` um die beiden Achsen in ein fixes Verhältnis zu setzen (1:1).
-- Optional: 
-  - Setze die Achsen Start- und Endwerte mittels `scale_y_continuous` bzw. `scale_x_continuous`.
-  - Setze analog @kovic2014 die `breaks` (0.0, 0.1...0.7) manuell (innerhalb `scale_*_continuous`)
-  - Nutze `labs()` für die Beschriftung der Achsen
+- Create a `ggplot` object with `ggplot(canton, aes(auslanderanteil, ja_anteil))`, then add a point layer with `geom_point()`.
+- Use `coord_fixed()` to set a fixed ratio (1:1) between the axes.
+- Optionally, you can:
+   - Set the axis start and end values with `scale_y_continuous` or `scale_x_continuous`.
+   - Manually set the `breaks` (0.0, 0.1…0.7) within `scale_*_continuous` as in @kovic2014.
+   - Use `labs()` to label the axes.
 
 ```{r}
 #| output: true
 
-# Lösung zu Aufgabe 1
+# Solution to Task 1
 
-plot1 <- ggplot(kanton, aes(auslanderanteil, ja_anteil)) +
+plot1 <- ggplot(canton, aes(auslanderanteil, ja_anteil)) +
   geom_point() +
   coord_fixed(1) +
   scale_y_continuous(breaks = c(0, 0.1, 0.3, 0.5, 0.7), limits = c(0, 0.7)) +
   scale_x_continuous(breaks = c(0, 0.1, 0.3, 0.5, 0.7), limits = c(0, 0.7)) +
-  labs(y = "Anteil Ja-Stimmen", x = "Ausländeranteil")
+  labs(y = "Proportion of Yes Votes", x = "Foreigner Proportion")
 
 plot1
 ```
 
-## Aufgabe 2
+## Task 2
 
-Rekonstrukturiere folgenden Plot aus @kovic2014 mithilfe von ggplot:
+Next, replicate the following plot from @kovic2014 using ggplot:
 
-Tipp:
+Here’s a tip:
 
-- Nutze `geom_smooth`
+- Use `geom_smooth`.
 
 ```{r}
 #| output: true
 
-# Lösung zu Aufgabe 2
+# Solution to Task 2
 
 plot1 +
   geom_smooth()
 ```
 
-## Aufgabe 3
+## Task 3
 
-Importiere die Gemeindedaten *tagi_data_gemeinden.csv*.
+Now, let’s import the municipal data *tagi_data_gemeinden.csv*.
 
-Rekonstrukturiere folgenden Plot aus @kovic2014 mithilfe von ggplot und dem tagi_data_gemeinden.csv Datensatz:
+Replicate the following plot from @kovic2014 using ggplot and the *tagi_data_gemeinden.csv* dataset:
 
-Tipp:
+Here are some tips:
 
-- Nutze `geom_point()` 
-- Nutze `labs()`
-- Nutze `coord_fixed()` 
+- Use `geom_point()`.
+- Use `labs().`
+- Use `coord_fixed()`.
 
 ```{r}
 #| output: true
 
-# Lösung zu Aufgabe 3
+# Solution to Task 3
 
-gemeinde <- read_delim("datasets/infovis/tagi_data_gemeinden.csv", ",")
+municipality <- read_delim("datasets/infovis/tagi_data_gemeinden.csv", ",")
 
-plot2 <- ggplot(gemeinde, aes(anteil_ausl, anteil_ja)) +
+plot2 <- ggplot(municipality, aes(anteil_ausl, anteil_ja)) +
   geom_point() +
-  labs(x = "Ausländeranteil", y = "Anteil Ja-Stimmen") +
+  labs(x = "Foreigner Proportion", y = "Proportion of Yes Votes") +
   coord_fixed(1) +
   lims(x = c(0, 1), y = c(0, 1))
 
 plot2
 ```
 
-## Aufgabe 4
+## Task 4
 
-Rekonstrukturiere folgenden Plot aus @kovic2014 mithilfe von ggplot und dem tagi_data_gemeinden.csv Datensatz:
+Replicate the following plot from @kovic2014 using ggplot and the *tagi_data_gemeinden.csv* dataset:
 
-Tipp:
+Here’s a tip:
 
-- Nutze `geom_smooth`
+- Use `geom_smooth`.
 
 ```{r}
 #| output: true
 
-# Lösung zu Aufgabe 4
+# Solution to Task 4
 
 plot2 +
   geom_smooth()
 ```
 
-## Aufgabe 5
+## Task 5
 
-Rekonstrukturiere folgenden Plot aus @kovic2014 mithilfe von ggplot und dem tagi_data_gemeinden.csv Datensatz:
+Replicate the following plot from @kovic2014 using ggplot and the *tagi_data_gemeinden.csv* dataset:
 
-Tipp:
+Here’s a tip:
 
-- Nutze `facet_wrap` um einen Plot pro Kanton darzustellen.
+- Use `facet_wrap` to display a separate plot for each canton.
 
 ```{r}
 #| output: true
 
-# Lösung zu Aufgabe 5
+# Solution to Task 5
 
 plot3 <- plot2 +
   facet_wrap(~kanton)
 plot3
 ```
 
-## Aufgabe 6
+## Task 6
 
-Rekonstrukturiere folgenden Plot aus @kovic2014 mithilfe von ggplot und dem tagi_data_gemeinden.csv Datensatz:
+Replicate the following plot from @kovic2014 using ggplot and the *tagi_data_gemeinden.csv* dataset:
 
-Tipp:
+Here’s a tip:
 
-- Nutze `geom_smooth`
+- Use `geom_smooth`.
 
 ```{r}
 #| output: true
 
-# Lösung zu Aufgabe 6
+# Solution to Task 6
 
 plot3 +
   geom_smooth()
 ```
 
 
-## Aufgabe 7
+## Task 7
 
-Rekonstrukturieren folgenden Plot aus @kovic2014 mithilfe von ggplot und dem tagi_data_gemeinden.csv Datensatz:
+Replicate the following plot from @kovic2014 using ggplot and the *tagi_data_gemeinden.csv* dataset:
 
-Tipp:
+Here’s a tip:
 
-- Nutze `facet_wrap`
+- Use `facet_wrap`
 
 ```{r}
 #| output: true
 
-# Lösung zu Aufgabe 7
+# Solution to Task 7
 
 plot4 <- plot2 +
   facet_wrap(~quantile)
 plot4
 ```
 
-## Aufgabe 8
+## Task 8
 
-Rekonstrukturiere folgenden Plot aus @kovic2014 mithilfe von ggplot und dem tagi_data_gemeinden.csv Datensatz:
+Replicate the following plot from @kovic2014 using ggplot and the *tagi_data_gemeinden.csv* dataset:
 
-Tipp:
+Here’s a tip:
 
-- Nutze `geom_smooth`
+- Use `geom_smooth`.
 
 ```{r}
 #| output: true
 
-# Lösung zu Aufgabe 8
+# Solution to Task 8
 
 plot4 +
   geom_smooth()

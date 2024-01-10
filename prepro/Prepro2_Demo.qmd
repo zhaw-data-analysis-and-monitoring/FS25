@@ -4,17 +4,17 @@ lesson: PrePro2
 thema: Piping / Joins
 index: 1
 knitr:
-  opts_chunk: 
+  opts_chunk:
     collapse: true
 ---
 
 # Prepro 2: Demo
 
-Diese Demo kann auch als [R Script heruntergeladen werden](Prepro2_Demo.R) (Rechtsklick → *Save Target As..*)
+The code for this demo can also [be downloaded as an R Script](Prepro2_Demo.R) (right click → *Save Target As..*)
 
 ## Piping
 
-Gegeben ist ein character string (`diary`). Wir wollen aus diesem Text die Temperaturangabe aus dem String extrahieren und danach den Wert von Kelvin in Celsius nach der folgenden Formel umwandeln und zum Schluss den Mittelwert über all diese Werte berechnen.
+We want to extract the temperature data from a character string (`diary`), and then convert the Kelvin value into Celsius according to the following formula, before finally calculating the mean of all the values:
 
 $$°C = K - 273.15$$
 
@@ -28,116 +28,115 @@ diary <- c(
 diary
 ```
 
-Dazu brauchen wir die Funktion `substr()`, welche aus einem `character` einen Teil "raus schnipseln" kann.
+To do this, we need the `substr()` function, which can extract part of a `character`.
 
 ```{r}
-# Wenn die Buchstaben einzelne _Elemente_ eines Vektors wären, würden wir diese
-# folgendermassen subsetten:
+# If the letters were individual _elements_ of a vector, we would subset them like this:
 
 charvec1 <- c("a", "b", "c", "d", "e", "f", "g", "h")
 charvec1[4:6]
 
-# Aber wenn diese in einem einzigen character gespeichert sind, brauchen wir substr:
+# But if these are stored in a single character, we need substr:
 charvec2 <- "abcdefgh"
 substr(charvec2, 4, 6)
 ```
 
-Zudem nutzen haben wir eine Hilfsfunktion `subtrahieren`, welche zwei Werte annimmt, den `minuend` und den `subtrahend`:
+We also need the auxiliary subtraction function, `substract`, which accepts two values, the `minuend` and the `subtrahend`:
 
 ```{r}
-subtrahieren <- function(minuend, subtrahend) {
+subtract <- function(minuend, subtrahend) {
   minuend - subtrahend
 }
 
-subtrahieren(10, 4)
+subtract(10, 4)
 ```
 
-Übersetzt in `R`-Code entsteht folgende Operation:
+Translated into `R`-code, this results in the following operation:
 
 ```{r}
-output <- mean(subtrahieren(as.numeric(substr(diary, 20, 22)), 273.15))
-#                                             \_1_/
-#                                      \________2__________/
-#                           \___________________3___________/
-#              \________________________________4__________________/
-#         \_____________________________________5____________________/
+output <- mean(subtract(as.numeric(substr(diary, 20, 22)), 273.15))
+#                                         \_1_/
+#                                  \________2__________/
+#                       \___________________3__________/
+#              \____________________________4____________________/
+#         \_________________________________5____________________/
 
-# 1. Nimm diary
-# 2. Extrahiere auf jeder Zeile die Werte 20 bis 22
-# 3. Konvertiere "character" zu "numeric"
-# 4. Subtrahiere 273.15
-# 5. Berechne den Mittlwert
+# 1. Take diary
+# 2. Extract values 20 to 22 on each line
+# 3. Convert "character" to "numeric"
+# 4. Subtract 273.15
+# 5. Calculate the mean
 ```
 
-Die ganze Operation liest sich etwas leichter, wenn diese sequentiell notiert wird:
+The whole operation is a little easier to read if it is written down sequentially:
 
 ```{r}
-temp <- substr(diary, 20, 22)      # 2
-temp <- as.numeric(temp)           # 3
-temp <- subtrahieren(temp, 273.15) # 4
-output <- mean(temp)               # 5
+temp <- substr(diary, 20, 22)  # 2
+temp <- as.numeric(temp)       # 3
+temp <- subtract(temp, 273.15) # 4
+output <- mean(temp)           # 5
 ```
 
-Umständlich ist dabei einfach, dass die Zwischenresultate immer abgespeichert und in der darauf folgenden Operation wieder abgerufen werden müssen. Hier kommt "piping" ins Spiel: *Mit "piping" wird der Output der einen Funktion der erste Parameter der darauf folgenden Funktion.*
+The fact that the intermediate results must always be saved and retrieved again in the subsequent operation makes this somewhat cumbersome. This is where "piping" comes into play: *It makes the output of one function the first parameter of the subsequent function.*
 
 ```{r}
-diary |>                  # 1
-  substr(20, 22) |>       # 2
-  as.numeric() |>         # 3
-  subtrahieren(273.15) |> # 4
-  mean()                  # 5
+diary |>              # 1
+  substr(20, 22) |>   # 2
+  as.numeric() |>     # 3
+  subtract(273.15) |> # 4
+  mean()              # 5
 ```
 
 :::{.callout-important}
-- der `|>` Pipe Operator wurde erst in R `4.1` eingeführt
-- Neben dem *base R* Pipe Operator existiert im Package `magrittr` ein sehr ähnlicher[^pipe] Pipe Operator: `%>%`
-- Die Tastenkombination <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd> in RStudio fügt einen Pipe Operator ein. 
-- Welcher Pipe Operator `|>` oder `%>%` mit der obigen Tastenkombination eingeführt wird, kann über die RStudio Settings `Tools` → `Global Options` → `Code` → Häckchen setzen bei `Use nativ pipe operator`
-- Wir empfehlen die base-R Pipe `|>` zu verwenden
+- the `|>` pipe operator was first introduced in R `4.1`
+- In addition to the *base R* pipe operator, there is also a very similar[^pipe] pipe operator, `%>%`, in the `magrittr` package.
+- The <kbd>Ctrl</kbd> +<kbd>Shift</kbd>+<kbd>M</kbd> keyboard shortcut in RStudio inserts a pipe operator.
+- By checking the Use native pipe operator setting in RStudio Settings `Tools` → `Global Options` → `Code`, you can control which `pipe operator`, `|>` or `%>%`, is inserted with the above key combination.
+- We recommend using the base-R pipe operator `|>`
 :::
 
-[^pipe]: siehe <https://stackoverflow.com/q/67633022/4139249>
+[^pipe]: see <https://stackoverflow.com/q/67633022/4139249>
 
 ## Joins
 
 ```{r}
-studierende <- data.frame(
-  Matrikel_Nr = c(100002, 100003, 200003),
-  Studi = c("Patrick", "Manuela", "Eva"),
-  PLZ = c(8006, 8001, 8820)
+students <- data.frame(
+  Matriculation_No = c(100002, 100003, 200003),
+  Student = c("Patrick", "Manuela", "Eva"),
+  ZIP = c(8006, 8001, 8820)
 )
 
-studierende
+students
 
-ortschaften <- data.frame(
-  PLZ = c(8003, 8006, 8810, 8820),
-  Ortsname = c("Zürich", "Zürich", "Horgen", "Wädenswil")
+localities <- data.frame(
+  ZIP = c(8003, 8006, 8810, 8820),
+  LocalityName = c("Zurich", "Zurich", "Horgen", "Wadenswil")
 )
 
-ortschaften
+localities
 ```
 
 ```{r}
 # Load library
 library("dplyr")
 
-inner_join(studierende, ortschaften, by = "PLZ")
+inner_join(students, localities, by = "ZIP")
 
-left_join(studierende, ortschaften, by = "PLZ")
+left_join(students, localities, by = "ZIP")
 
-right_join(studierende, ortschaften, by = "PLZ")
+right_join(students, localities, by = "ZIP")
 
-full_join(studierende, ortschaften, by = "PLZ")
+full_join(students, localities, by = "ZIP")
 ```
 
 ```{r}
-studierende <- data.frame(
-  Matrikel_Nr = c(100002, 100003, 200003),
-  Studi = c("Patrick", "Manuela", "Pascal"),
-  Wohnort = c(8006, 8001, 8006)
+students <- data.frame(
+  Matriculation_No = c(100002, 100003, 200003),
+  Student = c("Patrick", "Manuela", "Pascal"),
+  Residence = c(8006, 8001, 8006)
 )
 
-left_join(studierende, ortschaften, by = c("Wohnort" = "PLZ"))
+left_join(students, localities, by = c("Residence" = "ZIP"))
 ```
 
 ```{r}

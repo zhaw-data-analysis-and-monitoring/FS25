@@ -1,21 +1,21 @@
 ---
 date: 2023-11-27
 lesson: RaumAn1
-thema: Spatial Joins
+topic: Spatial Joins
 index: 2
-execute: 
-  echo: false   # set to true to show musterlösung
-  output: false # set to true to show musterlösung
+execute:
+  echo: false   # set to true to show sample solution
+  output: false # set to true to show sample solution
 code-fold: true
-code-summary: "Musterlösung"
+code-summary: "Sample Solution"
 knitr:
-  opts_chunk: 
+  opts_chunk:
     collapse: true  
 ---
 
-# Rauman 1: Übung B {#sec-rauman1b}
+# Rauman 1: Exercise B {#sec-rauman1b}
 
-Für die kommende Übung arbeiten wir mit dem Datensatz *gruental.gpkg*. Importiere ihn in R. Zudem brauchen wir die folgenden libraries:
+For the upcoming exercise, we will work with the *gruental.gpkg*. data set. Import it into R. We also need the following libraries:
 
 ```{r}
 #| echo: true
@@ -33,9 +33,9 @@ library("ggplot2")
 read_sf("datasets/rauman/gruental.gpkg")
 ```
 
-### Aufgabe 1: Geopackage "Layers"
+### Task 1: Geopackage "Layers"
 
-Allenfalls ist euch beim Importieren des Geopackage *gruental.gpkg* folgende Warnmeldung aufgefallen:
+You may have noticed the following warning message when importing the *gruental.gpkg* geopackage:
 
 ```
 Warning message:
@@ -43,18 +43,18 @@ In evalq((function (..., call. = TRUE, immediate. = FALSE, noBreaks. = FALSE,  :
   automatically selected the first layer in a data source containing more than one.
 ```
 
-Diese Warnmeldung weist darauf hin, dass das Geopackage `gruental.gpkg` mehrere Layers (rep. Datensätze) enthält und nur der erste Layer importiert wurde. Bringe mit dem Befehl `st_layers` die Layer Namen in Erfahrung und nutze diese im Anschluss in `st_read` (als Argument `layer = `) um die layers einzeln zu importieren und in variablen zu speichern (zB in als Variable `wiesen` und `baeume`).
+This warning message indicates that the geopackage `gruental.gpkg` has several layers (rep. records) and only the first layer has been imported. Use the `st_layers` command to find out the layer names and then use them in `st_read` (as argument `layer =`) to import the layers individually and store them in variables (e.g., such as in the variables `wiesen` and `baeume`).
 
 ```{r}
 st_layers("datasets/rauman/gruental.gpkg")
 
-wiesen <- read_sf("datasets/rauman/gruental.gpkg", "wiesen")
-baeume <- read_sf("datasets/rauman/gruental.gpkg", "baeume")
+meadows <- read_sf("datasets/rauman/gruental.gpkg", "wiesen")
+trees <- read_sf("datasets/rauman/gruental.gpkg", "baeume")
 ```
 
-### Aufgabe 2: Datensätze erkunden
+### Task 2: Understanding the data sets
 
-Nimm dir etwas Zeit und erkunde die beiden Datensätze. Nutze dafür auch die Visualisierungsmöglichkeiten von `ggplot` (insbesondere `geom_sf`). Du kannst mehrere `geom_sf()` übereinander lagern, um gleichzeitig mehrere Datensätze darzustellen.
+Take some time to explore the two datasets. Use the visualisation options of `ggplot` (especially `geom_sf`). You can superimpose multiple `geom_sf` to represent multiple records at the same time.
 
 ```{r}
 #| output: true
@@ -62,29 +62,29 @@ Nimm dir etwas Zeit und erkunde die beiden Datensätze. Nutze dafür auch die Vi
 #| layout-ncol: 2
 #| column: page
 #| fig.cap:
-#| - Wiesen-Flächen eingefärbt nach Typ
-#| - Bäume eingefärbt nach Baumtyp
+#| - Meadow areas are shown in different colours depending on type 
+#| - Trees are shown in different colours depending on type
 
-ggplot(wiesen) +
+ggplot(meadows) +
   geom_sf(aes(fill = flaechen_typ)) +
-  geom_sf(data = baeume) +
+  geom_sf(data = trees) +
   theme_void()
 
-ggplot(wiesen) +
+ggplot(meadows) +
   geom_sf() +
-  geom_sf(data = baeume, aes(colour = baum_typ)) +
+  geom_sf(data = trees, aes(colour = baum_typ)) +
   theme_void()
 ```
 
-### Aufgabe 3:  Spatial Join mit Punkten {#sec-spatial-join-points}
+### Task 3:  Spatial join with points {#sec-spatial-join-points}
 
-Wir wollen nun für jeden *Baum* wissen, ob er sich in einer Wiese befindet oder nicht. Dazu nutzen wir die GIS-Technik *Spatial Join*, die in der Vorlesung beschrieben wurde. In `sf` können wir Spatial Joins mit der Funktion `st_join` durchführen, dabei gibt es nur `left` sowie `inner`-Joins (vgl. PrePro 1 & 2). So müssen die Punkte "Links", also an erste Stelle aufgeführt werden, da wir ja Attribute *an* die Punkte anheften wollen.
+We now want to know whether each *tree* is in a meadow or not. To do this, we use the GIS technique *spatial join* as described in the lecture. Using `sf`, we can perform spatial joins with `st_join`. There are only `left` and `innerjoins` (see PrePro 1 & 2). The "links" points must be listed first, since we want to attach attributes *to* the points.
 
-Beachte, dass der Output eine neue Spalte `flaechen_typ` aufweist. Diese ist leer (`NA`) wenn sich der entsprechende Baum nicht in einer Wiese befindet. Wie viele Bäume befinden sich in einer Wiese, wie viele nicht?
+Note that the output has a new column: `flaechen_typ`. This is empty (`NA`) if the corresponding tree is not in a meadow. How many trees are in a meadow and how many are not?
 
 ```{r}
-baeume_join <- st_join(baeume, wiesen)
+trees_join <- st_join(trees, meadows)
 
-anzahl_in_wiese <- sum(!is.na(baeume_join$flaechen_typ))
-anzahl_nicht_in_wiese <- sum(is.na(baeume_join$flaechen_typ))
+number_in_meadow <- sum(!is.na(trees_join$flaechen_typ))
+number_not_in_meadow <- sum(is.na(trees_join$flaechen_typ))
 ```
