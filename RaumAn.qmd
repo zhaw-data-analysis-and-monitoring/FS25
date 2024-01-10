@@ -2,7 +2,7 @@
 title: "Spatial Analysis"
 listing:
     type: table
-    contents: SpatAn
+    contents: spatan
     categories: false
     fields: [title, date, lesson, topic]
     field-links: [title]

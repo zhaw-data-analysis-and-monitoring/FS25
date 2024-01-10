@@ -1,7 +1,7 @@
 ---
 date: 2023-11-27
 lesson: SpatAn1
-Topic: Implementation
+topic: Implementation
 index: 1
 execute:
   echo: false   # set to true to show sample solution 
