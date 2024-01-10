@@ -1,7 +1,7 @@
 ---
 date: 2023-10-23
 lesson: InfoVis1
-thema: Plots & Facets
+topic: Plots & Facets
 index: 3
 execute:
   echo: false   # set to true to show sample solution

@@ -1,6 +1,6 @@
 ---
 date: 2023-12-04
-lesson: RaumAn3
+lesson: SpatAn3
 topic: Density values
 index: 1
 execute:
@@ -13,7 +13,7 @@ knitr:
     collapse: true  
 ---
 
-# Rauman 3: Exercise A
+# SpatAn 3: Exercise A
 
 For today's exercise, we need the following datasets. Import these into R. Check whether the CRS has been set correctly, set it if necessary. Familiarise yourself with the data (visualise, scroll through, etc.).
 

@@ -1,7 +1,7 @@
 ---
 date: 2023-12-04
-lesson: RaumAn3
-thema: G-Function
+lesson: SpatAn3
+topic: G-Function
 index: 3
 execute:
   echo: false   # set to true to show sample solution
@@ -13,7 +13,7 @@ knitr:
     collapse: true  
 ---
 
-# Rauman 3: Exercise C (Optional)
+# SpatAn 3: Exercise C (Optional)
 
 In this optional exercise, we want to calculate and compare the G-function for measuring points in air quality and red kite movements.
 

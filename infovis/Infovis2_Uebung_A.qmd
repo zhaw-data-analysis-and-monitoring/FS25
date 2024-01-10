@@ -1,7 +1,7 @@
 ---
 date: 2023-10-24
 lesson: InfoVis2
-thema: Advanced ggplot
+topic: Advanced ggplot
 index: 1
 execute:
   echo: false   # set to true to show the sample solution

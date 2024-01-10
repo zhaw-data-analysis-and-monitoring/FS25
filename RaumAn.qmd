@@ -19,7 +19,7 @@ listing:
     date-format: iso
 ---
 
-<!-- ## Part 1
+## Part 1
 
 The first exercise introduces the basics of loading and displaying geospatial data in both vector and raster formats. It also covers the fundamentals of coordinate systems and vector-to-raster conversion. Initial analyses demonstrate the use of Spatial Joins and the annotation of points with attributes from enclosing vector data. Finally, the issue of spatial data aggregation dependency is addressed, illustrated by the Modifiable Areal Unit Problem (MAUP).
 
@@ -31,12 +31,4 @@ The second exercise focuses on processing and visualising geospatial datasets, s
 
 The third part focuses on calculating spatial autocorrelation with Moran’s I for a choropleth map. Revisiting the aggregated water availability maps from the first exercise, we will examine the degree to which the cantons and districts are autocorrelated. Instead of simply applying a function to calculate Moran’s I without understanding how it works, we will break down the formula into its components and work through it step by step. This hands-on approach not only highlights how Moran’s I operates but also reinforces the data science techniques learned previously.
 
-## Part 4
-
-In exercise 4, you will become familiar with basic spatial analysis tools for both vector and raster data. We will first revisit the vegetation data from the Grüental Campus, this time using buffers instead of spatial joins to calculate the spatial neighbourhood land use for each data point. Next, we will transition to the raster data format by applying classic analytical operations to a digital elevation model, where we calculate the slope and aspect of the terrain.
-
-## Part 5
-
-The focus on spatial analysis culminates with a multi-criteria analysis to determine optimal locations for wind turbines. Following the guidelines discussed in the lectures, you will apply the required criteria using spatial data. This exercise integrates many of the concepts and methods you have learned so far. At the end, individual layers are weighted and combined to create a suitability map for wind turbine placement.
-
-Let's get started! -->
+Let's get started!

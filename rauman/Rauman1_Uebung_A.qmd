@@ -1,6 +1,6 @@
 ---
 date: 2023-11-27
-lesson: RaumAn1
+lesson: SpatAn1
 Topic: Implementation
 index: 1
 execute:
@@ -13,7 +13,7 @@ knitr:
     collapse: true  
 ---
 
-# Rauman 1: Exercise A
+# StatAn 1: Exercise A
 
 There are already a large number of packages for working with spatial data in R, which in turn are based on other packages (keyword *dependencies*). For *vector data*, the  [`sp`](https://cran.r-project.org/package=sp) package dominated for a long time, and has now been replaced by [`sf`](https://r-spatial.github.io/sf/). Wherever possible, we will work with `sf` and only use other packages in exceptional cases.
 

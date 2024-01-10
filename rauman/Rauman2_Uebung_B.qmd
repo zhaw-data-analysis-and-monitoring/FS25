@@ -1,6 +1,6 @@
 ---
 date: 2023-11-28
-lesson: RaumAn2
+lesson: SpatAn2
 topic: Introducing Raster Data
 index: 2
 execute:
@@ -13,7 +13,7 @@ knitr:
     collapse: true  
 ---
 
-# Rauman 2: Exercise B {#sec-raster-intro}
+# SpatAn 2: Exercise B {#sec-raster-intro}
 
 In [the last exercise](#sec-raster-intro1), you had your first experience with raster data. We first rasterised a vector dataset. However, we often work with spatial data that has already been captured in raster format.
 
