@@ -2,7 +2,7 @@
 date: 2024-04-30
 lesson: SpatAn2
 topic: Raster Data
-index: 2
+index: 4
 execute:
   echo: false   # set to true to show sample solution
   output: false # set to true to show sample solution
