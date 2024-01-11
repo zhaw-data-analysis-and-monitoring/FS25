@@ -1,7 +1,7 @@
 ---
-date: 2023-11-28
+date: 2024-04-30
 lesson: SpatAn2
-topic: Introducing Raster Data
+topic: Raster Data
 index: 2
 execute:
   echo: false   # set to true to show sample solution

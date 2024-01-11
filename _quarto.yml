@@ -48,7 +48,7 @@ book:
     - index.qmd
     - part: PrePro.qmd
       chapters:
-      - prepro/Prepro1_Vorbereitung.qmd
+      - prepro/Prepro0_Vorbereitung.qmd
       - --
       - prepro/Prepro1_Demo.qmd
       - prepro/Prepro1_Uebung.qmd
@@ -61,7 +61,7 @@ book:
       - prepro/Prepro3_Uebung.qmd
     - part: InfoVis.qmd
       chapters:
-      - infovis/Infovis1_Vorbereitung.qmd
+      - infovis/Infovis0_Vorbereitung.qmd
       - --
       - infovis/Infovis1_Demo.qmd
       - infovis/Infovis1_Uebung.qmd
@@ -71,7 +71,13 @@ book:
       - infovis/Infovis2_Uebung_B.qmd
     - part: Statistic.qmd
       chapters: 
-        - statistic/Statistic.qmd
+        - statistic/Stat0_Vorbereitung.qmd
+        - --
+        - statistic/Stat1_Uebung.qmd
+        - --
+        - statistic/Stat2_Uebung.qmd
+        - --
+        - statistic/Stat3_Uebung.qmd
     - part: SpatAn.qmd
       chapters:
       - spatan/Spatan0_Vorbereitung.qmd

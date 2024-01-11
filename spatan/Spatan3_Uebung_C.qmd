@@ -1,5 +1,5 @@
 ---
-date: 2023-12-04
+date: 2024-05-07
 lesson: SpatAn3
 topic: G-Function
 index: 3

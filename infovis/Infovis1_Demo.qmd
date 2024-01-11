@@ -1,5 +1,5 @@
 ---
-date: 2023-10-23
+date: 2024-03-19
 lesson: InfoVis1
 topic: "Plots & Facets"
 index: 1

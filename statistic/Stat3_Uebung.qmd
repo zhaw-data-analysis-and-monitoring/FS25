@@ -1,7 +1,7 @@
 ---
-date: 2023-11-27
-lesson: Statistic
-Topic: 
+date: 2024-04-23
+lesson: stat3
+topic: Statistic 3
 index: 1
 execute:
   echo: false   # set to true to show sample solution 
@@ -13,6 +13,6 @@ knitr:
     collapse: true  
 ---
 
-# Statistic 
+# Statistic 3
 
-Test
+Cluster analysis and data classification approaches
