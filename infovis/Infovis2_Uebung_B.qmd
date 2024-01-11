@@ -2,7 +2,7 @@
 date: 2024-03-26
 lesson: InfoVis2
 topic: Advanced ggplot
-index: 1
+index: 2
 execute:
   echo: false   # set to true to show the sample solution
   output: false # set to true to show the sample solution
