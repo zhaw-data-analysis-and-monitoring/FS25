@@ -1,3 +1,4 @@
 /.quarto/
 _book
 .~lock*
+.Rproj.user
