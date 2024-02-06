@@ -1,7 +1,7 @@
 ---
-date: 2023-10-23
+date: 2024-03-19
 lesson: InfoVis1
-thema: "Plots & Facets"
+topic: "Plots & Facets"
 index: 1
 ---
 
@@ -15,11 +15,16 @@ library("ggplot2")
 library("tidyr")
 ```
 
+<<<<<<< HEAD
 Als erstes laden wir den Datensatz *temperature_SHA_ZER.csv* ein. Es handelt sich dabei um eine leicht modifizierte Variante der Daten aus PrePro1 und PrePro2.
 test
+=======
+In this demonstration, we'll start by loading the dataset *temperature_SHA_ZER.csv*, a refined version of the data from our previous lessons, PrePro1 and PrePro2.
+
+>>>>>>> cc3ac110100e5507b0b5b27555aec1a5a315e543
 ```{r}
-# Wir können den Datensatz direkt über die URL einladen oder aber ihr nutzt die
-# URL um den Datensatz lokal bei euch abzuspeichern und wie gewohnt einzulesen
+# You can load the dataset directly from the provided URL
+# Alternatively, you can download the dataset to your local machine using this URL and then read it as you normally would. Here’s the command to read the dataset:
 temperature <- read_delim("datasets/infovis/temperature_SHA_ZER.csv", ",")
 ```
 
@@ -32,30 +37,29 @@ knitr::kable(head(temperature))
 
 ## Base-plot vs. ggplot
 
-Um in "base-R" einen Scatterplot zu erstellen wo Datum der Temperatur gegenübersteht, gehen wir wie folgt vor:
+We can create a scatterplot in "Base-R" to compare dates and temperatures as follows:
 
 ```{r}
 plot(temperature$time, temperature$SHA, type = "l", col = "red")
 lines(temperature$time, temperature$ZER, col = "blue")
 ```
 
-In `ggplot` sieht das etwas anders und auf den ersten Blick etwas komplizierter aus: Ein plot wird durch den Befehl `ggplot()` initiiert. Hier wird einerseits der Datensatz festgelegt, auf dem der Plot beruht (`data = `), sowie die Variablen innerhalb des Datensatzes, die Einfluss auf den Plot ausüben (`mapping = aes()`). 
+In `ggplot`, the approach is more nuanced. A plot begins with `ggplot()`. This command specifies the dataset (`data =`) and the variables within the dataset that influence the plot (`mapping = aes()`).
 
 ```{r}
-# Datensatz: "temperature" | Beeinflussende Variabeln: "time" und "temp"
+# Dataset: "temperature" | Influencing variables: "time" and "temp"
 ggplot(data = temperature, mapping = aes(time, SHA))
 ```
 
-Weiter braucht es *mindestens* ein "Layer" der beschreibt, wie die Daten dargestellt werden sollen (z.B. `geom_point()`).
-Anders als bei "Piping" (`|>`) wird ein Layer mit `+` hinzugefügt.
+In ggplot, *at least one* "layer" is required to represent data, such as `geom_point()` for scatterplots, using the + operator. Unlike "piping" (`|>`), a layer is added with `+`.
 
 ```{r}
 ggplot(data = temperature, mapping = aes(time, SHA)) +
-  # Layer: "geom_point" entspricht Punkten in einem Scatterplot
+  # Layer: "geom_point" corresponds to points in a scatterplot
   geom_point()
 ```
 
-Da ggplot die Eingaben in der Reihenfolge `data = ` und dann `mapping = `erwartet, können wir diese Spezifizierungen auch weglassen.
+Since inputs are expected in the order of `data = ` followed by `mapping =` in ggplot, we can omit these specifications.
 
 ```{r}
 #| eval: false
@@ -65,20 +69,20 @@ ggplot(temperature, aes(time, SHA)) +
 
 ## Long vs. wide
 
-Wie wir in PrePro 2 bereits erwähnt haben, ist `ggplot2` auf *long tables* ausgelegt. Wir überführen deshalb an dieser Stelle die breite in eine lange Tabelle:
+As mentioned in PrePro 2, `ggplot2` is designed for *long tables*. Therefore, we need to transform the wide table into a long format:
 
 ```{r}
 temperature_long <- pivot_longer(temperature, -time, names_to = "station", values_to = "temp")
 ```
 
-Nun wollen wir die unterschiedlichen Stationen unterschiedlich einfärben. Da wir Variablen definieren wollen, welche Einfluss auf die Grafik haben sollen, gehört diese Information in `aes()`.
+To colour-code different weather stations, we define variables that will influence the graphic, which are incorporated in the `aes()` function:
 
 ```{r}
 ggplot(temperature_long, aes(time, temp, colour = station)) +
   geom_point()
 ```
 
-Wir können noch einen Layer mit Linien hinzufügen:
+We can also add additional layers with lines:
 
 ```{r}
 ggplot(temperature_long, aes(time, temp, colour = station)) +
@@ -86,25 +90,26 @@ ggplot(temperature_long, aes(time, temp, colour = station)) +
   geom_line()
 ```
 
-## Beschriftungen (labels)
+## Labels
 
-Weiter können wir die Achsen beschriften und einen Titel hinzufügen. Zudem lasse ich die Punkte (`geom_point()`) nun weg, da mir diese nicht gefallen.
+Next, we'll refine our plot by adding axis labels and a title. Additionally, we've chosen to remove the points (`geom_point()`) as they don't align with my preferred visualisation style.
 
 ```{r}
 ggplot(temperature_long, aes(time, temp, colour = station)) +
   geom_line() +
   labs(
-    x = "Zeit",
-    y = "Temperatur in Grad C°",
-    title = "Temperaturdaten Schweiz",
-    subtitle = "2001 bis 2002",
-    color = "Station"
+    x = "Time",
+    y = "Temperature in degrees C°",
+    title = "Temperature Data Switzerland",
+    subtitle = "2001 to 2002",
+    colour = "Station"
   )
+
 ```
 
 ## Split Apply Combine
 
-Im obigen Plot fällt auf, dass stündliche Werte eine zu hohe Auflösung ist, wenn wir daten über 2 Jahre visualisieren. Mit *Split Apply Combine* (PrePro 3) können wir die Auflösung unserer Daten verändern: 
+In our plot, the hourly data points are too detailed for a two-year visualisation. Using the *Split Apply Combine* technique (covered in PrePro 3), we can adjust the data resolution:
 
 ```{r}
 temperature_day <- temperature_long |>
@@ -119,37 +124,35 @@ temperature_day <- temperature_day |>
 temperature_day
 ```
 
-## X/Y-Achse anpassen
+## Adjusting the X/Y Axes
 
-Man kann auch Einfluss auf die x-/y-Achsen nehmen. Dabei muss man zuerst festlegen, was für ein Achsentyp der Plot hat (vorher hat `ggplot` eine Annahme auf der Basis der Daten getroffen). 
+You can also influence the x/y axes. You first have to determine what type of axis the plot has (in its default setting, `ggplot` automatically selects the axis type based on the nature of the data).
 
-Bei unserer y-Achse handelt es sich um numerische Daten, `ggplot` nennt diese: `scale_y_continuous()`. Unter [ggplot2.tidyverse.org](http://ggplot2.tidyverse.org/reference/#section-scales) findet man noch andere x/y-Achsentypen (`scale_x_irgenwas` bzw. `scale_y_irgendwas`).
+For our y-axis, which consists of numerical data, `ggplot` uses `scale_y_continuous()`. Other axis types can be found at [ggplot2.tidyverse.org](http://ggplot2.tidyverse.org/reference/#section-scales) (`scale_x_something` or `scale_y_something`).
 
 ```{r}
 ggplot(temperature_day, aes(time, temp, colour = station)) +
   geom_line() +
   labs(
-    x = "Zeit",
-    y = "Temperatur in Grad C°",
-    title = "Temperaturdaten Schweiz",
-    subtitle = "2001 bis 2002",
+    x = "Time",
+    y = "Temperature in degrees C",
+    title = "Temperature Data Switzerland",
+    subtitle = "2001 to 2002",
     color = "Station"
   ) +
-  scale_y_continuous(limits = c(-30, 30)) # y-Achsenabschnitt bestimmen
-
+  scale_y_continuous(limits = c(-30, 30)) # determine y-axis section
 ```
 
-
-Das gleiche Spiel kann man für die y-Achse betreiben. Bei unserer y-Achse handelt es sich ja um Datumsangaben. `ggplot` nennt diese: `scale_x_date()`. 
+This can also be done for the x-axis. Our x-axis consists of date information. `ggplot` calls this: `scale_x_date()`.
 
 ```{r}
 ggplot(temperature_day, aes(time, temp, colour = station)) +
   geom_line() +
   labs(
-    x = "Zeit",
-    y = "Temperatur in Grad C°",
-    title = "Temperaturdaten Schweiz",
-    subtitle = "2001 bis 2002",
+    x = "Time",
+    y = "Temperature in degrees C",
+    title = "Temperature Data Switzerland",
+    subtitle = "2001 to 2002",
     color = "Station"
   ) +
   scale_y_continuous(limits = c(-30, 30)) +
@@ -159,11 +162,11 @@ ggplot(temperature_day, aes(time, temp, colour = station)) +
   )
 ```
 
-## Themes
+## Customising Themes 
 
-Mit `theme` verändert man das allgmeine Layout der Plots. Beispielsweise kann man mit `theme_classic()` `ggplot`-Grafiken etwas weniger "Poppig" erscheinen lassen: so sind sie besser für Bachelor- / Masterarbeiten sowie Publikationen geeignet. `theme_classic()` kann man indiviudell pro Plot anwenden, oder für die aktuelle Session global setzen (s.u.)
+The `theme` function in `ggplot` allows us to alter the general layout of plots. For instance, `theme_classic()` changes the plot's style to a more traditional look, which is ideal for formal reports or publications. This theme can be applied either to individual plots or set as a default for all plots within a session.
 
-Individuell pro Plot:
+Applying to a single Plot:
 
 ```{r}
 #| eval: false
@@ -173,7 +176,7 @@ ggplot(temperature_day, aes(time, temp, colour = station)) +
   theme_classic()
 ```
 
-Global (für alle nachfolgenden Plots der aktuellen Session):
+Global setting (for all subsequent plots in the current session):
 
 ```{r}
 theme_set(theme_classic())
@@ -181,38 +184,39 @@ theme_set(theme_classic())
 
 ## Facets / Small Multiples
 
-Sehr praktisch sind auch die Funktionen für "Small multiples". Dies erreicht man mit `facet_wrap()` (oder `facet_grid()`, mehr dazu später). Man muss mit einem Tilde-Symbol "`~`" nur festlegen, welche *Variable* für das Aufteilen des Plots in kleinere Subplots verantwortlich sein soll. 
+ggplot also offers powerful functions for creating "Small multiples" using `facet_wrap()` (or `facet_grid()`, more on this later). These functions divide the main plot into smaller subplots based on a specified *variable*, denoted by the tilde symbol "`~`".
 
 ```{r}
 ggplot(temperature_day, aes(time, temp, colour = station)) +
   geom_line() +
   labs(
-    x = "Zeit",
-    y = "Temperatur in Grad C°",
-    title = "Temperaturdaten Schweiz",
-    subtitle = "2001 bis 2002",
-    color = "Station"
+    x = "Time",
+    y = "Temperature in °C",
+    title = "Temperature Data of Switzerland",
+    subtitle = "2001 to 2002",
+    colour = "Station"
   ) +
   scale_y_continuous(limits = c(-30, 30)) +
   scale_x_date(
     date_breaks = "3 months",
     date_labels = "%b"
   ) +
-  facet_wrap(station ~ .)
+  facet_wrap(~station)
+
 ```
 
-Auch `facet_wrap` kann man auf seine Bedürfnisse anpassen: Beispielweise kann man mit `ncol = ` die Anzahl facets pro Zeile bestimmen. 
+`facet_wrap` can also be customised further, such as by setting the number of facets per row with `ncol = `.
 
-Zudem brauchen wir die Legende nicht mehr, da der Stationsnamen über jedem Facet steht. Ich setze deshalb `theme(legend.position="none")` 
+In addition, since the station names are displayed above each facet, we no longer require the legend. This is achieved with `theme(legend.position="none")`.
 
 ```{r}
 ggplot(temperature_day, aes(time, temp, colour = station)) +
   geom_line() +
   labs(
-    x = "Zeit",
-    y = "Temperatur in Grad C°",
-    title = "Temperaturdaten Schweiz",
-    subtitle = "2001 bis 2002"
+    x = "Time",
+    y = "Temperature in °C",
+    title = "Temperature Data of Switzerland",
+    subtitle = "2001 to 2002"
   ) +
   scale_y_continuous(limits = c(-30, 30)) +
   scale_x_date(
@@ -223,9 +227,9 @@ ggplot(temperature_day, aes(time, temp, colour = station)) +
   theme(legend.position = "none")
 ```
 
-## In Variabel abspeichern und Exportieren
+## Storing and Exporting Plots
 
-Genau wie `data.frames` und andere Objekte, kann man einen ganzen Plot auch in einer Variabel speichern. Dies kann nützlich sein um einen Plot zu exportieren (als png, jpg usw.) oder sukzessive erweitern wie in diesem Beispiel.
+Like `data.frames` and other objects, a complete ggplot plot can be stored in a variable. This is useful for exporting the plot (as PNG, JPG, etc.) or for progressively enhancing it, as shown in this example.
 
 ```{r}
 p <- ggplot(temperature_day, aes(time, temp, colour = station)) +
@@ -242,10 +246,10 @@ p <- ggplot(temperature_day, aes(time, temp, colour = station)) +
     date_labels = "%b"
   ) +
   facet_wrap(~station, ncol = 1)
-# ich habe an dieser Stelle theme(legend.position="none") entfernt
+# At this point, theme(legend.position="none") was removed
 ```
 
-Folgendermassen kann ich den Plot als png-File abspeichern (ohne Angabe von "plot = " wird einfach der letzte Plot gespeichert)
+To save the plot as a PNG file (without specifying "plot = ", the last plot is simply saved):
 
 ```{r}
 #| eval: false
@@ -253,7 +257,7 @@ Folgendermassen kann ich den Plot als png-File abspeichern (ohne Angabe von "plo
 ggsave(filename = "plot.png", plot = p)
 ```
 
-.. und so kann ich einen bestehenden Plot (in einer Variabel) mit einem Layer / einer Option erweitern
+To add a layer or option to an existing plot stored in a variable:
 
 ```{r}
 #| eval: false
@@ -262,7 +266,7 @@ p +
   theme(legend.position = "none")
 ```
 
-Wie üblich wurde diese Änderung nicht gespeichert, sondern nur das Resultat davon ausgeben. Wenn die Änderung in meinem Plot (in der Variabel) abspeichern will, muss ich die Variabel überschreiben:
+As is typical with R, the modification made to the plot is not automatically saved; it only shows the outcome of the change. To permanently incorporate this change into my plot stored in the variable, we need to overwrite the variable with the updated plot:
 
 ```{r}
 p <- p +
@@ -271,7 +275,7 @@ p <- p +
 
 ## Smoothing
 
-Mit `geom_smooth()` kann `ggplot` eine Trendlinie auf der Baiss von Punktdaten berechnen. Die zugrunde liegende statistische Methode kann selbst gewählt werden (ohne Angabe verwendet `ggplot` bei < 1'000 Messungen `stats::loess`, ansonsten `mgcv::gam`)
+The `geom_smooth()` function in `ggplot` can add trend lines to scatter plots. It is possible to select the underlying statistical method that is applied, yet by default, for datasets with fewer than 1,000 observations, `ggplot` defaults to using the `stats::loess` method. For larger datasets, it switches to `mgcv::gam`.
 
 ```{r}
 p <- p +

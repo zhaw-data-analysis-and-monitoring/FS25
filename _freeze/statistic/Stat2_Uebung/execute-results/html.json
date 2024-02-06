@@ -1,0 +1,14 @@
+{
+  "hash": "3663c4d9b1c1f8042e8fe57819e0062c",
+  "result": {
+    "markdown": "---\ndate: 2024-04-09\nlesson: stat2 \ntopic: Statistic 2\nindex: 1\nexecute:\n  echo: false   # set to true to show sample solution \n  output: false # set to true to show sample solution\ncode-fold: true\ncode-summary: \"Sample Solution\"\nknitr:\n  opts_chunk:\n    collapse: true  \n---\n\n\n# Statistic 2\n\nAdvanced applications of inductive and multivariate statistics, …",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

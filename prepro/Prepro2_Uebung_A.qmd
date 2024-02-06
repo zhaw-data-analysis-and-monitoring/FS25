@@ -1,19 +1,19 @@
 ---
-date: 2023-10-16
+date: 2024-02-27
 lesson: PrePro2
-thema: Piping / Joins
+topic: Piping / Joins
 index: 2
-execute: 
-  echo: true   # set to true to show musterlösung
-  output: true # set to true to show musterlösung
+execute:
+  echo: true # set to true to show sample solution
+  output: true # set to true to show sample solution
 code-fold: true
-code-summary: "Musterlösung"
+code-summary: "Sample Solution"
 knitr:
-  opts_chunk: 
+  opts_chunk:
     collapse: true
 ---
 
-# Prepro 2: Übung A
+# Prepro 2: Exercise A
 
 ```{r}
 #| echo: true
@@ -23,23 +23,23 @@ library("dplyr")
 library("readr")
 library("lubridate")
 
-# Alternativ kannst du alle tidyverse packages mit library("tidyverse") laden
+# Alternatively, you can load all tidyverse packages with library("tidyverse")
 ```
 
-## Aufgabe 1
+## Task 1
 
-Lese die Wetterdaten von letzer Woche *weather.csv* (Quelle MeteoSchweiz) in `R` ein. Sorge dafür, dass die Spalten korrekt formatiert sind (`stn` als `factor`, `time` als `POSIXct`, `tre200h0` als `numeric`.)
+Read the weather data from last week *weather.csv* (source MeteoSchweiz) into `R`. Make sure that the columns are formatted correctly (`stn` as a `factor`, `time` as `POSIXct`, `tre200h0` as a `numeric`).
 
 ```{r}
-# Variante 1
-wetter <- read_delim("datasets/prepro/weather.csv", ",")
-wetter$stn <- as.factor(wetter$stn)
-wetter$time <- as.POSIXct(as.character(wetter$time), format = "%Y%m%d%H", tz = "UTC")
+# Option 1
+weather <- read_delim("datasets/prepro/weather.csv", ",")
+weather$stn <- as.factor(weather$stn)
+weather$time <- as.POSIXct(as.character(weather$time), format = "%Y%m%d%H", tz = "UTC")
 ```
 
 ```{r}
-# Variate 2 (für Profis)
-wetter <- read_csv("datasets/prepro/weather.csv",
+# Option 2 (for pros)
+weather <- read_csv("datasets/prepro/weather.csv",
   col_types = cols(
     col_factor(levels = NULL),
     col_datetime(format = "%Y%m%d%H"),
@@ -48,60 +48,60 @@ wetter <- read_csv("datasets/prepro/weather.csv",
 )
 ```
 
-## Aufgabe 2
+## Task 2
 
-Lese den Datensatz *metadata.csv* ebenfalls als csv ein.
+Read in the *metadata.csv* dataset as a csv.
 
 :::{.callout-tip}
-Wenn Umlaute und Sonderzeichen nicht korrekt dargestellt werden (z.B. das è in Gen*è*ve), hat das vermutlich mit der [Zeichencodierung](https://de.wikipedia.org/wiki/Zeichenkodierung) zu tun. Das File ist aktuell in *UTF-8* codiert. Wenn Umlaute nicht korrekt dargestellt werden, hat R diese Codierung nicht erkannt und sie muss in der Import-Funktion spezifitiert werden. Dies wird je nach verwendete import Funktion unterschiedlich gemacht:
+If umlauts and special characters are not displayed correctly (e.g. the *è* in Gèneve), this probably has something to do with the [character encoding](https://de.wikipedia.org/wiki/Zeichenkodierung). The file is currently encoded in *UTF-8*. If special characters are not correctly displayed, R has not recognised this coding and it must be specified in the import function. How this is done depends on the import function used:
 
-- Funktionen aus dem Package `readr`: `locale = locale(encoding = "UTF-8")`
-- Base-R Funktionen: `fileEncoding = "UTF-8"`
+- Package functions: `readr`: `locale = locale(encoding = "UTF-8")`
+- Base-R functions: `fileEncoding = "UTF-8"`
 
-Wenn ihr die codierung eines Files *nicht* kennt, könnt wie folgt vorgehen: Anleitung [für Windows](https://stackoverflow.com/a/13464816/4139249), [für Mac](https://stackoverflow.com/a/2461193/4139249) und [für Linux](https://stackoverflow.com/a/805474/4139249). 
-:::
+If you do *not* know how a file is encoded, the following instructions for [Windows](https://stackoverflow.com/a/13464816/4139249), [Mac](https://stackoverflow.com/a/2461193/4139249) and [Linux](https://stackoverflow.com/a/805474/4139249) will help:
+::
 
 ```{r}
 metadata <- read_delim("datasets/prepro/metadata.csv", delim = ";", locale = locale(encoding = "UTF-8"))
 ```
 
-## Aufgabe 3
+## Task 3
 
-Nun wollen wir den Datensatz `wetter`mit den Informationen aus `metadata` anreichern. Uns interessiert aber nur das Stationskürzel, der Name, die x/y Koordinaten sowie die Meereshöhe, selektiere diese Spalten.
+Now we want to enrich the `weather` data set with information from `metadata`. However, we are only interested in the station abbreviation, the name, the x/y coordinates and the sea level. Select these columns.
 
 ```{r}
 metadata <- metadata[, c("stn", "Name", "x", "y", "Meereshoehe")]
 ```
 
-## Aufgabe 4
+## Task 4
 
-Jetzt kann `metadata` mit dem Datensatz `wetter` verbunden werden. Überlege dir, welcher Join dafür sinnvoll ist und mit welchem Attribut wir "joinen" können.
+Now the `metadata` can be connected to the `weather` data set. Which join should we use to do this? And, which attribute can we join?
 
-Nutze die Join-Möglichkeiten von `dplyr` (Hilfe via `?dplyr::join`)  um die Datensätze `wetter` und `metadata` zu verbinden.
+Use the join options in `dplyr` (help via`? dplyr::join`)  to connect the `weather` data set and the `metadata`.
 
 ```{r}
-wetter <- left_join(wetter, metadata, by = "stn")
+weather <- left_join(weather, metadata, by = "stn")
 
-# Jointyp: Left-Join auf 'wetter', da uns nur die Stationen im Datensatz 'wetter' interessieren.
-# Attribut: "stn"
+# Join type: Left-Join on 'weather', as we are only interested in the stations in the 'weather' dataset.
+# Attribute: "stn"
 ```
 
-## Aufgabe 5
+## Task 5
 
-Erstelle eine neue Spalte `month` welche den jeweiligen Monat (aus `time`) beinhaltet. Nutze dafür die Funktion `lubridate::month()`.
+Create a new `month` column (from `time`). To do this, use the `lubridate::month()` function.
 
 ```{r}
-wetter$month <- month(wetter$time)
+weather$month <- month(weather$time)
 ```
 
-## Aufgabe 6
+## Task 6
 
-Berechne mit der Spalte `month` die Durchschnittstemperatur pro Monat.
+Use the `month` column to calculate the average temperature per month.
 
 ```{r}
-mean(wetter$tre200h0[wetter$month == 1])
-mean(wetter$tre200h0[wetter$month == 2])
-mean(wetter$tre200h0[wetter$month == 3])
+mean(weather$tre200h0[weather$month == 1])
+mean(weather$tre200h0[weather$month == 2])
+mean(weather$tre200h0[weather$month == 3])
 
-# usw. für alle 12 Monate
+# etc. for all 12 months
 ```

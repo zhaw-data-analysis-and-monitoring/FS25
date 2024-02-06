@@ -1,0 +1,14 @@
+{
+  "hash": "ae1e68e2a7e2dfbe2bedaf1a5e5ba756",
+  "result": {
+    "markdown": "---\ndate: 2024-04-02\nlesson: stat1\ntopic: Statistic 1\nindex: 1\nexecute:\n  echo: false   # set to true to show sample solution \n  output: false # set to true to show sample solution\ncode-fold: true\ncode-summary: \"Sample Solution\"\nknitr:\n  opts_chunk:\n    collapse: true  \n---\n\n\n# Statistic 1\n\nThe basics, comparisons of two samples, ANOVA, Regression techniques (linear, multiple, non-linear)",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

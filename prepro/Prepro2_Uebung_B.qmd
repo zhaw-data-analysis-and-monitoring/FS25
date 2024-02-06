@@ -1,32 +1,32 @@
 ---
-date: 2023-10-16
+date: 2024-02-27
 lesson: PrePro2
-thema: Piping / Joins
+topic: Piping / Joins
 index: 3
-execute: 
-  echo: true   # set to true to show musterlösung
-  output: true # set to true to show musterlösung
+execute:
+  echo: true # set to true to show sample solution
+  output: true # set to true to show sample solution
 code-fold: true
-code-summary: "Musterlösung"
+code-summary: "Sample Solution"
 knitr:
-  opts_chunk: 
+  opts_chunk:
     collapse: true
 ---
 
-# Prepro 2: Übung B
+# Prepro 2: Exercise B
 
 ```{r}
 #| echo: true
 #| code-fold: false
 
-# Benötigte Packages
+# Required Packages
 library("dplyr")
 library("readr")
 ```
 
-## Aufgabe 1
+## Task 1
 
-Gegeben sind die Daten von drei Sensoren (*sensor1.csv*, *sensor2.csv*, *sensor3.csv*). Lese die Datensätze ein.
+You have data from three sensors (*sensor1.csv*, *sensor2.csv*, *sensor3.csv*). Read in the data sets.
 
 ```{r}
 sensor1 <- read_delim("datasets/prepro/sensor1.csv", ";")
@@ -34,9 +34,9 @@ sensor2 <- read_delim("datasets/prepro/sensor2.csv", ";")
 sensor3 <- read_delim("datasets/prepro/sensor3.csv", ";")
 ```
 
-## Aufgabe 2
+## Task 2
 
-Erstelle aus den 3 Dataframes eine einzige Dataframe, die aussieht wie unten dargestellt. Nutze dafür zwei joins aus `dplyr` um 3 `data.frames` miteinander zu verbinden. Bereinige im Anschluss die Spaltennamen ([wie geht das?](https://www.statology.org/how-to-rename-data-frame-columns-in-r/)).
+From the 3 data frames, create a single data frame that looks like the one shown below. Use two joins from `dplyr` to connect 3 `data.frames`. Then tidy up the column names ([how can we do that?](https://www.statology.org/how-to-rename-data-frame-columns-in-r/)).
 
 ```{r}
 sensor1_2 <- full_join(sensor1, sensor2, "Datetime")
@@ -55,15 +55,15 @@ sensor_all <- rename(sensor_all, sensor3 = Temp)
 knitr::kable(head(sensor_all))
 ```
 
-## Aufgabe 3
+## Task 3
 
-Importiere die Datei *sensor_fail.csv* in `R`.
+Import the *sensor_fail.csv* file into `R`.
 
 ```{r}
 sensor_fail <- read_delim("datasets/prepro/sensor_fail.csv", delim = ";")
 ```
 
-`sensor_fail.csv` hat eine Variabel `SensorStatus`: `1` bedeutet der Sensor misst, `0` bedeutet der Sensor misst nicht. Fälschlicherweise wurde auch dann der Messwert `Temp = 0` erfasst, wenn `Sensorstatus = 0`. Richtig wäre hier `NA` (not available). Korrigiere den Datensatz entsprechend.
+`sensor_fail.csv` has a variable `SensorStatus`: `1` means the sensor is measuring, `0` means the sensor is not measuring. If sensor `status = 0`, the `Temp = 0` value is incorrect. It should be `NA` (not available). Correct the dataset accordingly.
 
 ```{r}
 #| echo: false
@@ -73,25 +73,26 @@ knitr::kable(sensor_fail)
 ```
 
 ```{r}
-# mit base-R:
+# with base-R:
 sensor_fail$Temp_correct[sensor_fail$SensorStatus == 0] <- NA
-sensor_fail$Temp_correct[sensor_fail$SensorStatus != 0] <- sensor_fail$Temp #Warnmeldung kann ignoriert werden.
+sensor_fail$Temp_correct[sensor_fail$SensorStatus != 0] <- sensor_fail$Temp # Warning message can be ignored.
 
-# das gleiche mit dplyr:
+# the same with dplyr:
 sensor_fail <- sensor_fail |>
   mutate(Temp_correct = ifelse(SensorStatus == 0, NA, Temp))
 ```
 
-## Aufgabe 4
+## Task 4
 
-Warum spielt das es eine Rolle, ob `0` oder `NA` erfasst wird? Berechne die Mittlere der Temperatur / Feuchtigkeit nach der Korrektur. 
+Why does it matter if `0` or `NA` is recorded? Calculate the mean of the temperature / humidity after you have corrected the dataset.
 
 ```{r}
-# Mittelwerte der falschen Sensordaten: 0 fliesst in die Berechnung
-# ein und verfälscht den Mittelwert
+# Mean values of the incorrect sensor data: 0 flows into the calculation
+# and distorts the mean
 mean(sensor_fail$Temp)
 
-# Mittelwerte der korrigierten Sensordaten: mit na.rm = TRUE werden
-# NA-Werte aus der Berechnung entfernt.
+# Mean values of the corrected sensor data: with na.rm = TRUE,
+# NA values are removed from the calculation.
 mean(sensor_fail$Temp_correct, na.rm = TRUE)
+
 ```

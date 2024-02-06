@@ -1,21 +1,21 @@
 ---
-date: 2023-10-24
+date: 2024-03-26
 lesson: InfoVis2
-thema: Vertiefung ggplot
+topic: Advanced ggplot
 index: 1
-execute: 
-  echo: true   # set to true to show musterlösung
-  output: true
+execute:
+  echo: false   # set to true to show the sample solution
+  output: false # set to true to show the sample solution
 code-fold: true
-code-summary: "Musterlösung"
+code-summary: "Sample Solution"
 knitr:
-  opts_chunk: 
+  opts_chunk:
     collapse: true
 ---
 
-# Infovis 2: Übung A
+# Infovis 2: Exercise A
 
-Für die heutige Übung brauchst du den Datensatz *temperature_2005.csv*. Dabei handelt es sich wieder um Teperaturwerte verschiedener Stationen, diesmal aus dem Jahr 2005. Das Datum ist so formatiert, dass `R` (isbesondere `read_csv`) es korrekt als `datetime` erkennen und als `POSIXct` einlesen sollte.
+For today’s exercise, you will need the dataset *temperature_2005.csv*. This dataset contains temperature readings from various weather stations, this time from the year 2005. The date is formatted in such a way that `R` (specifically `read_csv`) should correctly recognise it as `datetime` and read it as `POSIXct`.
 
 ```{r}
 #| echo: true
@@ -35,9 +35,9 @@ library("ggplot2")
 temperature <- read_delim("datasets/infovis/temperature_2005.csv", ",")
 ```
 
-## Aufgabe 1
+## Task 1
 
-Mache aus der *wide table* eine *long table* die wie folgt aussieht. 
+Transform the *wide table* into a *long table* using the following structure.
 
 ```{r}
 #| output: true
@@ -47,7 +47,7 @@ temperature_long <- pivot_longer(temperature, -time, names_to = "station", value
 knitr::kable(head(temperature_long))
 ```
 
-Importiere anschliessend den Datensatz *temperature_2005_metadata.csv* und verbinde die beiden Datensätze mit einem `left_join` via `station` (bzw. `stn`). 
+Next, import the dataset *temperature_2005_metadata.csv* and join the two datasets with a `left_join` via `station` (or `stn`).
 
 ```{r}
 metadata <- read_delim("datasets/infovis/temperature_2005_metadata.csv", ",")
@@ -55,26 +55,26 @@ metadata <- read_delim("datasets/infovis/temperature_2005_metadata.csv", ",")
 temperature_long <- left_join(temperature_long, metadata, by = c(station = "stn"))
 ```
 
-## Aufgabe 2
+## Task 2
 
-Erstelle ein Scatterplot (`time` vs. `temperature`) wobei die Punkte aufgrund ihrer Meereshöhe eingefärbt werden sollen. Tiefe Werte sollen dabei blau eingefärbt werden und hohe Werte rot (`scale_color_gradient`). Verkleinere die Punkte um übermässiges Überplotten der Punkten zu vermeiden (`size =`). Weiter sollen auf der x-Achse im Abstand von 3 Monaten der jeweilige Monat vermerkt sein (`date_breaks` bzw. `date_labels` von `scale_x_datetime()`).
+Create a scatter plot (`time` vs. `temperature`) where the points are coloured based on their sea level. Lower values should be coloured blue and higher values red (`scale_colour_gradient`). Reduce the size of the points to avoid excessive over-plotting of the points (`size =`). Furthermore, the respective month should be noted on the x-axis at intervals of 3 months (`date_breaks` and `date_labels` from `scale_x_datetime()`).
 
 ```{r}
 #| output: true
 
-# Musterlösung
-ggplot(temperature_long, aes(time, temperature, color = Meereshoehe)) +
+# Sample Solution
+ggplot(temperature_long, aes(time, temperature, colour = Meereshoehe)) +
   geom_point(size = 0.5) +
-  labs(x = "", y = "Temperatur in ° Celsius") +
+  labs(x = "", y = "Temperature in ° Celsius") +
   scale_x_datetime(date_breaks = "3 months", date_labels = "%b") +
-  scale_color_gradient(low = "blue", high = "red")
+  scale_colour_gradient(low = "blue", high = "red")
 ```
 
-## Aufgabe 3
+## Task 3
 
-Erstelle eine Zusatzvariabel `Date` mit dem Datum der jeweiligen Messung ( mit `as.Date`). Nutze diese Spalte um die Tagesmitteltemperatur pro Station zu berechnen (mit `summarise()`). 
+Create an additional `Date` variable with the date of the respective measurement (with `as.Date()`). Use this column to calculate the average daily temperature at each weather station (with `summarise()`).
 
-Um die Metadaten  (`Name`, `Meereshoehe`, `x`, `y`) nicht zu verlieren kannst du den Join aus der ersten Übung wieder ausführen. Alternativ (schneller aber auch schwerer zu verstehen) kannst du diese Variabeln innerhalb deines `group_by` verwenden.
+To keep the metadata (`Name`, `Meereshoehe`, `x`, `y`), you can perform the join from the first exercise again. Alternatively (faster but also more advanced), you can use these variables within your `group_by`.
 
 ```{r}
 temperature_long <- temperature_long |>
@@ -83,24 +83,24 @@ temperature_long <- temperature_long |>
   summarise(temperature = mean(temperature))
 ```
 
-## Aufgabe 4
+## Task 4
 
-Wiederhole nun den Plot aus der ersten Aufgabe mit den aggregierten Daten aus der vorherigen Aufgabe. Um die labels korrekt zu setzen musst du `scale_x_datetime` mit `scale_x_date` ersetzen. 
+Now repeat the plot from the first task with the aggregated data from the previous task. To set the labels correctly, you need to replace `scale_x_datetime` with `scale_x_date`.
 
 ```{r}
 #| output: true
 
-p <- ggplot(temperature_long, aes(time, temperature, color = Meereshoehe)) +
+p <- ggplot(temperature_long, aes(time, temperature, colour = Meereshoehe)) +
   geom_point(size = 0.5) +
-  labs(x = "", y = "Temperatur in ° Celsius") +
+  labs(x = "", y = "Temperature in ° Celsius") +
   scale_x_date(date_breaks = "3 months", date_labels = "%b") +
   scale_color_gradient(low = "blue", high = "red")
 p
 ```
 
-## Aufgabe 5
+## Task 5
 
-Füge am obigen Plot eine schwarze, gestrichelte Trendlinie hinzu.
+Add a black, dashed trend line to the plot above.
 
 ```{r}
 #| output: true
@@ -111,72 +111,73 @@ p <- p +
 p
 ```
 
-## Aufgabe 6
+## Task 6
 
-Positioniere die Legende oberhalb des Plots (nutze dazu `theme()` mit `legend.position`). 
+Position the legend above the plot (use `theme()` with `legend.position`).
 
 ```{r}
 #| output: true
 
-# Musterlösung
+# Sample Solution
 p <- p +
   theme(legend.position = "top")
 p
 ```
 
-## Aufgabe 7 (optional, fortgeschritten)
+## Task 7 (optional, advanced)
 
-Füge den Temperaturwerten auf der y-Ache ein `°C` hinzu (siehe unten und studiere [diesen Tipp](https://stackoverflow.com/a/35967126/4139249) zur Hilfe). 
+Add the temperature values on the y-axis with a `°C` (see below and [this page](https://stackoverflow.com/a/35967126/4139249) for help)
 
 ```{r}
 #| output: true
 
-# Musterlösung
+# Sample Solution
 p <- p +
   scale_y_continuous(labels = function(x) paste0(x, "°C")) +
-  labs(x = "Kalenderwoche", y = "Temperatur")
+  labs(x = "Calendar Week", y = "Temperature")
 p
 ```
 
-## Aufgabe 8
+## Task 8
 
-Jetzt verlassen wir den Scatterplot und machen einen Boxplot mit den Temperaturdaten. Färbe die Boxplots wieder in Abhängigkeit der Meereshöhe ein. 
+Now, let's move away from the scatter plot and create a box plot with the temperature data. Colour the box plots again depending on the sea level.
 
-- Beachte den Unterschied zwischen `colour =` und `fill =`
-- Beachte den Unterschied zwischen `facet_wrap()` und `facet_grid()`
-- `facet_grid()` braucht übrigens noch einen Punkt (`.`) zur Tilde (`~`). 
-- Beachte den Unterschied zwischen "`.~`" und "`~.`" bei `facet_grid()`
-- verschiebe nach Bedarf die Legende
+- Note the difference between `colour =` and `fill =`
+- Note the difference between `facet_wrap()` and `facet_grid()`
+- Remember,` facet_grid()` requires a period (`.`) next to the tilde (`~`).
+
+- Note the difference between "`.~`" and "`~.`" in `facet_grid()`
+- Adjust the position of the legend as needed
 
 ```{r}
 #| output: true
 
-# Musterlösung
-temperature_long <- mutate(temperature_long, monat = month(time, label = T, abbr = F))
+# Sample solution
+temperature_long <- mutate(temperature_long, month = month(time, label = T, abbr = F))
 
-ggplot(temperature_long, aes(monat, temperature, fill = Meereshoehe)) +
+ggplot(temperature_long, aes(month, temperature, fill = Meereshoehe)) +
   geom_boxplot() +
-  labs(x = "Station", y = "Temperatur") +
+  labs(x = "Station", y = "Temperature") +
   facet_wrap(~station) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-## Aufgabe 9
+## Task 9
 
-Als letzter wichtiger Plottyp noch zwei Übungen zum Histogramm. Erstelle ein Histogramm `geom_histogram()` mit den Temperaturwerten. Teile dazu die  Stationen in verschiedene Höhenlagen ein (Tieflage [< 400 m], Mittellage [400 - 600 m] und Hochlage [> 600 m]). Vergleiche die Verteilung der Temperaturwerte in den verschiedenen Lagen mit einem Histogramm. 
+As a final important plot type, let’s complete two exercises with histograms. First, create a histogram `geom_histogram()` with the temperature values, then allocate the weather stations to different altitude levels (Low altitude [[< 400 m]], Mid altitude [[400 - 600 m]] and High altitude [[> 600 m]]). Finally, compare the distribution of temperature values at the different altitudes using a histogram.
 
-Tip: Nutze `cut` um die Stationen in die drei Gruppen aufzuteilen
+Tip: Use `cut` to divide the stations into the three groups
 
 ```{r}
 #| output: true
 
-# Musterlösung
+# Sample Solution
 temperature_long <- temperature_long |>
-  mutate(lage = cut(Meereshoehe, c(0, 400, 600, 1000), labels = c("Tieflage", "Mittellage", "Hochlage")))
+  mutate(elevation = cut(Meereshoehe, c(0, 400, 600, 1000), labels = c("Low Altitude", "Mid Altitude", "High Altitude")))
 
 ggplot(temperature_long, aes(temperature)) +
   geom_histogram() +
-  facet_grid(~lage) +
-  labs(x = "Lage", y = "Temperatur") +
+  facet_grid(~elevation) +
+  labs(x = "Elevation", y = "Temperature") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```

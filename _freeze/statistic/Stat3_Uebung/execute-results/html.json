@@ -1,0 +1,14 @@
+{
+  "hash": "67acfb5190f4f89c86551f5c9b6f47a0",
+  "result": {
+    "markdown": "---\ndate: 2024-04-23\nlesson: stat3\ntopic: Statistic 3\nindex: 1\nexecute:\n  echo: false   # set to true to show sample solution \n  output: false # set to true to show sample solution\ncode-fold: true\ncode-summary: \"Sample Solution\"\nknitr:\n  opts_chunk:\n    collapse: true  \n---\n\n\n# Statistic 3\n\nCluster analysis and data classification approaches",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

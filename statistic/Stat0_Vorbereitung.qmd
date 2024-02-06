@@ -1,0 +1,32 @@
+---
+date: 2024-04-02
+lesson: stat1
+topic: Preparation
+index: 0
+knitr:
+  opts_chunk:
+    collapse: true
+---
+
+## Preparation {#sec-stat-preparation}
+
+As part of Statistic 1 - 3, we will need some R packages. We recommend installing them *before* the first lesson. Similar to the preparation exercise [in Prepro1](#sec-prepro-preparation) you can use the code below to automatically install all packages that have not yet been installed.
+
+```{r}
+#| eval: false
+
+ipak <- function(pkg) {
+  new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
+  if (length(new.pkg)) {
+    install.packages(new.pkg, dependencies = TRUE)
+  }
+}
+
+packages <- c('dplyr'
+ 
+)
+
+ipak(packages)
+```
+
+You can also download the data for the exercises on [Moodle]().

@@ -1,0 +1,28 @@
+---
+title: "Spatial Analysis"
+listing:
+    type: table
+    contents: spatan
+    categories: false
+    fields: [title, date, lesson, topic]
+    field-links: [title]
+    sort-ui: false
+    filter-ui: false
+    sort:
+        - "date"
+        - "index"
+    field-display-names:
+        title: "Title"
+        lesson: "Lesson"
+        topic: "Topic"
+        date: "Date"
+    date-format: iso
+---
+
+## Part 1
+
+The first exercise introduces the basics of loading and displaying geospatial data in both vector and raster formats. It also covers the fundamentals of coordinate systems and vector-to-raster conversion. Initial analyses demonstrate the use of Spatial Joins and the annotation of points with attributes from enclosing vector data. Finally, the issue of spatial data aggregation dependency is addressed, illustrated by the Modifiable Areal Unit Problem (MAUP).
+
+## Part 2
+
+The second exercise focuses on processing and visualising geospatial datasets, starting with a point dataset on air quality measurement in Switzerland (specifically nitrogen dioxide (NO2) levels). Unlike the point dataset on water availability from the previous exercise, the air quality monitoring sites have an irregular spatial distribution. Nevertheless, the goal is to interpolate a continuous layer of air quality values across Switzerland. We begin with the Inverse Distance Weighting (IDW) interpolation method, followed by constructing Thiessen Polygons using a nearest-neighbor approach. The latter part of the exercise examines density distribution, utilising a dataset on the movement of red kites in Switzerland. A Kernel Density Estimation (KDE) will be used to calculate a continuous density distribution, providing an approximation of the habitat of this bird of prey species.
