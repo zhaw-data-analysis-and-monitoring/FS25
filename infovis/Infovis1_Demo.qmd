@@ -15,8 +15,13 @@ library("ggplot2")
 library("tidyr")
 ```
 
+<<<<<<< HEAD
+Als erstes laden wir den Datensatz *temperature_SHA_ZER.csv* ein. Es handelt sich dabei um eine leicht modifizierte Variante der Daten aus PrePro1 und PrePro2.
+test
+=======
 In this demonstration, we'll start by loading the dataset *temperature_SHA_ZER.csv*, a refined version of the data from our previous lessons, PrePro1 and PrePro2.
 
+>>>>>>> cc3ac110100e5507b0b5b27555aec1a5a315e543
 ```{r}
 # You can load the dataset directly from the provided URL
 # Alternatively, you can download the dataset to your local machine using this URL and then read it as you normally would. Here’s the command to read the dataset:

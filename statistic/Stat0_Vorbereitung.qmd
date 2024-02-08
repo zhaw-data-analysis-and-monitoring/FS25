@@ -22,7 +22,7 @@ ipak <- function(pkg) {
   }
 }
 
-packages <- c(
+packages <- c('dplyr'
  
 )
 
