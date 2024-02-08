@@ -46,6 +46,7 @@ book:
 
   chapters:
     - index.qmd
+    - preparation.qmd
     - part: PrePro.qmd
       chapters:
       - prepro/Prepro0_Vorbereitung.qmd

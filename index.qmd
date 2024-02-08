@@ -8,7 +8,9 @@ attr(now, "tzone") <- "Europe/Zurich"
 options(knitr.duplicate.label = "allow")
 ```
 
-The "Data Analysis and Monitoring" module provides an in-depth overview of the methodological skills required for hands-on and applied scientific work in the field of "Environment and Natural Resources" at the Master's level. Students will refine their methodological expertise by analytically examining the interrelationships within the "Environment and Natural Resources" system. They will also acquire the methodological foundations that will underpin the subsequent modules in the MSc UNR programme. The module provides both general methodological skills that cut across disciplines (e.g., scientific theory, computer-aided data processing, and statistics) and specialised knowledge.
+TODO: Add Intro Text
+
+<!--The "Data Analysis and Monitoring" module provides an in-depth overview of the methodological skills required for hands-on and applied scientific work in the field of "Environment and Natural Resources" at the Master's level. Students will refine their methodological expertise by analytically examining the interrelationships within the "Environment and Natural Resources" system. They will also acquire the methodological foundations that will underpin the subsequent modules in the MSc UNR programme. The module provides both general methodological skills that cut across disciplines (e.g., scientific theory, computer-aided data processing, and statistics) and specialised knowledge. -->
 
 The materials required for the R exercises are available here, with demo files, exercises and solutions.
 
