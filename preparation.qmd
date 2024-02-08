@@ -64,10 +64,10 @@ Click on "Ok" to apply the change and close the options menu.
 
 ### Folder structure for this course {#folder-structure}
 
-By this point, you probably have created a folder for this course somewhere on your computer. In our example, we assume this folder is located here: `C:/Users/yourname/semester2/Module_DAM` (mentally replace this with your actual path). Before we dive into the exercises, take a minute to think about how you are going to structure your files in this folder. This course will take place over several weeks, and in each week you will receive or produce various files. We recommend creating a separate folder for each week, and one folder for the case studies, like so:
+By this point, you probably have created a folder for this course somewhere on your computer. In our example, we assume this folder is located here: `C:/Users/yourname/semester2/Module_DAMO` (mentally replace this with your actual path). Before we dive into the exercises, take a minute to think about how you are going to structure your files in this folder. This course will take place over several weeks, and in each week you will receive or produce various files. We recommend creating a separate folder for each week, and one folder for the case studies, like so:
 
 ```
-Course Folder (C:\\Users\\yourname\\semester2\\Module_DAM)
+Course Folder (C:\\Users\\yourname\\semester2\\Module_DAMO)
  ¦--week_1                                                
  ¦--week_2                                                
  ¦--week_3                                                
@@ -78,21 +78,21 @@ Course Folder (C:\\Users\\yourname\\semester2\\Module_DAM)
 For the R-exercises we recommend that you create a new RStudio Project each week in subdirectory of the appropriate week. For example, this week your folder structure could look like this: 
 
 ```
-Folder Week 1 (C:\\Users\\yourname\\semester2\\Module_DAM\\week_1)
+Folder Week 1 (C:\\Users\\yourname\\semester2\\Module_DAMO\\week_1)
  ¦--slides.pdf                                                  
  ¦--my_notes.docx                                               
  ¦--seminar_screenshot.jpg                                      
- °---dam-week1-rexercise                                             
-     ¦--dam-week1-rexercise.Rproj                                   
+ °---damo-week1-rexercise                                             
+     ¦--damo-week1-rexercise.Rproj                                   
      ¦--test.csv                                      
      °--my_solution.qmd   
 ```
 
 Note: 
 
-- the RStudio Project is located in a subfolder of `C:/Users/yourname/semester1/Module_DAM/week_1` and named `dam-week1-rexercise`.
-- `dam-week1-rexercise` is the project's *directory name* and the *project name*
-- we realize that `dam` and the week number is redundant, there is a reason[^redundancy] for this
+- the RStudio Project is located in a subfolder of `C:/Users/yourname/semester1/Module_DAMO/week_1` and named `damo-week1-rexercise`.
+- `damo-week1-rexercise` is the project's *directory name* and the *project name*
+- we realize that `damo` and the week number is redundant, there is a reason[^redundancy] for this
 - this means each week is a fresh start (which has pros and cons)
 
 [^redundancy]: You will see the project names of all your RStudio Projects listed in RStudio. Having the week number in the project name keeps you from getting confused on which project you are working on.
@@ -101,8 +101,8 @@ Note:
 
 Create a new *RStudio Project* (File > New Project > New Directory > New Project). 
 
-1. Click on "Browse" and switch to *your equivalent* of the folder `C:/Users/yourname/semester1/Module_DAM/week_1` (the project we are about to initiate will be be created in a subdirectory of this folder). Click on "open" to confirm the selection
-2. In the field "Directory name", type `dam-week1-rexercise`. This will be the name of your RStudio project and it's parent directory.
+1. Click on "Browse" and switch to *your equivalent* of the folder `C:/Users/yourname/semester1/Module_DAMO/week_1` (the project we are about to initiate will be be created in a subdirectory of this folder). Click on "open" to confirm the selection
+2. In the field "Directory name", type `damo-week1-rexercise`. This will be the name of your RStudio project and it's parent directory.
 3. Click on "Create Project"
 
 You are all set! You can start working on the tasks of exercise 1.
