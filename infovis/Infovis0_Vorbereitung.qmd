@@ -27,4 +27,7 @@ packages <- c("dplyr", "ggplot2", "lubridate", "readr", "scales", "tidyr")
 ipak(packages)
 ```
 
-Additionally, you can download the data for the exercises from [Moodle]().
+You can download the datasets for the exercises from Moodle:
+
+- [InfoVis1](https://moodle.zhaw.ch/mod/folder/view.php?id=1185325)
+- [InfoVis2](https://moodle.zhaw.ch/mod/folder/view.php?id=1185326)

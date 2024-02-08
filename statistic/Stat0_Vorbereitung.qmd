@@ -29,4 +29,8 @@ packages <- c('dplyr'
 ipak(packages)
 ```
 
-You can also download the data for the exercises on [Moodle]().
+You can download the datasets for the exercises from Moodle:
+
+- [Stat1]()
+- [Stat2]()
+- [Stat3]()

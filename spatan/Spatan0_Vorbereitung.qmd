@@ -30,4 +30,7 @@ packages <- c(
 ipak(packages)
 ```
 
-You can also download the data for the exercises on [Moodle]().
+You can download the datasets for the exercises from Moodle:
+
+- [SpatAn1](https://moodle.zhaw.ch/mod/folder/view.php?id=1185332)
+- [SpatAn2](https://moodle.zhaw.ch/mod/folder/view.php?id=1185334)

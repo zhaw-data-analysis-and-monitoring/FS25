@@ -113,7 +113,7 @@ knitr::kable(df)
 
 ## Task 4
 
-On Moodle, you will find a zip file called *prepro.zip*. Download the file and unpack it **in your project folder**. Import the `weather.csv` file. If you use the RStudio GUI for this, save the import command in your R-Script. Please use a relative path (i.e., not a path starting with `C:/`, `~/`or similar).)
+On Moodle, you will find a folder called *Datasets*. Download the file and move it **in your project folder**. Import the `weather.csv` file. If you use the RStudio GUI for this, save the import command in your R-Script. Please use a relative path (i.e., **not** a path starting with `C:/`, `~/`or similar).)
 
 :::{.callout-note}
 I use `readr` to import csv files and the `read_delim` function (with *underscore*) as an alternative to `read.csv` or `read.delim` (with a *dot*). However, this is a personal preference[^readr], and it is up to you which function you use. Remember that the two functions require slightly different parameters.
