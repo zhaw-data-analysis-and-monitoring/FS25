@@ -39,7 +39,7 @@ In the time of writing (`r heute`), the current `R` Version is `r rv$version` (r
 
 ## Install or update RStudio
 
-RStudio is the IDE (integrated development environment) we use in our course to interact with R. There are good alternatives you can use, RStudio simply seems to be [the most popular choice](https://twitter.com/mdancho84/status/1502237075550392323). If you want to use your own IDE, please feel free to do so. However, we don't recommend this if you are a beginner.
+[RStudio](https://posit.co/download/rstudio-desktop/) is the IDE (integrated development environment) we use in our course to interact with R. There are good alternatives you can use, RStudio simply seems to be [the most popular choice](https://twitter.com/mdancho84/status/1502237075550392323). If you want to use your own IDE, please feel free to do so. However, we don't recommend this if you are a beginner.
 
 We recommend updating RStudio to the newest version before the course: check if this is the case by clicking on *help > check for updates*. 
 
