@@ -24,5 +24,5 @@ pacman::p_install(
 
 You can download the datasets for the exercises from Moodle:
 
-- [SpatAn1](https://moodle.zhaw.ch/mod/folder/view.php?id=1185332)
-- [SpatAn2](https://moodle.zhaw.ch/mod/folder/view.php?id=1185334)
+- {{<var datasets.SpatAn1>}}
+- {{<var datasets.SpatAn2>}}
