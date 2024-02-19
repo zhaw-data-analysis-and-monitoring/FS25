@@ -15,7 +15,7 @@ knitr:
 
 # Infovis 2: Exercise A
 
-For today’s exercise, you will need the dataset *temperature_2005.csv*. This dataset contains temperature readings from various weather stations, this time from the year 2005. The date is formatted in such a way that `R` (specifically `read_csv`) should correctly recognise it as `datetime` and read it as `POSIXct`.
+For today’s exercise, you will need the dataset *temperature_2005.csv*. This dataset contains temperature readings from various weather stations, this time from the year 2005. The date is formatted in such a way that R (specifically `read_delim`) should correctly recognise it as `datetime` and read it as `POSIXct`.
 
 ```{r}
 #| echo: true
