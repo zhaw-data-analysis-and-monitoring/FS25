@@ -22,8 +22,6 @@ knitr:
 library("dplyr")
 library("readr")
 library("lubridate")
-
-# Alternatively, you can load all tidyverse packages with library("tidyverse")
 ```
 
 ## Task 1

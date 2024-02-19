@@ -19,7 +19,7 @@ knitr:
 
 You have a dataset, *sensors_combined.csv*, with temperature values from three different sensors. Import it as a csv into R (as `sensors_combined`).
 
-Reformat the `datetime` column to `POSIXct`. Use the `as.POSIXct` function (read it in using`?strftime())` to determine the specific format (the template).
+Reformat the `datetime` column to `POSIXct`. Use the *as.POSIXct* function (read it in using`?strftime())` to determine the specific format (the template).
 
 ```{r}
 library("readr")

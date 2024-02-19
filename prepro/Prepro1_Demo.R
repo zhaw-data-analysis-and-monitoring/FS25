@@ -12,25 +12,26 @@ d <- 8L
 is.numeric(d)
 is.integer(d)
 
-e <- 3
-f <- 6
-
-e > f
-
-
 sunny <- FALSE
 dry <- TRUE
 
 sunny & dry
 
+e <- 3
+f <- 6
+
+e > f
 
 fname <- "Andrea"
 lname <- "Muster"
 class(fname)
 
 paste(fname, lname)
+paste(fname, lname, sep = ",")
 
 
+# with c(), we can combine multiple character strings
+# we will learn about this later
 bundesrat <- c("die Mitte","FDP", "SVP", "FDP", "SVP", "SP", "SP")
 
 class(bundesrat)
@@ -41,36 +42,52 @@ bundesrat2
 
 factor(bundesrat, levels = c("SP", "die Mitte", "FDP", "SVP"), ordered = TRUE)
 
-date <- "2017-10-01 13:45:10"
+now_txt <- as.POSIXct("2024-02-01 13:45:00")
+
+now_pretty <- strftime(now_txt, format = "%d.%m.%Y at %H:%M")
+n_secs <- as.numeric(now_txt)
+n_secs_pretty <- format(n_secs,big.mark = "'")
+
+# We may have a timestamp saved as a character string
+today_txt <- "2024-02-01 13:45:00"
+
+# as.POSIXct converts the string to POSIXct:
+today_posixct <- as.POSIXct(today_txt)
+
+# When printing a posixct date to the console, it is human readable
+today_posixct
+
+# To see the internally stored value (# of seconds), convert it to numeric:
+as.numeric(today_posixct)
+
+
+date_txt <- "01.10.2017 15:15"
 
 # converts character to POSIXct:
-as.POSIXct(date)
+as.POSIXct(date_txt)
 
-date2 <- "01.10.2017"
+date_posix <- as.POSIXct(date_txt, format = "%d.%m.%Y %H:%M")
 
-# converts character to POSIXct:
-as.POSIXct(date2)
+date_posix
 
-as.POSIXct(date2, format = "%d.%m.%Y %H:%M")
-
-date2_posix <- as.POSIXct(date2, format = "%d.%m.%Y %H:%M")
-
-strftime(date2_posix, format = "%m") # extracts the month as a number
-strftime(date2_posix, format = "%b") # extracts the month by name (abbreviated)
-strftime(date2_posix, format = "%B") # extracts the month by name (full)
+strftime(date_posix, format = "%m")           # <1>
+strftime(date_posix, format = "%b")           # <2>
+strftime(date_posix, format = "%B")           # <3>
 
 library("lubridate")
 
-month(date2_posix) # extracts the month as a number
-month(date2_posix, label = TRUE, abbr = TRUE) # extracts the month by name (abbreviated)
-month(date2_posix, label = TRUE, abbr = FALSE) # extracts the month by name (full)
+month(date_posix)                             # <1>
+month(date_posix, label = TRUE, abbr = TRUE)  # <2>
+month(date_posix, label = TRUE, abbr = FALSE) # <3>
 
 vec <- c(10, 20, 33, 42, 54, 66, 77)
 vec
-vec[5]
-vec[2:4]
 
-vec2 <- vec[2:4]
+# to extract the 5th element
+vec[5]
+
+# to extract elements 2 to 4
+vec[2:4]
 
 mylist <- list("q", TRUE, 3.14)
 
@@ -78,13 +95,14 @@ mylist2 <- list(fav_letter = "q", fav_boolean = TRUE, fav_number = 3.14)
 
 mylist2
 
+# note how the names become column names
 as.data.frame(mylist2)
 
 df <- data.frame(
   City = c("Zurich", "Geneva", "Basel", "Bern", "Lausanne"),
   Arrival = c(
-    "1.1.2017 10:00", "1.1.2017 14:00",
-    "1.1.2017 13:00", "1.1.2017 18:00", "1.1.2017 21:00"
+    "1.1.2017 10:10", "5.1.2017 14:45",
+    "8.1.2017 13:15", "17.1.2017 18:30", "22.1.2017 21:05"
   )
 )
 
@@ -94,12 +112,18 @@ df$City
 
 df$Residents <- c(400000, 200000, 175000, 14000, 130000)
 
-df$Residents <- as.integer(df$Residents)
 
-df$Arrival <- as.POSIXct(df$Arrival, format = "%d.%m.%Y %H:%M")
 
-df$Arrival
 
-df$Arrival_hour <- hour(df$Arrival)
+# first, test the output of the "as.POSIXct"-function
+as.POSIXct(df$Arrival, format = "%d.%m.%Y %H:%M")
 
-df$Arrival_hour
+# if it works, we can save the output to a new column
+df$Arrival_ct <- as.POSIXct(df$Arrival, format = "%d.%m.%Y %H:%M")
+
+
+# We *could* overwrite the old column, but this is a destructive operation!
+
+df$Arrival_day <- wday(df$Arrival_ct, label = TRUE, week_start = 1)
+
+df$Arrival_day

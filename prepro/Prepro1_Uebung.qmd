@@ -53,7 +53,7 @@ library("lubridate")
 
 ## Task 1
 
-Create a `data.frame` with the following data.
+Create a `data.frame` with the following data. Tipp: Create a vector for each column first.
 
 ```{r}
 df <- data.frame(
@@ -91,7 +91,7 @@ df$Sex <- factor(df$Sex, levels = c("m","f"))
 
 ## Task 3
 
-On Moodle, you will find a folder called *Datasets*. Download the file and move it **in your project folder**. Import the `weather.csv` file. If you use the RStudio GUI for this, save the import command in your R-Script. Please use a relative path (i.e., **not** a path starting with `C:/`, `~/`or similar).)
+On Moodle, you will find a folder called *Datasets*. Download the file and move it **in your project folder**. Import the `weather.csv` file. If you use the RStudio GUI for this, save the import command in your R-Script. Please use a relative path (i.e., **not** a path starting with `C:\`, or similar).)
 
 :::{.callout-note}
 I use `readr` to import csv files and the `read_delim` function (with *underscore*) as an alternative to `read.csv` or `read.delim` (with a *dot*). However, this is a personal preference[^readr], and it is up to you which function you use. Remember that the two functions require slightly different parameters.
@@ -126,7 +126,7 @@ The `time` column is a date/time with a format of YYYYMMDDHH ( see *meta.txt*). 
 
 :::{.callout-tip}
 - If no time zone is set, `as.POSIXct()` sets a default (based on `sys.timezone()`). In our case, however, these are values in UTC (see *metadata.csv*)
-- `as.POSIXct` requires a `character` input: If you receive the error message `'origin' must be supplied` (or similar), you have probably tried to input a `numeric` into the function with.
+- *as.POSIXct* requires a `character` input: If you receive the error message `'origin' must be supplied` (or similar), you have probably tried to input a `numeric` into the function with.
 :::
 
 ```{r}

@@ -1,5 +1,5 @@
 # these temperature are in Kelvin:
-temperature <- c("310","322","410")
+temperature <- c("310","322","348")
 
 temperature
 
@@ -20,11 +20,12 @@ output <- mean(subtract(as.integer(temperature), 273.15))
 tmp <- as.integer(temperature)   # 2
 tmp <- subtract(tmp, 273.15)     # 3
 output <- mean(tmp)              # 4
+output
 
-temperature |>              # 1
-  as.integer() |>     # 3
-  subtract(273.15) |> # 4
-  mean()              # 5
+temperature |>        # 1
+  as.integer() |>     # 2
+  subtract(273.15) |> # 3
+  mean()              # 4
 
 students <- data.frame(
   Matriculation_No = c(100002, 100003, 200003),
