@@ -4,8 +4,8 @@ lesson: PrePro2
 topic: Piping / Joins
 index: 3
 execute:
-  echo: true # set to true to show sample solution
-  output: true # set to true to show sample solution
+  echo: false # set to true to show sample solution
+  output: false # set to true to show sample solution
 code-fold: true
 code-summary: "Sample Solution"
 knitr:
@@ -57,7 +57,7 @@ knitr::kable(head(sensor_all))
 
 ## Task 3
 
-Import the *sensor_fail.csv* file into `R`.
+Import the *sensor_fail.csv* file into R.
 
 ```{r}
 sensor_fail <- read_delim("datasets/prepro/sensor_fail.csv", delim = ";")

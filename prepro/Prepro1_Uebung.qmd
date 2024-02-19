@@ -4,13 +4,10 @@ lesson: PrePro1
 topic: Data Types
 index: 2
 execute:
-  echo: true # set to true to show sample solution
-  output: true # set to true to show sample solution
+  echo: false # set to true to show sample solution
+  output: false # set to true to show sample solution
 code-fold: true
 code-summary: "Sample Solution"
-knitr:
-  opts_chunk:
-    collapse: true
 ---
 
 # PrePro 1: Exercise
