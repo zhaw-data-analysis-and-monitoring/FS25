@@ -54,12 +54,14 @@ Now we will set some RStudio Global options. But first, **close all instances of
   - Activate the option "Use native pipe operator, |> (requires R 4.1+)"
 - **R Markdown**
   - Deactivate the option "Show output inline for all R Markdown documents"
+
+<!--
 - **Terminal**
   - Set option "New terminals open with" to "Git Bash" 
-  
+-->
 Click on "Ok" to apply the change and close the options menu.
 
-[^restore]: We recommend that you start each RStudio session with a blank slate, as recommended by @wickham2017 see [here](https://r4ds.had.co.nz/workflow-projects.html)
+[^restore]: We recommend that you start each RStudio session with a blank slate, as recommended by @wickham2023
 [^saveworkspace]: If we don't restore the workspace at startup, there is no need to save it on exit.
 
 ### Folder structure for this course {#folder-structure}
