@@ -57,10 +57,10 @@ Create a `data.frame` with the following data.
 
 ```{r}
 df <- data.frame(
-  AnimalType = c("Fox", "Bear", "Rabbit", "Moose"),
+  Species = c("Fox", "Bear", "Rabbit", "Moose"),
   Number = c(2, 5, 1, 3),
   Weight = c(4.4, 40.3, 1.1, 120),
-  Gender = c("m", "f", "m", "m"),
+  Sex = c("m", "f", "m", "m"),
   Description = c("Reddish", "Brown, large", "Small, with long ears", "Long legs, shovel antlers")
 )
 ```
@@ -83,32 +83,13 @@ typeof(df$Number)
 # Number was interpreted as `double`, but it is actually an `integer`.
 
 df$Number <- as.integer(df$Number)
+
+# We know sex only has two options:
+df$Sex <- factor(df$Sex, levels = c("m","f"))
 ```
+
 
 ## Task 3
-
-Use the `weight` column to divide the animals into 3 weight categories:
-
-- light: \< 5kg
-- medium: 5 - 100 kg
-- heavy: \> 100kg
-
-```{r}
-df$WeightClass[df$Weight > 100] <- "heavy"
-df$WeightClass[df$Weight <= 100 & df$Weight > 5] <- "medium"
-df$WeightClass[df$Weight <= 5] <- "light"
-```
-
-Result:
-
-```{r}
-#| echo: false
-#| output: true
-
-knitr::kable(df)
-```
-
-## Task 4
 
 On Moodle, you will find a folder called *Datasets*. Download the file and move it **in your project folder**. Import the `weather.csv` file. If you use the RStudio GUI for this, save the import command in your R-Script. Please use a relative path (i.e., **not** a path starting with `C:/`, `~/`or similar).)
 
@@ -130,16 +111,16 @@ weather <- read_delim("datasets/prepro/weather.csv", ",")
 knitr::kable(head(weather, 10))
 ```
 
-## Task 5
+## Task 4
 
-Check the feedback from `read_csv()`. Have the data been interpreted correctly?
+Check the feedback from `read_delim()`. Have the data been interpreted correctly?
 
 ```{r}
 # The 'time' column was interpreted as 'integer'. However, it is 
 # obviously a time indication.
 ```
 
-## Task 6
+## Task 5
 
 The `time` column is a date/time with a format of YYYYMMDDHH ( see *meta.txt*). In order for R to recognise the data in this column as date/time, it must be in the correct format (`POSIXct`). Therefore, we must tell R what the current format is. Use `as.POSIXct()` to read the column into R, remembering to specify both `format` and `tz`.
 
@@ -160,7 +141,7 @@ weather$time <- as.POSIXct(as.character(weather$time), format = "%Y%m%d%H", tz =
 knitr::kable(head(weather, 10), caption = "The new table should look like this")
 ```
 
-## Task 7
+## Task 6
 
 Create two new columns for day of week (Monday, Tuesday, etc) and calendar week. Use the newly created `POSIXct` column and a suitable function from `lubridate`.
 
@@ -177,19 +158,3 @@ weather$week <- week(weather$time)
 knitr::kable(head(weather, 10))
 ```
 
-## Task 8
-
-Create a new column based on the temperature values that classifies the rows into "cold" (below zero degrees) and "warm" (above zero degrees)
-
-```{r}
-weather$temp_cat[weather$tre200h0 > 0] <- "warm"
-weather$temp_cat[weather$tre200h0 <= 0] <- "cold"
-```
-
-```{r}
-#| purl: false
-#| echo: false
-#| output: true
-
-knitr::kable(head(weather, 10))
-```

@@ -3,9 +3,6 @@ date: 2024-02-20
 lesson: PrePro1
 topic: Data Types
 index: 1
-knitr:
-  opts_chunk:
-    collapse: true
 ---
 
 # Prepro 1: Demo
@@ -30,46 +27,29 @@ x <- 10.3
 
 x
 
-typeof(x)
+class(x)
 ```
 
-Either `<-` or `=` can be used. However, the latter does not work in all situations, and is also easily confused with `==`.
+Either `<-` or `=` can be used. However, the latter is also easily confused with `==`.
 
 ```{r}
 y = 7.3
 y
 ```
 
-If the numeric data type is not explicitly assigned, R always uses `double`:
-
-```{r}
-z <- 42
-typeof(z)
-is.integer(z)
-is.numeric(z)
-is.double(z)
-```
 
 #### Integer
 
 A number is only stored as an `integer` if it is explicitly defined as one (using `as.integer()` or `L`).
 
 ```{r}
-a <- as.integer(z)
-is.numeric(a)
-is.integer(a)
 
-c <- 8L
-is.numeric(c)
-is.integer(c)
+d <- 8L
+is.numeric(d)
+is.integer(d)
 ```
 
-```{r}
-typeof(a)
 
-is.numeric(a)
-is.integer(a)
-```
 
 #### Logical queries
 
@@ -82,10 +62,11 @@ f <- 6
 e > f
 
 
-sunny <- TRUE
-dry <- FALSE
+sunny <- FALSE
+dry <- TRUE
 
-sunny & !dry
+sunny & dry
+
 ```
 
 #### Character
@@ -93,52 +74,41 @@ sunny & !dry
 **Character** strings contain text.
 
 ```{r}
-s <- as.character(3.14)
-s
-typeof(s)
+fname <- "Andrea"
+lname <- "Muster"
+class(fname)
 ```
 
 Connecting / concatenating character strings
 
 ```{r}
-fname <- "Andrea"
-lname <- "Muster"
 paste(fname, lname)
-
-fname2 <- "Simon"
-fname == fname2
 ```
 
 #### Factors
 
-Factors in R denote a collection of repeating character strings, e.g. weekdays (there are only 7 different values for "weekdays").
+Factors in R denote a collection of repeating character strings, e.g. the policical parties represented in the federal council ("bundesrat").
 
 ```{r}
-weekdays <- c("Thursday", "Friday", "Saturday")
 
-typeof(weekdays)
+bundesrat <- c("die Mitte","FDP", "SVP", "FDP", "SVP", "SP", "SP")
 
-weekdays_fac <- as.factor(weekdays)
+class(bundesrat)
 
-weekdays
-weekdays_fac
+bundesrat2 <- as.factor(bundesrat)
+
+bundesrat2
 ```
 
-As shown in the above example, the main difference between `character vectors` and character `factors` is that factors also have `levels`. These `levels` correspond to the unique values.
-
-By default, the order of the days is alphabetical. However, a specific order can be set using `ordered = T`, with the desired order defined in `levels =` [^ordered].
-
-[^ordered]: `ordered = T` can only be specified for the `factor()` function, not for `as.factor()`. Otherwise, `factor()` and `as.factor()` are very similar.
+By default, the factor levels are ordered alphabetically. Sometimes we may want to order the factors, usually for visualisation purposes. To do so, we specify the `levels` in the order we want and set `ordered = TRUE`.
 
 ```{r}
-factor(weekdays, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"), ordered = TRUE)
+factor(bundesrat, levels = c("SP", "die Mitte", "FDP", "SVP"), ordered = TRUE)
 ```
-
-Note that there is a `<` sign between the levels!
 
 #### Time/Date
 
-R requires time/date data types to be read in `POSIXct` format. It should be noted that date and time are always stored **together** in R (in *one object* or *one* vector), unlike in other programs, such as Excel, where these items can be stored separately.
+R requires time/date data types to be read in `POSIXct` format. It should be noted that date and time are (always) stored **together** in R (in *one object* or *one* vector), unlike in other programs, such as Excel, where these items can be stored separately.
 
 ```{r}
 date <- "2017-10-01 13:45:10"
@@ -152,12 +122,15 @@ If the character string is delivered in the above format (`year-month-day hour:m
 However, if the format is different, the function must be provided with the exact format. The  syntax for the function can be found in`?strptime`.
 
 ```{r}
-date <- "01.10.2017 13:45"
+#| error: true
+date2 <- "01.10.2017"
 
 # converts character to POSIXct:
-as.POSIXct(date, format = "%d.%m.%Y %H:%M")
+as.POSIXct(date2)
 
-date2 <- as.POSIXct(date, format = "%d.%m.%Y %H:%M")
+as.POSIXct(date2, format = "%d.%m.%Y %H:%M")
+
+date2_posix <- as.POSIXct(date2, format = "%d.%m.%Y %H:%M")
 ```
 
 You can see in the above example that R has automatically set the time zone (`CEST`) to the **system time zone** (`Sys.timezone ()`).
@@ -165,9 +138,9 @@ You can see in the above example that R has automatically set the time zone (`CE
 Theoretically, the same code can also be used to extract specific components from a date.
 
 ```{r}
-strftime(date2, format = "%m") # extracts the month as a number
-strftime(date2, format = "%b") # extracts the month by name (abbreviated)
-strftime(date2, format = "%B") # extracts the month by name (full)
+strftime(date2_posix, format = "%m") # extracts the month as a number
+strftime(date2_posix, format = "%b") # extracts the month by name (abbreviated)
+strftime(date2_posix, format = "%B") # extracts the month by name (full)
 ```
 
 However, the functions from lubridate are simpler to use:
@@ -175,9 +148,9 @@ However, the functions from lubridate are simpler to use:
 ```{r}
 library("lubridate")
 
-month(date2) # extracts the month as a number
-month(date2, label = TRUE, abbr = TRUE) # extracts the month by name (abbreviated)
-month(date2, label = TRUE, abbr = FALSE) # extracts the month by name (full)
+month(date2_posix) # extracts the month as a number
+month(date2_posix, label = TRUE, abbr = TRUE) # extracts the month by name (abbreviated)
+month(date2_posix, label = TRUE, abbr = FALSE) # extracts the month by name (full)
 ```
 
 ### Vectors
@@ -261,17 +234,6 @@ df$Arrival_hour <- hour(df$Arrival)
 df$Arrival_hour
 ```
 
-We can also divide the cities into large, medium and small.
-
-```{r}
-df$Size <- "no information"
-
-df$Size[df$Residents > 300000] <- "large"
-df$Size[df$Residents <= 300000 & df$Residents > 150000] <- "medium"
-df$Size[df$Residents <= 150000] <- "small"
-
-df$Size
-```
 
 ```{r}
 #| purl: false

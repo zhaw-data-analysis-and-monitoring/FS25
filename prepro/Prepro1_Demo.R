@@ -2,29 +2,15 @@ x <- 10.3
 
 x
 
-typeof(x)
+class(x)
 
 y = 7.3
 y
 
-z <- 42
-typeof(z)
-is.integer(z)
-is.numeric(z)
-is.double(z)
 
-a <- as.integer(z)
-is.numeric(a)
-is.integer(a)
-
-c <- 8L
-is.numeric(c)
-is.integer(c)
-
-typeof(a)
-
-is.numeric(a)
-is.integer(a)
+d <- 8L
+is.numeric(d)
+is.integer(d)
 
 e <- 3
 f <- 6
@@ -32,54 +18,52 @@ f <- 6
 e > f
 
 
-sunny <- TRUE
-dry <- FALSE
+sunny <- FALSE
+dry <- TRUE
 
-sunny & !dry
+sunny & dry
 
-s <- as.character(3.14)
-s
-typeof(s)
 
 fname <- "Andrea"
 lname <- "Muster"
+class(fname)
+
 paste(fname, lname)
 
-fname2 <- "Simon"
-fname == fname2
 
-weekdays <- c("Thursday", "Friday", "Saturday")
+bundesrat <- c("die Mitte","FDP", "SVP", "FDP", "SVP", "SP", "SP")
 
-typeof(weekdays)
+class(bundesrat)
 
-weekdays_fac <- as.factor(weekdays)
+bundesrat2 <- as.factor(bundesrat)
 
-weekdays
-weekdays_fac
+bundesrat2
 
-factor(weekdays, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"), ordered = TRUE)
+factor(bundesrat, levels = c("SP", "die Mitte", "FDP", "SVP"), ordered = TRUE)
 
 date <- "2017-10-01 13:45:10"
 
 # converts character to POSIXct:
 as.POSIXct(date)
 
-date <- "01.10.2017 13:45"
+date2 <- "01.10.2017"
 
 # converts character to POSIXct:
-as.POSIXct(date, format = "%d.%m.%Y %H:%M")
+as.POSIXct(date2)
 
-date2 <- as.POSIXct(date, format = "%d.%m.%Y %H:%M")
+as.POSIXct(date2, format = "%d.%m.%Y %H:%M")
 
-strftime(date2, format = "%m") # extracts the month as a number
-strftime(date2, format = "%b") # extracts the month by name (abbreviated)
-strftime(date2, format = "%B") # extracts the month by name (full)
+date2_posix <- as.POSIXct(date2, format = "%d.%m.%Y %H:%M")
+
+strftime(date2_posix, format = "%m") # extracts the month as a number
+strftime(date2_posix, format = "%b") # extracts the month by name (abbreviated)
+strftime(date2_posix, format = "%B") # extracts the month by name (full)
 
 library("lubridate")
 
-month(date2) # extracts the month as a number
-month(date2, label = TRUE, abbr = TRUE) # extracts the month by name (abbreviated)
-month(date2, label = TRUE, abbr = FALSE) # extracts the month by name (full)
+month(date2_posix) # extracts the month as a number
+month(date2_posix, label = TRUE, abbr = TRUE) # extracts the month by name (abbreviated)
+month(date2_posix, label = TRUE, abbr = FALSE) # extracts the month by name (full)
 
 vec <- c(10, 20, 33, 42, 54, 66, 77)
 vec
@@ -119,11 +103,3 @@ df$Arrival
 df$Arrival_hour <- hour(df$Arrival)
 
 df$Arrival_hour
-
-df$Size <- "no information"
-
-df$Size[df$Residents > 300000] <- "large"
-df$Size[df$Residents <= 300000 & df$Residents > 150000] <- "medium"
-df$Size[df$Residents <= 150000] <- "small"
-
-df$Size

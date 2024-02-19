@@ -28,41 +28,30 @@ library("lubridate")
 
 ## Task 1
 
-Read the weather data from last week *weather.csv* (source MeteoSchweiz) into `R`. Make sure that the columns are formatted correctly (`stn` as a `factor`, `time` as `POSIXct`, `tre200h0` as a `numeric`).
+Read the weather data from last week *weather.csv* (source MeteoSchweiz) into R. Make sure that the columns are formatted correctly (`stn` as a `factor`, `time` as `POSIXct`, `tre200h0` as a `numeric`).
 
 ```{r}
-# Option 1
 weather <- read_delim("datasets/prepro/weather.csv", ",")
 weather$stn <- as.factor(weather$stn)
 weather$time <- as.POSIXct(as.character(weather$time), format = "%Y%m%d%H", tz = "UTC")
 ```
 
-```{r}
-# Option 2 (for pros)
-weather <- read_csv("datasets/prepro/weather.csv",
-  col_types = cols(
-    col_factor(levels = NULL),
-    col_datetime(format = "%Y%m%d%H"),
-    col_double()
-  )
-)
-```
 
 ## Task 2
 
 Read in the *metadata.csv* dataset as a csv.
 
 :::{.callout-tip}
-If umlauts and special characters are not displayed correctly (e.g. the *è* in Gèneve), this probably has something to do with the [character encoding](https://de.wikipedia.org/wiki/Zeichenkodierung). The file is currently encoded in *UTF-8*. If special characters are not correctly displayed, R has not recognised this coding and it must be specified in the import function. How this is done depends on the import function used:
+If umlauts and special characters are not displayed correctly (e.g. the *è* in Gèneve), this probably has something to do with the [character encoding](https://youtu.be/MijmeoH9LT4?si). The file is currently encoded in `UTF-8`. If special characters are not correctly displayed, R has not recognised this encoding and it must be specified in the import function. How this is done depends on the import function used:
 
 - Package functions: `readr`: `locale = locale(encoding = "UTF-8")`
 - Base-R functions: `fileEncoding = "UTF-8"`
 
-If you do *not* know how a file is encoded, the following instructions for [Windows](https://stackoverflow.com/a/13464816/4139249), [Mac](https://stackoverflow.com/a/2461193/4139249) and [Linux](https://stackoverflow.com/a/805474/4139249) will help:
-::
+Note: If you have a file where you do *not* know how a file is encoded, the following instructions for [Windows](https://stackoverflow.com/a/13464816/4139249), [Mac](https://stackoverflow.com/a/2461193/4139249) and [Linux](https://stackoverflow.com/a/805474/4139249) will help.
+:::
 
 ```{r}
-metadata <- read_delim("datasets/prepro/metadata.csv", delim = ";", locale = locale(encoding = "UTF-8"))
+metadata <- read_delim("datasets/prepro/metadata.csv", ";", locale = locale(encoding = "UTF-8"))
 ```
 
 ## Task 3
