@@ -7,10 +7,9 @@ class(x)
 y = 7.3
 y
 
-
 d <- 8L
-is.numeric(d)
-is.integer(d)
+
+class(d)
 
 sunny <- FALSE
 dry <- TRUE

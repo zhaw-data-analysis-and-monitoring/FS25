@@ -46,10 +46,9 @@ y
 A number is only stored as an `integer` if it is explicitly defined as one (using `as.integer()` or `L`).
 
 ```{r}
-
 d <- 8L
-is.numeric(d)
-is.integer(d)
+
+class(d)
 ```
 
 
