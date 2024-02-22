@@ -26,9 +26,9 @@ library("readr")
 library("ggplot2")
 ```
 
-## Split Apply Combine
+<!-- ## Split Apply Combine -->
 
-### Load data
+## Load data
 
 Lets load the weather data (source MeteoSchweiz) from the last exercise.
 
@@ -42,7 +42,7 @@ weather <- weather |>
   )
 ```
 
-### Calculate values
+## Calculate values
 
 We would like to calculate the average of all measured temperature values. To do this, we could use the following command:
 
@@ -56,7 +56,7 @@ Various values can be calculated using the same approach (e.g. the maximum (`max
 
 This approach only works well if we want to calculate values across *all* observations for a variable (column). As soon as we want to group the observations, it becomes difficult. For example, if we want to calculate the average temperature *per month*.
 
-### Convenience Variables
+## Convenience Variables
 
 To solve this task, the month must first be extracted (the month is the *convenience variable*). For this we need the `lubridate::month()` function.
 
@@ -74,7 +74,7 @@ weather <- mutate(weather, month = month(time))
 
 The main advantage of `dplyr` is not yet apparent at this point. However, this will become clear later.
 
-### Calculate values from groups
+## Calculate values from groups
 
 To calculate the average value per month with base R, you can first create a subset with `[]` and calculate the average value as follows:
 
@@ -88,7 +88,7 @@ We have to repeat this every month, which of course is very cumbersome. That is 
 summarise(group_by(weather, month), temp_average = mean(tre200h0, na.rm = TRUE))
 ```
 
-### Concatenate vs. Nest
+## Concatenate vs. Nest
 
 Translated into English, the above operation is as follows:
 
@@ -140,9 +140,11 @@ weather_summary <- weather |>               # 1) take the dataset "weather"
 weather_summary
 ```
 
+
+<!-- 
 ## Reshaping data
 
-### Wide → long
+## Wide → long
 
 Tables can be transformed from *wide* to* long* using `tidyr` (see ^[ https://r4ds.had.co.nz/tidy-data.html#pivoting]). This package also works perfectly with piping (`|>`).
 
@@ -197,7 +199,7 @@ ggplot(weather_summary_long, aes(day, MeasurementValue, colour = MeasurementType
   geom_line()
 ```
 
-### Long → wide
+## Long → wide
 
 The counterpart to `pivot_longer` is `pivot_wider`. This function allows us to convert a *long* table into a *wide* one. To do this, we must specify in `names_from` which column the new column names should be created from (`names_from`) and  which column the values should originate from (`values_from`):
 
@@ -213,3 +215,5 @@ ggplot(weather_summary) +
   geom_line(aes(day, temp_max)) +
   geom_line(aes(day, temp_min))
 ```
+
+-->
