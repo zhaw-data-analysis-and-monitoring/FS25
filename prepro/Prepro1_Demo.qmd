@@ -86,6 +86,9 @@ paste(fname, lname)
 paste(fname, lname, sep = ",")
 ```
 
+
+<!--
+
 ### Factors
 
 Factors in R denote a collection of repeating character strings, e.g. the policical parties represented in the federal council ("Bundesrat").
@@ -109,6 +112,8 @@ By default, the factor levels are ordered alphabetically. Sometimes we may want 
 factor(bundesrat, levels = c("SP", "die Mitte", "FDP", "SVP"), ordered = TRUE)
 ```
 
+-->
+
 ### Date / time
 
 ```{r}
@@ -120,7 +125,9 @@ n_secs <- as.numeric(now_txt)
 n_secs_pretty <- format(n_secs,big.mark = "'")
 ```
 
-R requires date / time data types to be stored in the `POSIXct` format. Internally, `POSIXct` is a numeric value, counting the number of seconds since midnight of January 1st, 1970 (which is also called *unix epoch*). On `{r} now_pretty`, `{r} n_secs_pretty` have passed since the *unix epoch*, so to store this timestamp, R stores the number `{r} n_secs_pretty`.
+In most parts of the world, we use the [Gregorian Calendar](https://en.wikipedia.org/wiki/Gregorian_calendar) to communicate a point in time. In this system, we track time as years, months, days, hours, minutes and seconds after a specific event ([*Anno Domini*](https://en.wikipedia.org/wiki/Anno_Domini), "in the year of the Lord").
+
+R, just as all other computer systems, do not store date / time information using years, months days etc. Instead, R stores the number of **seconds** after a given date (January 1st, 1970, which is also called *unix epoch*). This information is stored using the class `POSIXct`, which also helps us convert this number of seconds into more human readable information. On `{r} now_pretty`, `{r} n_secs_pretty` have passed since the *unix epoch*, so to store this timestamp, R stores the number `{r} n_secs_pretty`.
 
 
 
