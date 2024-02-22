@@ -140,6 +140,8 @@ weather_summary <- weather |>               # 1) take the dataset "weather"
 weather_summary
 ```
 
+
+<!-- 
 ## Reshaping data
 
 ### Wide → long
@@ -213,3 +215,5 @@ ggplot(weather_summary) +
   geom_line(aes(day, temp_max)) +
   geom_line(aes(day, temp_min))
 ```
+
+-->

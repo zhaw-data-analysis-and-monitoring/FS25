@@ -17,18 +17,19 @@ knitr:
 
 ## Task 1
 
-You have a dataset, *sensors_combined.csv*, with temperature values from three different sensors. Import it as a csv into R (as `sensors_combined`).
+You have a dataset, *sensors_long.csv*, with temperature values from three different sensors. Import it as a csv into R (as `sensors_long`).
 
 Reformat the `datetime` column to `POSIXct`. Use the *as.POSIXct* function (read it in using`?strftime())` to determine the specific format (the template).
 
 ```{r}
 library("readr")
 
-sensors_combined <- read_delim("datasets/prepro/sensors_combined.csv", ",")
+sensors_long <- read_delim("datasets/prepro/sensors_long.csv", ",")
 
-sensors_combined$Datetime <- as.POSIXct(sensors_combined$Datetime, format = "%d%m%Y_%H%M")
+sensors_long$Datetime <- as.POSIXct(sensors_long$Datetime, format = "%d%m%Y_%H%M")
 ```
 
+<!--
 ## Task 2
 
 Convert the table to a *long* format (use the `pivot_longer` function from `tidyr`) and save the output as `sensors_long`.
@@ -43,13 +44,16 @@ Tips:
 library("tidyr")
 
 # Option 1 (Deselect columns)
-sensors_long <- pivot_longer(sensors_combined, -Datetime)
+sensors_long <- pivot_longer(sensors_long, -Datetime)
 
 # Option 2 (Select columns)
-sensors_long <- pivot_longer(sensors_combined, c(sensor1:sensor3))
+sensors_long <- pivot_longer(sensors_long, c(sensor1:sensor3))
 ```
 
-## Task 3
+
+-->
+
+## Task 2
 
 Group `sensors_long` according to the new column where the sensor information is contained (default: `name`) with `group_by` and calculate the average temperature for each sensor (`summarise`). Note: Both functions are part of the `dplyr` package.
 
@@ -65,7 +69,7 @@ sensors_long |>
   summarise(temp_mean = mean(value, na.rm = TRUE))
 ```
 
-## Task 4
+## Task 3
 
 Create a new *convenience* variable, `month`, for `sensors_long` (Tip: use the `month` function from `lubridate`). Now group by `month` *and* sensor and calculate the mean temperature.
 
@@ -78,7 +82,7 @@ sensors_long |>
   summarise(temp_mean = mean(value, na.rm = TRUE))
 ```
 
-## Task 5
+## Task 4
 
 Now download the *weather.csv* dataset (source MeteoSwiss) and import it as a .csv with the correct column types (`stn` as a `factor`, `time` as `POSIXct`, `tre200h0` as `double`).
 
@@ -86,7 +90,7 @@ Now download the *weather.csv* dataset (source MeteoSwiss) and import it as a .c
 weather <- read_delim("datasets/prepro/weather.csv", col_types = cols(col_factor(), col_datetime("%Y%m%d%H"), col_double()), ",")
 ```
 
-## Task 6
+## Task 5
 
 Now create a *convenience variable* for the calendar week for each measurement (`lubridate::isoweek`). Then calculate the average temperature value for each calendar week.
 
@@ -108,7 +112,7 @@ Next visualise the result:
 plot(weather_summary$week, weather_summary$temp_mean, type = "l")
 ```
 
-## Task 7
+## Task 6
 
 In the previous task, we calculated the average temperature per calendar week over *all years* (2000 and 2001). However, if we want to compare the years with each other, we have to create the year as an additional *convenience variable* and group it accordingly. Try this with the weather data and then visualise the output.
 
@@ -132,6 +136,10 @@ weather_summary2 <- weather |>
 plot(weather_summary2$week, weather_summary2$temp_mean, type = "l")
 ```
 
+
+
+<!--
+
 ## Task 8
 
 Transfer the output from the last exercise to a *wide table*. Now the two years can be compared much more easily.
@@ -147,3 +155,5 @@ weather_summary2 <- weather_summary2 |>
 plot(weather_summary2$week, weather_summary2$year2000, type = "l",col = "blue")
 lines(weather_summary2$week, weather_summary2$year2001, type = "l",col = "red")
 ```
+
+-->
