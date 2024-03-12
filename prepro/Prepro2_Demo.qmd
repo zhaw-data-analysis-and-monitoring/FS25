@@ -10,6 +10,14 @@ knitr:
 
 # Prepro 2: Demo
 
+```{r}
+#| purl: false
+#| echo: false
+#| output: false
+
+knitr::purl("prepro/Prepro2_Demo.qmd", "prepro/Prepro2_Demo.R", documentation = 0)
+```
+
 The code for this demo can also [be downloaded as an R Script](Prepro2_Demo.R) (right click → *Save Target As..*)
 
 ## Piping
@@ -114,10 +122,4 @@ students <- data.frame(
 left_join(students, localities, by = c("Residence" = "ZIP"))
 ```
 
-```{r}
-#| purl: false
-#| echo: false
-#| output: false
 
-knitr::purl("prepro/Prepro2_Demo.qmd", "prepro/Prepro2_Demo.R", documentation = 0)
-```

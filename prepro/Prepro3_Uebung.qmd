@@ -4,8 +4,8 @@ lesson: PrePro3
 topic: Split-Apply-Combine
 index: 2
 execute:
-  echo: false # set to true to show sample solution
-  output: false # set to true to show sample solution
+  echo: true # set to true to show sample solution
+  output: true # set to true to show sample solution
 code-fold: true
 code-summary: "Sample Solution"
 knitr:
@@ -19,7 +19,8 @@ knitr:
 
 You have a dataset, *sensors_long.csv*, with temperature values from three different sensors. Import it as a csv into R (as `sensors_long`).
 
-Reformat the `datetime` column to `POSIXct`. Use the *as.POSIXct* function (read it in using`?strftime())` to determine the specific format (the template).
+<!-- Introduce the next line in FS25, if datetime ins sensors_long is *not* a standard format -->
+<!-- Reformat the `datetime` column to `POSIXct`. Use the *as.POSIXct* function (read it in using`?strftime())` to determine the specific format (the template). -->
 
 ```{r}
 library("readr")
@@ -57,7 +58,7 @@ sensors_long <- pivot_longer(sensors_long, c(sensor1:sensor3))
 
 ## Task 2
 
-Group `sensors_long` according to the new column where the sensor information is contained (default: `name`) with `group_by` and calculate the average temperature for each sensor (`summarise`). Note: Both functions are part of the `dplyr` package.
+Group `sensors_long` according to the column `name` where the sensor information is contained, using the function `group_by`, and calculate the average temperature for each sensor (`summarise`). Note: Both functions are part of the `dplyr` package.
 
 The output will look like this:
 
@@ -86,10 +87,12 @@ sensors_long |>
 
 ## Task 4
 
-Now download the *weather.csv* dataset (source MeteoSwiss) and import it as a .csv with the correct column types (`stn` as a `factor`, `time` as `POSIXct`, `tre200h0` as `double`).
+Now download the *weather.csv* dataset (source MeteoSwiss) and import it as a .csv with the correct column types (time` as `POSIXct`, `tre200h0` as `double`).
 
 ```{r}
-weather <- read_delim("datasets/prepro/weather.csv", col_types = cols(col_factor(), col_datetime("%Y%m%d%H"), col_double()), ",")
+weather <- read_delim("datasets/prepro/weather.csv")
+
+weather$time2 <- as.POSIXct(weather$time, format = "%Y%m%d%H", tz = "UTC")
 ```
 
 ## Task 5
@@ -98,18 +101,19 @@ Now create a *convenience variable* for the calendar week for each measurement (
 
 ```{r}
 weather_summary <- weather |>
-  mutate(week = isoweek(time)) |>
+  mutate(week = isoweek(time2)) |>
   group_by(week) |>
   summarise(
     temp_mean = mean(tre200h0, na.rm = TRUE)
   )
 ```
 
-Next visualise the result:
+Next, you can visualise the result using the following function:
 
 ```{r}
 #| results: asis
 #| fig.show: asis
+#| echo: true
 
 plot(weather_summary$week, weather_summary$temp_mean, type = "l")
 ```
