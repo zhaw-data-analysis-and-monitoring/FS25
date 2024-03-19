@@ -27,7 +27,6 @@ library("readr")
 
 sensors_long <- read_delim("datasets/prepro/sensors_long.csv", ",")
 
-sensors_long$Datetime <- as.POSIXct(sensors_long$Datetime, format = "%d%m%Y_%H%M")
 ```
 
 <!--
