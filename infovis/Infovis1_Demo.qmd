@@ -15,11 +15,9 @@ library("ggplot2")
 library("tidyr")
 ```
 
-In this demonstration, we'll start by loading the dataset *temperature_SHA_ZER.csv*, a refined version of the data from our previous lessons, PrePro1 and PrePro2.
+In this demonstration, we'll start by loading the dataset *temperature_SHA_ZER.csv*, a refined version of the data from our previous lessons, PrePro1 and PrePro2. You can download this data from moodle: {{<var datasets.InfoVis1>}}
 
 ```{r}
-# You can load the dataset directly from the provided URL
-# Alternatively, you can download the dataset to your local machine using this URL and then read it as you normally would. Here’s the command to read the dataset:
 temperature <- read_delim("datasets/infovis/temperature_SHA_ZER.csv", ",")
 ```
 
