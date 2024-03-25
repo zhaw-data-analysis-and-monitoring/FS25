@@ -1,4 +1,10 @@
 
+# Publishing
+
+```
+quarto publish gh-pages --no-prompt
+```
+
 # ToDos für die nächste Durchführung 2025
 
 
@@ -39,7 +45,6 @@ Siehe https://stackoverflow.com/q/78188191/4139249
 
 ## InfoVis 1:
 
-- Daten sind für die studis neu. So ankündigen und link zu moodle setzen
 - Demo: 
   - Ganzer Teil mit der Wide Table entfernen und direkt eine Long table zur Verfügung stellen (pivot_* kennen die Studis nicht)
   - Demo signifikant kürzen
