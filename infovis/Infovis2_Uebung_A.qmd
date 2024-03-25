@@ -40,12 +40,25 @@ temperature <- read_delim("datasets/infovis/temperature_2005.csv", ",")
 Transform the *wide table* into a *long table* using the following structure.
 
 ```{r}
+#| echo: true
+#| code-fold: false
+
+temperature_long <- pivot_longer(
+  data = temperature, 
+  cols = -time, 
+  names_to = "station", 
+  values_to = "temperature"
+  )
+```
+
+
+```{r}
 #| output: true
 
-temperature_long <- pivot_longer(temperature, -time, names_to = "station", values_to = "temperature")
-
 knitr::kable(head(temperature_long))
+
 ```
+
 
 Next, import the dataset *temperature_2005_metadata.csv* and join the two datasets with a `left_join` via `station` (or `stn`).
 
@@ -100,7 +113,7 @@ p
 
 ## Task 5
 
-Add a black, dashed trend line to the plot above.
+Add a black, dashed trend line to the plot above (`geom_smooth()`).
 
 ```{r}
 #| output: true
@@ -124,21 +137,8 @@ p <- p +
 p
 ```
 
-## Task 7 (optional, advanced)
 
-Add the temperature values on the y-axis with a `°C` (see below and [this page](https://stackoverflow.com/a/35967126/4139249) for help)
-
-```{r}
-#| output: true
-
-# Sample Solution
-p <- p +
-  scale_y_continuous(labels = function(x) paste0(x, "°C")) +
-  labs(x = "Calendar Week", y = "Temperature")
-p
-```
-
-## Task 8
+## Task 7
 
 Now, let's move away from the scatter plot and create a box plot with the temperature data. Colour the box plots again depending on the sea level.
 
@@ -162,7 +162,7 @@ ggplot(temperature_long, aes(month, temperature, fill = Meereshoehe)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-## Task 9
+## Task 8
 
 As a final important plot type, let’s complete two exercises with histograms. First, create a histogram `geom_histogram()` with the temperature values, then allocate the weather stations to different altitude levels (Low altitude [[< 400 m]], Mid altitude [[400 - 600 m]] and High altitude [[> 600 m]]). Finally, compare the distribution of temperature values at the different altitudes using a histogram.
 
