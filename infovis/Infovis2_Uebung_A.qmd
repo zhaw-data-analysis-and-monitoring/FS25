@@ -37,7 +37,7 @@ temperature <- read_delim("datasets/infovis/temperature_2005.csv", ",")
 
 ## Task 1
 
-Transform the *wide table* into a *long table* using the following structure.
+Transform the *wide table* into a *long table* using the following code.
 
 ```{r}
 #| echo: true
@@ -49,15 +49,11 @@ temperature_long <- pivot_longer(
   names_to = "station", 
   values_to = "temperature"
   )
-```
 
-
-```{r}
-#| output: true
-
-knitr::kable(head(temperature_long))
+head(temperature_long)
 
 ```
+
 
 
 Next, import the dataset *temperature_2005_metadata.csv* and join the two datasets with a `left_join` via `station` (or `stn`).
@@ -70,7 +66,9 @@ temperature_long <- left_join(temperature_long, metadata, by = c(station = "stn"
 
 ## Task 2
 
-Create a scatter plot (`time` vs. `temperature`) where the points are coloured based on their sea level. Lower values should be coloured blue and higher values red (`scale_colour_gradient`). Reduce the size of the points to avoid excessive over-plotting of the points (`size =`). Furthermore, the respective month should be noted on the x-axis at intervals of 3 months (`date_breaks` and `date_labels` from `scale_x_datetime()`).
+Create a scatter plot (`time` vs. `temperature`) where the points are coloured based on their sea level. Lower values should be coloured blue and higher values red (`scale_colour_gradient`). 
+
+Tipp: Reduce the size of the points to avoid excessive over-plotting of the points (`size =`). 
 
 ```{r}
 #| output: true
@@ -79,7 +77,6 @@ Create a scatter plot (`time` vs. `temperature`) where the points are coloured b
 ggplot(temperature_long, aes(time, temperature, colour = Meereshoehe)) +
   geom_point(size = 0.5) +
   labs(x = "", y = "Temperature in ° Celsius") +
-  scale_x_datetime(date_breaks = "3 months", date_labels = "%b") +
   scale_colour_gradient(low = "blue", high = "red")
 ```
 
