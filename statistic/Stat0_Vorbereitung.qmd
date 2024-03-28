@@ -22,9 +22,7 @@ ipak <- function(pkg) {
   }
 }
 
-packages <- c('dplyr'
- 
-)
+packages <- c('dplyr', 'wooldridge')
 
 ipak(packages)
 ```
