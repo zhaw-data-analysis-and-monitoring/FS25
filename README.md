@@ -1,150 +1,53 @@
 
-## TODOS 2024
-
-
-
-## Abstract
-
-Hier sind ein paar Anleitungen, wie ihr mit dem Repo arbeiten könnt.
-
-## Anleitung 1: Software Aufsetzen
-
-### R, RStudio und Git installieren
-
-*(wer dies bereits gemacht hat oder auf dem RStudio Server arbeitet, kann diesen Schritt überspringen)*
-
-Wer Lokal auf seinem eingenen PC arbeiten will, muss eine aktuell version von R, RStudio und Git installieren. Siehe dazu folgende Anleitungen:
-
-- [happygitwithr: Install or upgrade R and RStudio](https://happygitwithr.com/install-r-rstudio.html)
-- [happygitwithr: Install Git](https://happygitwithr.com/install-git.html)
-
-### RStudio Konfigurieren
-
-Ich empfehle folgende Konfiguration in RStudio (Tools → `Global Options`):
-
-- R Markdown
-    - Show document outline by default: checked *(Stellt ein Inhaltsverzeichnis rechts von .Qmd files dar)*
-    - Soft-wrap R Markdown files: checken *(macht autmatische Zeilenumbrüche bei .Qmd files)*
-    - Show in document outline: Sections Only *(zeigt nur "Sections" im Inhaltsverzeichnis)*
-    - Show output preview in: Window *(beim kopilieren von Qmd Files wird im Anschluss ein Popup mit dem Resultat dargestellt)*
-    - Show equation an image previews: In a popup
-    - Evaluate chunks in directory: Document (**← wichtig !**)
-- Code \> Tab "Saving"
-    - Default Text Encoding: UTF-8 (**← wichtig !**)
-
-### Git konfigurieren
-
-Um git benutzen zu können, muss man Benutzernamen und Mailadresse festlegen. Allefalls habt ihr das schon gemacht. Wenn folgende Befehle euren Nutzernamen / Mailadresse anzeigen, könnt ihr diesen Schritt überspringen:
-
-```sh
-git config --global user.email
-git config --global user.name
-```
-
-Falls nicht, müssen diese Angaben zuerst noch gemacht werden. Siehe dazu folgende Kapitel:
-
--   [happygitwithr: Introduce yourself to Git](https://happygitwithr.com/hello-git.html)
--   [happygitwithr: Cache credentials for HTTPS](https://happygitwithr.com/https-pat)
-
-## Anleitung 2: Projekt aufsetzen
-
-### Repo Klonen
-
-Um die ganzen \*.Qmd Files lokal bearbeiten zu können, muss das Repository geklont werden. Mit RStudio ist dies sehr einfach, siehe dazu nachstehende Anleitung. Als Repo-URL folgendes einfügen: `https://github.com/zhaw-data-analysis-and-monitoring/FS24.git`
-
--   [happygitwithr: New RStudio Project via RStudio IDE](https://happygitwithr.com/new-github-first#rstudio-ide)
-
-Je nach gewählter "Clone"-Methode, muss das Git*Hub* Repo als *upstream* gesetzt werden. Dafür gibt es mehrere Möglichkeiten. Beispielsweise mit dem folgenden Befehl im Terminal
-
-    git branch -u origin/main
-
-Nun solltet ihr fast das ganze Repo lokal auf eurem Computer haben und die einzelnen Files bearbeiten können. Es gibt noch eine Ausnahme: Der `datasets` folder. Hierbei handelt es sich um einen einzelnen Ordner mit sämtlichen Datensätzen (csvs, tiffs, txts usw.) welche im Modul gebraucht werden. *Dieser Ordner ist ein separates, verschachteltes Git-Repo*. Dafür gibt es verschiedene Gründe (siehe FAQ). Wichtig ist jetzt, dass der Inhalt diess Ordners noch nicht auf euerem Computer gelandet ist. Dazu braucht es noch folgenden Befehl im Terminal:
-
-    git submodule update --init --recursive
-
-
-
-## Anleitung 3: Inhalte Editieren und veröffentlichen
-
-### Qmd erstellen
-
-Die meisten Inhalte exisitieren bereits und ihr müsst sie nur noch anpassen. Falls ihr aber ein neues .Qmd File erstellen möchtet, müsst ihr einen Unterordner in einem der Ordner erstellen. 
-
-### Qmd editieren
-
-Um Inhalte zu editieren, öffnet ihr das entsprechende .Qmd file in einem der Ordner `prepro`, `infovis`, `rauman` usw.. Ihr könnt dieses File wie ein reguläres, eigenständiges .Qmd File handhaben. **Wichtig**: Alle Pfade im Dokument sind relativ zum Project zu verstehen: **Das Working directory ist der Project folder!!**.
-
-### Qmd Kompilieren / Vorschau
-
-Statt auf den Preview button in RStudio zu clicken empfehlen wir, quarto von der Konsole (Terminal) aus zu bedienen. `quarto render` kompiliert das jeweilige File / Projekt in html (oder pdf). Sehr praktisch ist aber `quarto preview`, welches zusätzlich zum rendern erstellt einen "Webserver" zur Verfügung stellt, wo Änderungen an den qmd Files detektiert und live ge-updated werden.
-
-Hinweis: Auf gewissen Windows Versionen muss man den Befehl `quarto` mit `quarto.cmd` oder `quarto.exe` ersetzen. Versuche es zuerst mit quarto, wenn das nicht klappt versuche die erwähnten Varianten (siehe [hier](https://community.rstudio.com/t/bash-quarto-command-not-found/144187/2)).
-
-### Änderungen veröffentlichen
-
-Hier müssen wir unterscheiden zwischen den Änderungen den Source Files (Qmd) und Änderungen an den Output Files (pdf)
-
-Um die Änderungen an den Source Files zu veröffentlichen müsst ihr diese via git auf das Repository "pushen". Vorher aber müsst ihr die Änderungen `stage`-en und `commit`-en. Ich empfehle, dass ihr zumindest zu beginn mit dem RStudio "Git" Fenster arbeitet.
-
--   `stage`: Setzen eines Häckchens bei "Staged" (im Terminal mit `git add .`)
--   `commit`: Klick auf den Button "commit" (im Terminal mit `git commit -m "deine message"`)
--   `pull`: Klick auf den Button "Pull" (im Terminal mit `git pull`)
--   `push`: Click auf den button "Push" (im Terminal mit `git push`)
--   
-
-Um Änderungen an den Output Files zu Veröffentlichen muss (TBD)
-
-```sh
-quarto publish gh-pages --no-prompt 
-```
-
-## FAQ
-
-### Was tun bei folgendem Fehler `ERROR: SyntaxError: Unexpected token < in JSON at position 2`
-
-Nach ausführen von `quarto preview` erhalte ich den obigen Fehler. Der output im Terminal sieht folgendermassen aus:
+# Publishing
 
 ```
-[54/59] fallstudie_n/1_Vorbemerkung.qmd
-[55/59] fallstudie_n/2_Datenverarbeitung_Uebung.qmd
-[56/59] fallstudie_n/2_Datenverarbeitung_Loesung.qmd
-ERROR: SyntaxError: Unexpected token < in JSON at position 2
-``` 
-
-Ich kann den Fehler beheben, indem ich `quarto render das-letzte-qmd-file-vor-der-fehlermeldung.qmd` ausführe. In dem obigen Fall also:
-
-```sh
-quarto render fallstudie_n/2_Datenverarbeitung_Loesung.qmd
+quarto publish gh-pages --no-prompt
 ```
 
-
-### Was tun bei folgendem Fehler: `error: Your local changes to the following files would be overwritten by merge:`
-
-Bei einem `git pull` kann es zu folgender Fehlermeldung kommen.
-
-```
-error: Your local changes to the following files would be overwritten by merge:
-        prepro/Prepro1_Demo.qmd
-        ...
-Please commit your changes or stash them before you merge.
-Aborting
-```
-
-Dies bedeutet, dass das genannte File (bzw. die genannten Files) auf Github in Konfikt stehehen könnten mit dem File (bzw. den Files) bei dir auf der Festplatte. Um allfällige Konflikte zu lösen, müssen die lokalen Änderungen zuerst ge`stage`ed und dann `commit`ed werden. Anschliessend können die Änderungen von Github heruntergeladen werden.
-
-```
-git add "*.qmd"                # staged alle Files mit der Endung .qmd
-git commit -m "meine message" 
-git pull                       # lädt die Änderungen von Github herunter
-```
+# ToDos für die nächste Durchführung 2025
 
 
-### Wie löse ich einen merge-conflict?
+## Generell
 
-TBD
+- Library calls nicht am anfang des scripts, sondern erst wenn man die jeweilige function braucht. ist einfacher aus didaktischen gründen
+- installation von packages zwar vorher einfordern, beim jeweiligen library call aber nochmal erwähnen
 
-### Warum ist `datasets` ein separates Git-Repo?
-1. Die Datensätze sind häufig ein paar megabyte gross. In der Vergangenheit haben kleine Änderungen an diesen Files das Repo extrem ge-bloatet (vergrössert)
-2. Die Datenstäze sind teilweise vertraulich und sollten nicht öffentlich geteilt werden (das entsprechende Repo ist *private*) → dies sollte sich in Zukunft hoffentlich ändern (OER!)
+
+
+## Prepro 1
+
+- vor prepro 1 noch eine einheit einbauen (introduction to R)
+- > Check the feedback from read_delim(). Have the data been interpreted correctly?
+  - ↑ besser mit `str()` ersetzen
+- wir wurden gerade mal mit der demo fertig, es ist etwas viel
+  - factors ganz weglassen, auch aus der vorlesung
+  - ist die differenzierung zw. int und float wirklich so wichtig? das "L" macht viele verrückt
+- "Working with libraries / packages" ist zwar inhaltlich dort an der richtigen stelle, den meisten aber viel zu viel. Koordinieren mit patricks input zu libraries
+- folder structure ist den meisten auch zu viel für die erste einheit. Man kann es dort lassen, und dann immer wieder darauf hinweisen.
+- non zero exist status
+
+## Prepro 2
+
+- r version während den demos überprüfen, gerade für piping.
+- piping beispiel passt nicht mehr mit der übung zusammen
+- > Read in the metadata.csv dataset as a csv.
+  - ↑ woher sind die daten?
+  - read the dataset as a dataframe
+  - das der sep anders ist, ist super verwirrend
+- es ist mega verwirrend, wann dinge in "" gesetzt werden müssen und wann nicht. gerade dplyr select können wir ggf. weglassen? filter vorerst mal nicht.. oder?
+- doppeljoin in sensors1 - 3: die namen zu verschönern ist too much. ggf. dataframes mit vorbeiteten namen geben?
+
+
+Wir hatten häufig die folgende Frage: "When do we use quotes, when dont we?". Mit tidyverse brachte mich diese Frage etwas in Verlegendheit, aber eigentlich gibt es dazu ja schon ein paar Regeln. Diese könnten wir sowohl hier wie auch in Reme platzieren (jeweils mit kleinen Beispielen und Fusszeilen für die Ausnahmen).
+
+Siehe https://stackoverflow.com/q/78188191/4139249
+
+## InfoVis 1:
+
+- Demo: 
+  - Ganzer Teil mit der Wide Table entfernen und direkt eine Long table zur Verfügung stellen (pivot_* kennen die Studis nicht)
+  - Demo signifikant kürzen
+- Zu diesem Zeitpunkt sind die Studis fit und können die Übungen Problemlos lösen.
 
 

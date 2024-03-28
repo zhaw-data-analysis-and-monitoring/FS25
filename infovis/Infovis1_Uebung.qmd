@@ -43,8 +43,8 @@ Here’s are some tips to get you started:
 - Create a `ggplot` object with `ggplot(canton, aes(auslanderanteil, ja_anteil))`, then add a point layer with `geom_point()`.
 - Use `coord_fixed()` to set a fixed ratio (1:1) between the axes.
 - Optionally, you can:
-   - Set the axis start and end values with `scale_y_continuous` or `scale_x_continuous`.
-   - Manually set the `breaks` (0.0, 0.1…0.7) within `scale_*_continuous` as in @kovic2014.
+   - Set the axis limits with `scale_x_continuous` (or `scale_y_continuous`).
+   - Manually set the `breaks` (`0.0`, `0.1` `0.3` etc) within `scale_x_continuous` (or `scale_y_continuous`)
    - Use `labs()` to label the axes.
 
 ```{r}

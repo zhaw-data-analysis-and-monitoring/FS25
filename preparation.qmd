@@ -1,0 +1,110 @@
+# Preparation Course {#w0-preparation}
+
+In this course we will be using R and RStudio. We ask you to install and/or update these programs *before* the start of the course, so that we do not loose time once the course starts. In this chapter, we cover the course requirements and some tips on how you should change your RStudio settings. 
+
+```{r}
+#| echo: false
+#| include: false
+
+library("rversions")
+library("lubridate")
+
+rv <- rversions::r_release()
+rv
+
+rve <- strsplit(as.character(base::getRversion()), "\\.")[[1]]
+
+rversion_minimal <- function(version_string){
+  version_int <- as.integer(strsplit(version_string, "\\.")[[1]])
+  paste(version_int[1], ifelse(version_int[2] == 0, version_int[2], version_int[2]-1), 0,sep = ".")
+}
+
+heute <- paste(month(Sys.Date(), TRUE, FALSE, "C"), year(Sys.Date()), sep = ", ")
+```
+
+## Install or update R
+
+If you haven't installed R yet, do so now by getting the newest version from [CRAN](https://cran.r-project.org/). If you do have R installed, check your Version of R by opening RStudio and typing the following command into the console. 
+
+```{r}
+R.version.string
+```
+
+This returns the version number of your R installation, whereas the first digit (``r rve[1]``) indicates the number of the *major release*, the second digit  (``r rve[2]``) indicates the *minor release* and the last digit (``r rve[3]``) refers to the *patch release*. As a general rule of thumb, you will want to update R if you
+
+- don't have the current *major* version or
+- are lagging two (or more) versions behind the current *minor release*
+
+In the time of writing (`r heute`), the current R Version is `r rv$version` (released on `r strftime(rv$date, "%d.%m.%Y")`, see [cran.r-project.org](https://cran.r-project.org/)). Your installation should therefore not be older than `r rversion_minimal(rv$version)`. If it is, make sure that you have updated R before the course. Check [these instructions on how to update R](https://www.linkedin.com/pulse/3-methods-update-r-rstudio-windows-mac-woratana-ngarmtrakulchol/)
+
+## Install or update RStudio
+
+[RStudio](https://posit.co/download/rstudio-desktop/) is the IDE (integrated development environment) we use in our course to interact with R. There are good alternatives you can use, RStudio simply seems to be the most popular choice. If you want to use your own IDE, please feel free to do so. However, we don't recommend this if you are a beginner.
+
+We recommend updating RStudio to the newest version before the course: check if this is the case by clicking on *help > check for updates*. 
+
+## Configure RStudio{#configure-rstudio}
+
+Now we will set some RStudio Global options. But first, **close all instances of RStudio and restart it (!!!)**. Then go to Tools > Global options. 
+
+- **R General**
+  - Deactivate the option "Restore .RData into workspace at startup"[^restore]
+  - Set "Save workspace to .RData on exit " to "Never"[^saveworkspace]
+- **Code**
+  - Activate the option "Use native pipe operator, |> (requires R 4.1+)"
+- **R Markdown**
+  - Deactivate the option "Show output inline for all R Markdown documents"
+
+<!--
+- **Terminal**
+  - Set option "New terminals open with" to "Git Bash" 
+-->
+Click on "Ok" to apply the change and close the options menu.
+
+[^restore]: We recommend that you start each RStudio session with a blank slate, as recommended by @wickham2023
+[^saveworkspace]: If we don't restore the workspace at startup, there is no need to save it on exit.
+
+### Folder structure for this course {#folder-structure}
+
+By this point, you probably have created a folder for this course somewhere on your computer. In our example, we assume this folder is located here: `C:/Users/yourname/semester2/Module_DAMO` (mentally replace this with your actual path). Before we dive into the exercises, take a minute to think about how you are going to structure your files in this folder. This course will take place over several weeks, and in each week you will receive or produce various files. We recommend creating a separate folder for each week, and one folder for the case studies, like so:
+
+```
+Course Folder (C:\\Users\\yourname\\semester2\\Module_DAMO)
+ ¦--week_1                                                
+ ¦--week_2                                                
+ ¦--week_3                                                
+ |--...                                                
+ °--case_studies 
+```
+
+For the R-exercises we recommend that you create a new RStudio Project each week in subdirectory of the appropriate week. For example, this week your folder structure could look like this: 
+
+```
+Folder Week 1 (C:\\Users\\yourname\\semester2\\Module_DAMO\\week_1)
+ ¦--slides.pdf                                                  
+ ¦--my_notes.docx                                               
+ ¦--seminar_screenshot.jpg                                      
+ °---damo-week1-rexercise                                             
+     ¦--damo-week1-rexercise.Rproj                                   
+     ¦--test.csv                                      
+     °--my_solution.qmd   
+```
+
+Note: 
+
+- the RStudio Project is located in a subfolder of `C:/Users/yourname/semester1/Module_DAMO/week_1` and named `damo-week1-rexercise`.
+- `damo-week1-rexercise` is the project's *directory name* and the *project name*
+- we realize that `damo` and the week number is redundant, there is a reason[^redundancy] for this
+- this means each week is a fresh start (which has pros and cons)
+
+[^redundancy]: You will see the project names of all your RStudio Projects listed in RStudio. Having the week number in the project name keeps you from getting confused on which project you are working on.
+
+### Create an RStudio *project* for the first week
+
+Create a new *RStudio Project* (File > New Project > New Directory > New Project). 
+
+1. Click on "Browse" and switch to *your equivalent* of the folder `C:/Users/yourname/semester1/Module_DAMO/week_1` (the project we are about to initiate will be be created in a subdirectory of this folder). Click on "open" to confirm the selection
+2. In the field "Directory name", type `damo-week1-rexercise`. This will be the name of your RStudio project and it's parent directory.
+3. Click on "Create Project"
+
+You are all set! You can start working on the tasks of exercise 1.

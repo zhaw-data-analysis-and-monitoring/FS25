@@ -57,7 +57,7 @@ knitr::kable(head(sensor_all))
 
 ## Task 3
 
-Import the *sensor_fail.csv* file into `R`.
+Import the *sensor_fail.csv* file into R.
 
 ```{r}
 sensor_fail <- read_delim("datasets/prepro/sensor_fail.csv", delim = ";")

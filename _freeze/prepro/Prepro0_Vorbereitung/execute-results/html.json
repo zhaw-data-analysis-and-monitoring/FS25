@@ -1,7 +1,8 @@
 {
-  "hash": "4b56ccd1c76acb7e4ad8b2a34349eeed",
+  "hash": "9155f62c3bde3aeee58aaf070f7659fa",
   "result": {
-    "markdown": "---\ndate: 2024-02-20\nlesson: PrePro1\ntopic: Preparation\nindex: 0\nknitr:\n  opts_chunk:\n    collapse: true\n---\n\n\n## Preparation {#sec-prepro-preparation}\n\nFor Prepro 1 - 3, we will need the following packages: `dplyr`, `ggplot2`, `lubridate`, `readr` and `tidyr`. We recommend installing them *before* the first lesson. Individual packages are typically installed as follows:\n\n\n::: {.cell}\n\n```{.r .cell-code}\ninstall.packages(\"dplyr\")     # Quotation marks are mandatory\ninstall.packages(\"ggplot2\")\n...                           # etc.\n```\n:::\n\n\nThe code below will automatically install all uninstalled packages.\n\n\n::: {.cell}\n\n```{.r .cell-code}\nipak <- function(pkg) {\n  new.pkg <- pkg[!(pkg %in% installed.packages()[, \"Package\"])]\n  if (length(new.pkg)) {\n    install.packages(new.pkg, dependencies = TRUE)\n  }\n}\n\npackages <- c(\"dplyr\", \"ggplot2\", \"lubridate\", \"readr\", \"tidyr\")\n\nipak(packages)\n```\n:::\n\n\nYou can also download the data for the exercises from [Moodle]().",
+    "engine": "knitr",
+    "markdown": "---\ndate: 2024-02-20\nlesson: PrePro1\ntopic: Preparation\nindex: 0\nknitr:\n  opts_chunk:\n    collapse: true\n---\n\n\n## Preparation {#sec-prepro-preparation}\n\nFor Prepro 1 - 3, we will need the following packages: `dplyr`, `ggplot2`, `lubridate`, `readr` and `tidyr`. We recommend installing them *before* the first lesson. Individual packages cann be installed as follows:\n\n\n::: {.cell}\n\n```{.r .cell-code}\ninstall.packages(c(\"dplyr\", \"ggplot2\", \"lubridate\", \"readr\", \"tidyr\"))\n```\n:::\n\n\n\n\n\nYou can download the datasets for the exercises from Moodle:\n\n- {{<var datasets.PrePro1>}}\n- {{<var datasets.PrePro2>}}\n- {{<var datasets.PrePro3>}}",
     "supporting": [],
     "filters": [
       "rmarkdown/pagebreak.lua"

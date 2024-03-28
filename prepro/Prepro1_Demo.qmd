@@ -3,194 +3,221 @@ date: 2024-02-20
 lesson: PrePro1
 topic: Data Types
 index: 1
-knitr:
-  opts_chunk:
-    collapse: true
 ---
 
 # Prepro 1: Demo
 
 This demo's source code can also [be downloaded as an R Script](Prepro1_Demo.R) (right click → *Save Target As..*)
 
-### Data types
+## Data types
 
-#### Numerics
+### Doubles
 
 There are two different `numeric` data types in R:
 
 - `double`: floating-point number (e.g. 10.3, 7.3)
 - `integer` (e.g. 10, 7)
 
-##### Doubles
 
-A floating point number is assigned to a variable as follows:
+A double / floating point number is assigned to a variable as follows:
 
 ```{r}
 x <- 10.3
 
 x
 
-typeof(x)
+class(x)
 ```
 
-Either `<-` or `=` can be used. However, the latter does not work in all situations, and is also easily confused with `==`.
+:::{.callout-note}
+
+Either `<-` or `=` can be used. However, the latter is also easily confused with `==`.
 
 ```{r}
 y = 7.3
 y
 ```
 
-If the numeric data type is not explicitly assigned, R always uses `double`:
 
-```{r}
-z <- 42
-typeof(z)
-is.integer(z)
-is.numeric(z)
-is.double(z)
-```
+:::
 
-#### Integer
+### Integer
 
 A number is only stored as an `integer` if it is explicitly defined as one (using `as.integer()` or `L`).
 
 ```{r}
-a <- as.integer(z)
-is.numeric(a)
-is.integer(a)
+d <- 8L
 
-c <- 8L
-is.numeric(c)
-is.integer(c)
+class(d)
 ```
+
+
+
+### Boolean
 
 ```{r}
-typeof(a)
+sunny <- FALSE
+dry <- TRUE
 
-is.numeric(a)
-is.integer(a)
+sunny & dry
 ```
-
-#### Logical queries
-
-Also known as a **Boolean**.
 
 ```{r}
 e <- 3
 f <- 6
 
 e > f
-
-
-sunny <- TRUE
-dry <- FALSE
-
-sunny & !dry
 ```
 
-#### Character
+### Character
 
 **Character** strings contain text.
 
 ```{r}
-s <- as.character(3.14)
-s
-typeof(s)
+fname <- "Andrea"
+lname <- "Muster"
+class(fname)
 ```
 
 Connecting / concatenating character strings
 
 ```{r}
-fname <- "Andrea"
-lname <- "Muster"
 paste(fname, lname)
-
-fname2 <- "Simon"
-fname == fname2
+paste(fname, lname, sep = ",")
 ```
 
-#### Factors
 
-Factors in R denote a collection of repeating character strings, e.g. weekdays (there are only 7 different values for "weekdays").
+<!--
+
+### Factors
+
+Factors in R denote a collection of repeating character strings, e.g. the policical parties represented in the federal council ("Bundesrat").
 
 ```{r}
-weekdays <- c("Thursday", "Friday", "Saturday")
 
-typeof(weekdays)
+# with c(), we can combine multiple character strings
+# we will learn about this later
+bundesrat <- c("die Mitte","FDP", "SVP", "FDP", "SVP", "SP", "SP")
 
-weekdays_fac <- as.factor(weekdays)
+class(bundesrat)
 
-weekdays
-weekdays_fac
+bundesrat2 <- as.factor(bundesrat)
+
+bundesrat2
 ```
 
-As shown in the above example, the main difference between `character vectors` and character `factors` is that factors also have `levels`. These `levels` correspond to the unique values.
-
-By default, the order of the days is alphabetical. However, a specific order can be set using `ordered = T`, with the desired order defined in `levels =` [^ordered].
-
-[^ordered]: `ordered = T` can only be specified for the `factor()` function, not for `as.factor()`. Otherwise, `factor()` and `as.factor()` are very similar.
+By default, the factor levels are ordered alphabetically. Sometimes we may want to order the factors, usually for visualisation purposes. To do so, we specify the `levels` in the order we want and set `ordered = TRUE`.
 
 ```{r}
-factor(weekdays, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"), ordered = TRUE)
+factor(bundesrat, levels = c("SP", "die Mitte", "FDP", "SVP"), ordered = TRUE)
 ```
 
-Note that there is a `<` sign between the levels!
+-->
 
-#### Time/Date
-
-R requires time/date data types to be read in `POSIXct` format. It should be noted that date and time are always stored **together** in R (in *one object* or *one* vector), unlike in other programs, such as Excel, where these items can be stored separately.
+### Date / time
 
 ```{r}
-date <- "2017-10-01 13:45:10"
+#| echo: false
+now_txt <- as.POSIXct("2024-02-01 13:45:00")
+
+now_pretty <- strftime(now_txt, format = "%d.%m.%Y at %H:%M")
+n_secs <- as.numeric(now_txt)
+n_secs_pretty <- format(n_secs,big.mark = "'")
+```
+
+In most parts of the world, we use the [Gregorian Calendar](https://en.wikipedia.org/wiki/Gregorian_calendar) to communicate a point in time. In this system, we track time as years, months, days, hours, minutes and seconds after a specific event ([*Anno Domini*](https://en.wikipedia.org/wiki/Anno_Domini), "in the year of the Lord").
+
+R, just as all other computer systems, do not store date / time information using years, months days etc. Instead, R stores the number of **seconds** after a given date (January 1st, 1970, which is also called *unix epoch*). This information is stored using the class `POSIXct`, which also helps us convert this number of seconds into more human readable information. On `{r} now_pretty`, `{r} n_secs_pretty` have passed since the *unix epoch*, so to store this timestamp, R stores the number `{r} n_secs_pretty`.
+
+
+
+
+```{r}
+# We may have a timestamp saved as a character string
+today_txt <- "2024-02-01 13:45:00"
+
+# as.POSIXct converts the string to POSIXct:
+today_posixct <- as.POSIXct(today_txt)
+
+# When printing a posixct date to the console, it is human readable
+today_posixct
+
+# To see the internally stored value (# of seconds), convert it to numeric:
+as.numeric(today_posixct)
+
+```
+
+If the character string is delivered in the above format (`year-month-day hour:minute:second`), *as.POSIXct* knows how to caluate the number of seconds since *unix epoch*. However, if the format is different, we have to tell R how to read our timestamp. This requires a special syntax, which is described in `?strptime`.
+
+```{r}
+#| error: true
+date_txt <- "01.10.2017 15:15"
 
 # converts character to POSIXct:
-as.POSIXct(date)
+as.POSIXct(date_txt)
+
+date_posix <- as.POSIXct(date_txt, format = "%d.%m.%Y %H:%M")
+
+date_posix
 ```
 
-If the character string is delivered in the above format (`year-month-day hour:minute:second`), `as.POSIXct` needs no further information.
 
-However, if the format is different, the function must be provided with the exact format. The  syntax for the function can be found in`?strptime`.
+Theoretically, `strftime` can also be used to extract specific components from a date. However, the functions from `lubridate` are much simpler and we recommend you use these. Note how `strftime` always returns strings while `lubridate` returns more useful datatypes such as integers or factors.
 
 ```{r}
-date <- "01.10.2017 13:45"
+#| collapse: true
 
-# converts character to POSIXct:
-as.POSIXct(date, format = "%d.%m.%Y %H:%M")
-
-date2 <- as.POSIXct(date, format = "%d.%m.%Y %H:%M")
+strftime(date_posix, format = "%m")           # <1>
+strftime(date_posix, format = "%b")           # <2>
+strftime(date_posix, format = "%B")           # <3>
 ```
+1. extracts the month as a number
+2. extracts the month by name (abbreviated)
+3. extracts the month by name (full)
 
-You can see in the above example that R has automatically set the time zone (`CEST`) to the **system time zone** (`Sys.timezone ()`).
-
-Theoretically, the same code can also be used to extract specific components from a date.
-
-```{r}
-strftime(date2, format = "%m") # extracts the month as a number
-strftime(date2, format = "%b") # extracts the month by name (abbreviated)
-strftime(date2, format = "%B") # extracts the month by name (full)
-```
-
-However, the functions from lubridate are simpler to use:
 
 ```{r}
+#| collapse: true
+
 library("lubridate")
 
-month(date2) # extracts the month as a number
-month(date2, label = TRUE, abbr = TRUE) # extracts the month by name (abbreviated)
-month(date2, label = TRUE, abbr = FALSE) # extracts the month by name (full)
+month(date_posix)                             # <1>
+month(date_posix, label = TRUE, abbr = TRUE)  # <2>
+month(date_posix, label = TRUE, abbr = FALSE) # <3>
 ```
+1. extracts the month as a number
+2. extracts the month by name (abbreviated)
+3. extracts the month by name (full)
+
+:::{.callout-important}
+## Time is hard
+
+Handling date / time [is tricky](https://youtu.be/-5wpm-gesOY?si). We recommend the following practices to make life easier:
+
+- Always store time as *POSIXct*, not as text.
+- Always store *time* together with its according date, never separately.
+- If you must extract time (e.g. to analyse daily patterns), store it as [decimal time](https://en.wikipedia.org/wiki/Decimal_time) (e.g. store `15:45` as `15.75`) in a numeric data type.
+- Try to be explicit about which timezone your data originates from
+- If your observation period is affected by switching to or from [daylight saving time](https://en.wikipedia.org/wiki/Daylight_saving_time), think about converting time to *UTC*
+- Use `lubridate` rather than `strftime()`
+:::
+
+
+## Data structures
 
 ### Vectors
 
-Using `c()`, a set of values of the same data type can be assigned to a variable (as a `vector`).
+Using `c()`, a set of values of the same data type can be assigned to a variable (as a *vector*).
 
 ```{r}
 vec <- c(10, 20, 33, 42, 54, 66, 77)
 vec
-vec[5]
-vec[2:4]
 
-vec2 <- vec[2:4]
+# to extract the 5th element
+vec[5]
+
+# to extract elements 2 to 4
+vec[2:4]
 ```
 
 ### Lists
@@ -201,7 +228,7 @@ A `list` is a collection of objects that do not need to be the same data type.
 mylist <- list("q", TRUE, 3.14)
 ```
 
-The individual elements in a list can also be assigned names.
+The individual elements in a list can also have assigned names.
 
 ```{r}
 mylist2 <- list(fav_letter = "q", fav_boolean = TRUE, fav_number = 3.14)
@@ -209,11 +236,12 @@ mylist2 <- list(fav_letter = "q", fav_boolean = TRUE, fav_number = 3.14)
 mylist2
 ```
 
-### Data frames and convenience variables
+### Data frames 
 
-If each entry in a list is the same length, this list can also be represented as a table or frame. Ideally, the names of the columns in the frame should also be defined.
+If each entry in a list is the same length, this list can also be represented as a table, which is called a dataframe in R.
 
 ```{r}
+# note how the names become column names
 as.data.frame(mylist2)
 ```
 
@@ -223,8 +251,8 @@ The `data.frame` function allows a table to be created without first having to c
 df <- data.frame(
   City = c("Zurich", "Geneva", "Basel", "Bern", "Lausanne"),
   Arrival = c(
-    "1.1.2017 10:00", "1.1.2017 14:00",
-    "1.1.2017 13:00", "1.1.2017 18:00", "1.1.2017 21:00"
+    "1.1.2017 10:10", "5.1.2017 14:45",
+    "8.1.2017 13:15", "17.1.2017 18:30", "22.1.2017 21:05"
   )
 )
 
@@ -242,36 +270,38 @@ New columns can be added and existing ones can be changed:
 ```{r}
 df$Residents <- c(400000, 200000, 175000, 14000, 130000)
 
-df$Residents <- as.integer(df$Residents)
 ```
-
-In the `data.frame` above, the `Residents` column has been saved as a floating-point number. While this is not a problem, since we know that these are integers, we can change the data type. It is more important, however, that we convert the `Arrival` time (Arrivalcolumn) from a `factor` to a time format (`POSIXct`).
 
 ```{r}
-df$Arrival <- as.POSIXct(df$Arrival, format = "%d.%m.%Y %H:%M")
+#| echo: false
+#| purl: false
 
-df$Arrival
+dplyr::tibble(df) 
 ```
+
+We need to convert the Arrival time to a time format (`POSIXct`).
+
+```{r}
+# first, test the output of the "as.POSIXct"-function
+as.POSIXct(df$Arrival, format = "%d.%m.%Y %H:%M")
+
+# if it works, we can save the output to a new column
+df$Arrival_ct <- as.POSIXct(df$Arrival, format = "%d.%m.%Y %H:%M")
+
+
+# We *could* overwrite the old column, but this is a destructive operation!
+```
+
+
 
 These columns can now help to create **convenience variables**. E.g., the arrival time can be derived from the `Arrival` column.
 
 ```{r}
-df$Arrival_hour <- hour(df$Arrival)
+df$Arrival_day <- wday(df$Arrival_ct, label = TRUE, week_start = 1)
 
-df$Arrival_hour
+df$Arrival_day
 ```
 
-We can also divide the cities into large, medium and small.
-
-```{r}
-df$Size <- "no information"
-
-df$Size[df$Residents > 300000] <- "large"
-df$Size[df$Residents <= 300000 & df$Residents > 150000] <- "medium"
-df$Size[df$Residents <= 150000] <- "small"
-
-df$Size
-```
 
 ```{r}
 #| purl: false

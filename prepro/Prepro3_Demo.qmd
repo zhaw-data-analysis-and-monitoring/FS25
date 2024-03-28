@@ -14,7 +14,7 @@ execute:
 
 In this demo, we will introduce other tools from the Tidyverse and explain them using examples. The tidyverse tools make dealing with data much easier and have now become a must have when dealing with data in R.
 
-We cannot show you all the possibilities of tidyverse. Therefore, we will focus on the most important components and also introduce additional functionalities that we often use but may not yet be known to you. If you want to delve deeper into the topic, you should read @wickham2017. An extensive, although not comprehensive version is available online^[ http://r4ds.had.co.nz/], and the full eBook can be obtained from the library ^[ https://ebookcentral.proquest.com/lib/zhaw/detail.action?docID=4770093].
+We cannot show you all the possibilities of tidyverse. Therefore, we will focus on the most important components and also introduce additional functionalities that we often use but may not yet be known to you. If you want to delve deeper into the topic, you should read @wickham2023, which is available online: <https://r4ds.hadley.nz/>
 
 We will need the following packages:
 
@@ -26,9 +26,9 @@ library("readr")
 library("ggplot2")
 ```
 
-## Split Apply Combine
+<!-- ## Split Apply Combine -->
 
-### Load data
+## Load data
 
 Lets load the weather data (source MeteoSchweiz) from the last exercise.
 
@@ -42,7 +42,7 @@ weather <- weather |>
   )
 ```
 
-### Calculate values
+## Calculate values
 
 We would like to calculate the average of all measured temperature values. To do this, we could use the following command:
 
@@ -56,7 +56,7 @@ Various values can be calculated using the same approach (e.g. the maximum (`max
 
 This approach only works well if we want to calculate values across *all* observations for a variable (column). As soon as we want to group the observations, it becomes difficult. For example, if we want to calculate the average temperature *per month*.
 
-### Convenience Variables
+## Convenience Variables
 
 To solve this task, the month must first be extracted (the month is the *convenience variable*). For this we need the `lubridate::month()` function.
 
@@ -66,7 +66,7 @@ Now the month **convenience variable** can be created. Without using `dpylr`, a 
 weather$month <- month(weather$time)
 ```
 
-With `dplyr` (see ^[ @wickham2017, Chapter 10 /http://r4ds.had.co.nz/transform.html]), the same command looks like this:
+With `dplyr` the same command looks like this:
 
 ```{r}
 weather <- mutate(weather, month = month(time))
@@ -74,7 +74,7 @@ weather <- mutate(weather, month = month(time))
 
 The main advantage of `dplyr` is not yet apparent at this point. However, this will become clear later.
 
-### Calculate values from groups
+## Calculate values from groups
 
 To calculate the average value per month with base R, you can first create a subset with `[]` and calculate the average value as follows:
 
@@ -88,7 +88,7 @@ We have to repeat this every month, which of course is very cumbersome. That is 
 summarise(group_by(weather, month), temp_average = mean(tre200h0, na.rm = TRUE))
 ```
 
-### Concatenate vs. Nest
+## Concatenate vs. Nest
 
 Translated into English, the above operation is as follows:
 
@@ -96,7 +96,7 @@ Translated into English, the above operation is as follows:
 2) Form groups per year  (`group_by(weather, year)`)
 3) Calculate the mean temperature (`mean(tre200h0)`)
 
-The translation from `R` -> English looks different because we read the operation in a *concatenated form* in English (operation 1->2->3) while the computer reads it as a *nested* operation 3(2(1)). To make `R` closer to English, you can use the `|>` operator (see ^[ @wickham2017, Chapter 14 / http://r4ds.had.co.nz/pipes.html]).
+The translation from R -> English looks different because we read the operation in a *concatenated form* in English (operation 1 → 2 → 3) while the computer reads it as a *nested* operation 3(2(1)). To make R closer to English, you can use the `|>` operator [see @wickham2023, Chapter 4.3].
 
 ```{r}
 #| eval: false
@@ -118,8 +118,9 @@ weather |>                                 # 1
 ```
 
 This concatenation by means of `|>` (called pipe) makes the code a lot easier to write and read, and we will use it in the following exercises. Pipe is provided as part of the `magrittr` package and installed with `dplyr`.
+There are several online tutorials about `dplyr` [see @wickham2023, Part "Transform" or [this youtube tutorial](https://youtu.be/jWjqLW-u3hc)]
 
-There are several online tutorials about `dplyr` (see^[@wickham2017, Chapter 10 / http://r4ds.had.co.nz/transform.html, or [Hands-on dplyr tutorial..](https://youtu.be/jWjqLW-u3hc)]). Therefore, we will not explain all of these tools in full detail. Instead we will just focus on the important differences for two main functions in `dpylr`: `mutate()` and `summarise()`.
+Therefore, we will not explain all of these tools in full detail. Instead we will just focus on the important differences for two main functions in `dpylr`: `mutate()` and `summarise()`.
 
 - `summarise()` summarises a data set. The number of observations (rows) is reduced to the number of groups (e.g., one summarised observation (row) per year). In addition, the number of variables (columns) is reduced to those specified in the "summarise" function (e.g., `temp_mean`).
 - `mutate` adds *additional* variables (columns) to a `data.frame` (see example below).
@@ -139,9 +140,11 @@ weather_summary <- weather |>               # 1) take the dataset "weather"
 weather_summary
 ```
 
+
+<!-- 
 ## Reshaping data
 
-### Wide → long
+## Wide → long
 
 Tables can be transformed from *wide* to* long* using `tidyr` (see ^[ https://r4ds.had.co.nz/tidy-data.html#pivoting]). This package also works perfectly with piping (`|>`).
 
@@ -196,7 +199,7 @@ ggplot(weather_summary_long, aes(day, MeasurementValue, colour = MeasurementType
   geom_line()
 ```
 
-### Long → wide
+## Long → wide
 
 The counterpart to `pivot_longer` is `pivot_wider`. This function allows us to convert a *long* table into a *wide* one. To do this, we must specify in `names_from` which column the new column names should be created from (`names_from`) and  which column the values should originate from (`values_from`):
 
@@ -212,3 +215,5 @@ ggplot(weather_summary) +
   geom_line(aes(day, temp_max)) +
   geom_line(aes(day, temp_min))
 ```
+
+-->
