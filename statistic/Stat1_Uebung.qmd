@@ -13,7 +13,7 @@ knitr:
     collapse: true  
 ---
 
-# Statistics 1: The Basics of Statistics
+## Statistics 1: The Basics of Statistics
 
 ```{r}
 #| echo: true

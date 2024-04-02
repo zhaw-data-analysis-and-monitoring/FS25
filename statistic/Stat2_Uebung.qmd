@@ -13,7 +13,9 @@ knitr:
     collapse: true  
 ---
 
-# Statistic 2: 
+## Statistic 2: Advanced Topics: Inductive and Multivariate Statistics
+
+## Exercise I: Estimation of Multiple Regression Analysis
 
 ## Exercise 1
 
@@ -24,6 +26,9 @@ A problem of interest to health officials (and others) is to determine the effec
 might be positive or negative.
 3. Now, estimate the equation with and without faminc, using the data in BWGHT.RAW. Report the results in equation form, including the sample size and R-squared. Discuss your results, focusing on whether adding `faminc` substantially changes the estimated effect of `cigs` on `bwght`.
 
+
+
+
 ## Exercise 2
 
 Use the data in HPRICE1.RAW to estimate the model $price = \beta_0 + \beta_1sqrft + \beta_2bdrms + u,$ where `price` is the house price measured in thousands of dollars.
@@ -32,5 +37,48 @@ Use the data in HPRICE1.RAW to estimate the model $price = \beta_0 + \beta_1sqrf
 2. What is the estimated increase in price for a house with one more bedroom, holding square footage constant?
 3. What is the estimated increase in price for a house with an additional bedroom that is 140 square feet in size? Compare this to your answer in question 2.
 4. What percentage of the variation in price is explained by square footage and number of bedrooms?
-5. The first house in the sample has $sqrft = 2.438$ and $bdrms = 4$. Find the predicted selling price for this house from the OLS regression line.
+5. The first house in the sample has `sqrft` = 2.438 and `bdrms` = 4. Find the predicted selling price for this house from the OLS regression line.
 6. The actual selling price of the first house in the sample was \$300,000 (so `price` = 300). Find the residual for this house. Does it suggest that the buyer underpaid or overpaid for the house?
+
+
+## Exercise 3
+
+The file CEOSAL2.RAW contains data on 177 chief executive officers and can be used to examine the effects of firm performance on CEO salary.
+
+1. Estimate a model relating annual salary to firm sales and market value. Make the model of the constant elasticity variety for both independent variables. Write the results out in equation form.
+2. Add profits to the model from question 1. Why can this variable not be included in logarithmic form? Would you say that these firm performance variables explain most of the variation in CEO salaries?
+3. Add the variable `ceoten` to the model in question 2. What is the estimated percentage return for another year of CEO tenure, holding other factors fixed?
+4. Find the sample correlation coefficient between the variables `log(mktval)` and `profits`. Are these variables highly correlated? What does this say about the OLS estimators?
+
+## Exercise 4
+
+Use the data set in WAGE2.RAW for this problem. As usual, be sure all of the following regressions contain an intercept.
+
+1. Run a simple regression of `IQ` on `educ` to obtain the slope coefficient, say, $\tilde{\delta_1}$.
+2. Run the simple regression of `log(wage)` on `educ`, and obtain the slope coefficient, $\tilde{\beta_1}$.
+3. Run the multiple regression of `log(wage)` on `educ` and `IQ`, and obtain the slope coefficients, $\hat{\beta_1}$ and $\hat{\beta_2}$, respectively.
+4. Verify that b ˜ 1 5 bˆ 1 1 b ˆ 2 δ ˜ 1 $\tilde{\beta_1} = \hat{\beta_1} + \hat{\beta_2}\tilde{\delta_1}$.
+
+
+## Exercise II: Multiple Regression Analysis: Inference
+
+## Exercise 5
+
+The following model can be used to study whether campaign expenditures affect election
+outcomes:
+voteA 5 b0 1 b1log(expendA) 1 b2log(expendB) 1 b3 prtystrA 1 u,
+where voteA is the percentage of the vote received by Candidate A, expendA and expendB
+are campaign expenditures by Candidates A and B, and prtystrA is a measure of party
+strength for Candidate A (the percentage of the most recent presidential vote that went
+to A’s party).
+(i) What is the interpretation of b1?
+(ii) In terms of the parameters, state the null hypothesis that a 1% increase in A’s expenditures
+is offset by a 1% increase in B’s expenditures.
+(iii) Estimate the given model using the data in VOTE1.RAW and report the results
+in usual form. Do A’s expenditures affect the outcome? What about B’s expenditures?
+Can you use these results to test the hypothesis in part (ii)?
+(iv) Estimate a model that directly gives the t statistic for testing the hypothesis in part
+(ii). What do you conclude? (Use a two-sided alternative.)
+
+
+
