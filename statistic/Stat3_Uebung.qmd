@@ -18,6 +18,8 @@ knitr:
 ## K-means Clustering
 
 ```{r}
+#| eval: false
+
 install.packages("factoextra")
 library(factoextra)
 
