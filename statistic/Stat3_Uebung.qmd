@@ -3,14 +3,9 @@ date: 2024-04-16
 lesson: stat3
 topic: Statistic 3
 index: 1
-execute:
-  echo: true # set to true to show sample solution 
-  output: true # set to true to show sample solution
-code-fold: true
-code-summary: "Sample Solution"
 knitr:
   opts_chunk:
-    collapse: true  
+    collapse: true
 ---
 
 ## Statistics 3: Cluster analysis and data classification approaches
