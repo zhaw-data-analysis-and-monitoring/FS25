@@ -13,9 +13,10 @@ knitr:
 ## K-means Clustering
 
 ```{r}
-
+#| eval: false
 
 install.packages("factoextra")
+install.packages("mclust")
 library(factoextra)
 
 ```
@@ -99,6 +100,7 @@ plot(D.sl)
 
 ```
 
+Changing the method
 
 ```{r}
 #| eval: false
@@ -112,6 +114,37 @@ Group average clustering produces the same hierarchy of clusters as single linka
 #| eval: false
 D.ga <- hclust(D, method="average")
 plot(D.ga)
+
+```
+
+## Model-Based Clustering
+
+Model-based clustering is similar to K-means clustering, in that we want to allocate each case to a cluster.
+The difference is that we will now assume a probability distribution for the observations within each cluster.
+
+The `mclust` library can be used to perform model-based clustering with Gaussian clusters.
+We just have to specify the number of required clusters.
+
+```{r}
+#| eval: false
+library(mclust)
+iris.m <- Mclust(iris2,G=3)
+
+```
+
+Pairs plots of the classification of each point can easily be obtained, as can the estimated probability density of each cluster.
+
+```{r}
+#| eval: false
+plot(iris.m, what = c("classification"))
+
+```
+
+Changing the representation
+
+```{r}
+#| eval: false
+plot(iris.m, what = c("density"))
 
 ```
 
