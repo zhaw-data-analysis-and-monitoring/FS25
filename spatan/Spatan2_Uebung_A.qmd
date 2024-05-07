@@ -131,6 +131,8 @@ By now you have performed a few vector operations such as `st_buffer()` and `st_
 However, before we can answer that question, we have to convert the vector data set into a raster data set. To do this, a raster "template" is needed so that R knows roughly what the raster output should look like.
 
 ```{r}
+#| echo: true
+
 # Use the "terra" package to work with the raster format.
 library("terra")
 
@@ -146,6 +148,7 @@ trees_rast <- terra::rasterize(trees, template)
 The difference between raster and vector can be shown very vividly if the two data sets are stored one on top of the other.
 
 ```{r}
+#| echo: true
 #| output: true
 
 plot(trees_rast, col = "grey")
@@ -155,6 +158,7 @@ plot(trees, add = TRUE, col = "red", pch = "x")
  we can now use the function `distance()` with `trees_rast` to calculate the distance to each tree:
 
 ```{r}
+#| echo: true
 #| output: true
 
 trees_dist <- distance(trees_rast)
