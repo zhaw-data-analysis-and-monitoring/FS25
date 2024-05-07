@@ -131,11 +131,12 @@ plot(schwyz_aspect)
 ```
 
 ::: {.callout-note}
-"aspect" is a value that ranges from 0 to 360. In classic pallets, the two extreme values (in this case 0 and 360) are far apart in terms of colour. In aspect, however, these should be close together (since an orientation of 1° is only 2 degrees away from an orientation of 359°). To take this fact into account, we can create our own colour palette, where the first colour is repeated.
+"aspect" is a value that ranges from 0 to 360. In classic palettes, the two extreme values (in this case 0 and 360) are far apart in terms of colour. In aspect, however, these should be close together (since an orientation of 1° is only 2 degrees away from an orientation of 359°). To take this fact into account, we can create our own colour palette, where the first colour is repeated.
 :::
 
 ```{r}
 #| output: true
+#| echo: true
 
 tm_shape(schwyz_aspect) +
   tm_raster(
