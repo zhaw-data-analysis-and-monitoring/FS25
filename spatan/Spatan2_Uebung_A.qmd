@@ -99,7 +99,7 @@ trees_meadows$meadows_area <- as.numeric(st_area(trees_meadows))
 
 ## Task 4 (Optional)
 
-Now calculate the `meadow_share` from `meadow_area`. Tip: The circular area of $r^2\times \pi$ is 100%, whereas in our case, $r = $20.
+Now calculate the `meadow_share` from `meadow_area`. Tip: The circular area of $r^2\times \pi$ is 100%, whereas in our case, $r = 20$.
 
 ```{r}
 area_of_a_circle <- 20^2 * pi
