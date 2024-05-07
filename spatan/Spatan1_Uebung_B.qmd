@@ -15,25 +15,20 @@ knitr:
 
 # SpatAn 1: Exercise B {#sec-spatan1b}
 
-For the upcoming exercise, we will work with the *gruental.gpkg*. data set. Import it into R. We also need the following libraries:
-
-```{r}
-#| echo: true
-#| code-fold: false
-
-library("dplyr")
-library("sf")
-library("ggplot2")
-```
 
 ```{r}
 #| echo: false
 #| output: false
 
+library("sf")
+
+
 read_sf("datasets/rauman/gruental.gpkg")
 ```
 
 ### Task 1: Geopackage "Layers"
+
+For the upcoming exercise, we will work with the *gruental.gpkg*. data set: Import it into R. 
 
 You may have noticed the following warning message when importing the *gruental.gpkg* geopackage:
 
@@ -65,6 +60,8 @@ Take some time to explore the two datasets. Use the visualisation options of `gg
 #| - Meadow areas are shown in different colours depending on type 
 #| - Trees are shown in different colours depending on type
 
+library("ggplot2")
+
 ggplot(meadows) +
   geom_sf(aes(fill = flaechen_typ)) +
   geom_sf(data = trees) +
@@ -78,7 +75,7 @@ ggplot(meadows) +
 
 ### Task 3:  Spatial join with points {#sec-spatial-join-points}
 
-We now want to know whether each *tree* is in a meadow or not. To do this, we use the GIS technique *spatial join* as described in the lecture. Using `sf`, we can perform spatial joins with `st_join`. There are only `left` and `innerjoins` (see PrePro 1 & 2). The "links" points must be listed first, since we want to attach attributes *to* the points.
+We now want to know whether each *tree* is in a meadow or not. To do this, we use the GIS technique *spatial join* as described in the lecture. Using `sf`, we can perform spatial joins with `st_join`. There are only `left` and `innerjoins` (see PrePro 1 & 2). The points must be listed first, since we want to attach attributes *to* the points.
 
 Note that the output has a new column: `flaechen_typ`. This is empty (`NA`) if the corresponding tree is not in a meadow. How many trees are in a meadow and how many are not?
 

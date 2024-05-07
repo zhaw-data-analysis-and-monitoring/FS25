@@ -87,7 +87,7 @@ book:
       - --
       - spatan/Spatan2_Uebung_A.qmd
       - spatan/Spatan2_Uebung_B.qmd
-      - spatan/Spatan2_Uebung_C.qmd
+      # - spatan/Spatan2_Uebung_C.qmd
     - "References.qmd"
 
 

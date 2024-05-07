@@ -15,34 +15,33 @@ knitr:
 
 # SpatAn 1: Exercise A
 
-There are already a large number of packages for working with spatial data in R, which in turn are based on other packages (keyword *dependencies*). For *vector data*, the  [`sp`](https://cran.r-project.org/package=sp) package dominated for a long time, and has now been replaced by [`sf`](https://r-spatial.github.io/sf/). Wherever possible, we will work with `sf` and only use other packages in exceptional cases.
-
-For the upcoming exercises, you can install or load the following packages:
 
 ```{r}
 #| echo: true
 #| code-fold: false
 
-library("sf")
-library("dplyr")
-library("ggplot2")
+
+
 ```
+You can download the datasets for the exercises from Moodle: {{< var datasets.SpatAn1 >}}
+
 
 ## Task 1: Import vector data
 
-Import the *kantone.gpkg* and *gemeinden.gpkg* records as follows. These are geodata sets in the geopackage ("\* .gpkg") format, which is an alternative data format to the more well-known "Shapefiles" format.
+Import the *kantone.gpkg* and *gemeinden.gpkg* records as follows. These are geodatasets in the geopackage (`\* .gpkg`) format.
 
 ```{r}
 #| echo: true
 #| code-fold: false
+library("sf")
 
 cantons <- read_sf("datasets/rauman/kantone.gpkg")
 municipalities <- read_sf("datasets/rauman/gemeinden.gpkg")
 ```
 
-Look at the imported records.
+Look at the imported records *in your terminal* (see @nte-sf-terminal).
 
-:::{.callout-note}
+:::{#nte-sf-terminal .callout-note}
 You will get the most information about `sf` objects if you look at the record *in the console* (by typing the variable name in the console). When using the RStudio Viewer, `sf` objects load very slowly and metadata is not displayed.
 :::
 
@@ -86,23 +85,18 @@ Unfortunately, no coordinate systems are assigned in our case. With a little exp
 - `CH1903+ LV95`: the new coordinate system of Switzerland
 - `WGS84`: a frequently used, global geodetic coordinate system, i.e., the coordinates are given in length and width (lat/lon).
 
-It is important to determine the correct coordinate system on the basis of the coordinates shown in the `geometry` column. If you select a location by right clicking on [map.geo.admin.ch](https://map.geo.admin.ch), you can find the coordinates of this location in various coordinate reference systems.
+It is important to determine the correct coordinate system on the basis of the coordinates shown in the `geometry` column. If you select a location by right clicking on [map.geo.admin.ch](https://map.geo.admin.ch), you can find the coordinates of this location in various coordinate reference systems (see @fig-map-geo-admin).
 
-![](images/map.geo.admin.png)
+::: {#fig-map-geo-admin}
 
-<!--
-If you look at Switzerland in [epsg.io/map](https://epsg.io/map#srs=4326&x=8.407288&y=46.773731&z=9&layer=streets), you can see coordinates in various systems.
+![](../images/map.geo.admin.png)
 
-**How to Use**:
+The sampe location in different coordinate systems, displayed on the website [map.geo.admin.ch](https://map.geo.admin.ch)
 
-::: {layout="[50,50], [100]]"}
-![Coordinates in the crosshairs will be shown in the chosen coordinate system](images/koordinatenpaar.jpg)
-
-![You can change the coordinate system by selecting "change"](images/koordinatensystem.jpg)
-
-![For enthusiasts: Look at Switzerland in various coordinate systems by clicking "Reproject Map"](images/reproject.jpg)
 :::
--->
+
+
+
 
 If you compare these coordinates with the coordinates of our data sets, it quickly becomes clear that the `cantons` dataset is the coordinate reference system (CRS) WGS84. We can use this information to set the CRS of our dataset with `st_set_crs()`.
 
@@ -138,7 +132,7 @@ municipalities <- st_set_crs(municipalities, "CH1903+ LV95")
 st_crs(municipalities)
 ```
 
-The advertised names of these CRSs are prone to errors. Therefore, it is better to work with the respective EPSG codes of the reference systems. These EPSG codes can be found on the following website[:](https://epsg.io/map#srs=4326&x=8.407288&y=46.773731&z=9&layer=streets) epsg.io/map. It is worth noting the EPSG codes of the relevant CRS:
+The advertised names of these CRS are prone to errors. Therefore, it is better to work with the respective EPSG codes of the reference systems. These EPSG codes can be found on the following website: [epsg.io/map](https://epsg.io/map#srs=4326&x=8.407288&y=46.773731&z=9&layer=streets). It is worth noting the EPSG codes of the relevant CRS:
 
 - [CH1903 LV03](https://epsg.io/21781): `EPSG:21781`
 - [CH1903+ LV95](https://epsg.io/2056): `EPSG:2056`
@@ -161,12 +155,14 @@ st_crs(municipalities)
 Now that the CRS of the datasets is known, we can use `ggplot2` to visualise our data. In InfoVis 1 & 2, we worked intensively with `ggplot2` and got to know the `geom_point()` and `geom_line()` layers. `ggplot()` is also able to very easily plot vector data  with `geom_sf()`.
 
 ```{r}
+library("ggplot2") # Add this line to the top of you script
+
 ggplot() +
   # In geom_sf neither x nor y axes need to be defined
   geom_sf(data = municipalities)
 ```
 
-## Task 3: *Transform coordinate systems*
+## Task 3: Transform coordinate systems
 
 In the previous exercise, we *assigned* a coordinate system but we did *not* manipulate the existing coordinates (in the `geom` column). It is quite different to *transfer* the data from one coordinate system to the other. In the process of transforming the system, the coordinates are converted and thus manipulated. For practical reasons, <!-- What are the reasons? Can you explain in more detail? -->
 we will transfer all our data into the new Swiss coordinate system CH1903+ LV95. Transform the `cantons` record with `st_transform()` into CH1903+ LV95, using the correct EPSG code.
@@ -202,6 +198,8 @@ cantons
 ```{r}
 #| echo: true
 #| code-fold: false
+
+library("dplyr")  # Add this line to the top of you script
 
 cantons <- cantons |>
   mutate(
@@ -248,18 +246,9 @@ breaks = c(0, 50, 100, 150, 200, 300, 500, 750, 1000, 2000, Inf)
 cantons <- cantons |>
     mutate(population_density_classes = cut(population_density, breaks))
 
-# Create a colour palette: The number of colours needed is the number of "breaks" minus 1
-ncols <- length(breaks) - 1
-
-# Create a colour palette (see RColorBrewer::display.brewer.all())
-red_yellow_green <- RColorBrewer::brewer.pal(ncols, "RdYlGn")
-
-# Invert colour palette (to green-red-yellow)
-green_red_yellow <- rev(red_yellow_green)
-
 p_cantons <- ggplot(cantons, aes(fill = population_density_classes)) +
   geom_sf(colour = NA) +
-  scale_fill_manual(values = green_red_yellow) +
+  scale_fill_brewer(palette = "RdYlGn",direction = -1) +
   theme_void() +
   theme(legend.position = "none")
 ```
@@ -272,7 +261,7 @@ municipalities <- municipalities |>
 
 p_municipalities <- ggplot(municipalities, aes(fill = population_density_classes)) +
   geom_sf(colour = NA) +
-  scale_fill_manual(values = green_red_yellow) +
+  scale_fill_brewer(palette = "RdYlGn",direction = -1) +
   theme_void() +
   theme(legend.position = "none")
 ```
