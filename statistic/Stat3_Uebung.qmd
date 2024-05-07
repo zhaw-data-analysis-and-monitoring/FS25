@@ -1,18 +1,151 @@
 ---
-date: 2024-04-23
+date: 2024-04-16
 lesson: stat3
 topic: Statistic 3
 index: 1
-execute:
-  echo: true # set to true to show sample solution 
-  output: true # set to true to show sample solution
-code-fold: true
-code-summary: "Sample Solution"
 knitr:
   opts_chunk:
-    collapse: true  
+    collapse: true
 ---
 
-# Statistic 3
+## Statistics 3: Cluster analysis and data classification approaches
 
-Cluster analysis and data classification approaches
+## K-means Clustering
+
+```{r}
+#| eval: false
+
+install.packages("factoextra")
+install.packages("mclust")
+library(factoextra)
+
+```
+
+Consider the $iris$ dataset. Suppose we are given the petal and sepal length and widths, but not told which species each iris belongs to.
+
+Our goal is to find clusters within the data. These are groups of irises that are more similar to each other than to those in other groups (clusters). These clusters may correspond to the Species label (which we aren’t given), or they may not. The goal of cluster analysis is not to predict the species, but simply to group the data into similar clusters.
+
+Let’s look at finding 3 clusters. We can do this using the `kmeans` command in R.
+
+```{r}
+#| eval: false
+
+iris2 <- iris[,1:4]
+# nstart gives the number of random initialisations to try 
+set.seed(123)
+(iris.k <- kmeans(iris2, centers = 3, nstart=25))
+
+```
+
+From this output we can read off the final cluster means. Also given is the final within-cluster sum of squares for each cluster.
+
+We can visualise the output of K-means using the `fviz_cluster` command from the `factoextra` package. This first projects the points into two dimensions using PCA, and then shows the classification in 2D, and so some caution is needed in interpreting these plots.
+
+```{r}
+#| eval: false
+
+fviz_cluster(iris.k, data = iris2,
+             geom = "point")
+
+```
+
+Finally, in this case we know that there really are three clusters in the data (the three species). We can compare the clusters found using K-means with the species label to see if they are similar. The easiest way to do this is with the `table` command.
+
+```{r}
+#| eval: false
+table(iris$Species, iris.k$cluster)
+
+```
+
+In the iris data, we know there are 3 distinct species.
+But suppose we didn’t know this. What happens if we try other values for $K$?
+
+For the iris data, we can create an elbow plot using the `fviz_nbclust` command from the `factoextra` package.
+
+```{r}
+#| eval: false
+fviz_nbclust(iris2, kmeans, method = "wss")
+
+```
+
+In this case, we would probably decide there most likely three natural clusters in the data, as there is a reasonable decrease in W when moving from 2 to 3 clusters, but moving to 3 clusters only yields a minor improvement. Note here the slight increase in W in moving from 9 to 10 clusters. This is due to only using a greed search, rather than an exhaustive one (we know the best 10-group cluster must be better than the best 9-group cluster, we just have found it).
+
+## Hierarchical Clustering
+
+Suppose we are given 5 observations with distance matrix
+
+```{r}
+#| eval: false
+(D <- as.dist(matrix(c(0,0,0,0,0,
+                      2,0,0,0,0,
+                      11,9,0,0,0,
+                      15,13,10,0,0,
+                      7,5,4,8,0), nr=5, byrow=T)))
+
+```
+
+The `hclust` command does agglomerative clustering: we just have to specify the method to use.
+
+```{r}
+#| eval: false
+D.sl <-hclust(D, method="single")
+
+```
+
+To display the dendrogram
+
+```{r}
+#| eval: false
+plot(D.sl)
+
+```
+
+Changing the method
+
+```{r}
+#| eval: false
+plot(hclust(D, method="complete"))
+
+```
+
+Group average clustering produces the same hierarchy of clusters as single linkage, but the nodes (points where clusters join) are at different heights in the dendrogram.
+
+```{r}
+#| eval: false
+D.ga <- hclust(D, method="average")
+plot(D.ga)
+
+```
+
+## Model-Based Clustering
+
+Model-based clustering is similar to K-means clustering, in that we want to allocate each case to a cluster.
+The difference is that we will now assume a probability distribution for the observations within each cluster.
+
+The `mclust` library can be used to perform model-based clustering with Gaussian clusters.
+We just have to specify the number of required clusters.
+
+```{r}
+#| eval: false
+library(mclust)
+iris.m <- Mclust(iris2,G=3)
+
+```
+
+Pairs plots of the classification of each point can easily be obtained, as can the estimated probability density of each cluster.
+
+```{r}
+#| eval: false
+plot(iris.m, what = c("classification"))
+
+```
+
+Changing the representation
+
+```{r}
+#| eval: false
+plot(iris.m, what = c("density"))
+
+```
+
+

@@ -22,15 +22,7 @@ ipak <- function(pkg) {
   }
 }
 
-packages <- c('dplyr'
- 
-)
+packages <- c('dplyr', 'wooldridge')
 
 ipak(packages)
 ```
-
-You can download the datasets for the exercises from Moodle:
-
-- [Stat1]()
-- [Stat2]()
-- [Stat3]()
