@@ -15,6 +15,8 @@ knitr:
 
 # SpatAn 2: Exercise A
 
+Please download the data for todays exercise here: {{< var datasets.SpatAn2 >}}.
+
 In [the last exercise](#sec-spatan1b), we performed a spatial join between trees and meadows to find out whether a tree is in a meadow or not using data from the Grüental campus (*gruental.gpkg*)
 
 Today we will go a step further and try to answer the following question: *How much meadow is there within 20 metres of each tree?*
