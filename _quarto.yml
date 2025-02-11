@@ -34,7 +34,8 @@ execute:
 #     #tidy: true
     
 book:
-  title: "Data Analysis and Monitoring FS24"
+  title: "Data Analysis and Monitoring"
+  subtitle: "FS25"
   sidebar: 
     logo: images/zhaw_sw_neg.png
     collapse-level: 1
