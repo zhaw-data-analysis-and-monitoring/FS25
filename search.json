@@ -60,13 +60,166 @@
     ]
   },
   {
+    "objectID": "PrePro.html",
+    "href": "PrePro.html",
+    "title": "Pre-Processing",
+    "section": "",
+    "text": "Data Science 2.0 equips students with the essential knowledge and practical skills needed to prepare and enhance their self-collected or sourced data for analysis (preprocessing). This unit focuses on fundamental data processing skills while tackling common challenges in the processing of environmental science data, all through a practical, ‘hands-on’ approach with R exercises. Students will learn to articulate the characteristics of their data sets using the appropriate technical terminology. They will also learn to interpret metadata and critically assess its implications for their own analysis projects. The lesson emphasises critical concepts such as scale levels, data types, time data, and type conversions.\nThis lesson focuses on the central skills required for preprocessing structured data, a fundamental aspect of environmental science research. It covers combining datasets (joins) and transforming them (“reshape”, “split-apply-combine”). Given that data seldom presents itself in a format ready for statistical analysis or information visualisation, students will master the key concepts and R tools required for these often intricate preprocessing tasks, enabling them to execute them effectively.",
+    "crumbs": [
+      "Pre-Processing"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro0_Vorbereitung.html",
+    "href": "prepro/Prepro0_Vorbereitung.html",
+    "title": "Preparation",
+    "section": "",
+    "text": "For Prepro 1 - 3, we will need the following packages: dplyr, ggplot2, lubridate, readr and tidyr. We recommend installing them before the first lesson. Individual packages cann be installed as follows:\n\ninstall.packages(c(\"dplyr\", \"ggplot2\", \"lubridate\", \"readr\", \"tidyr\"))\n\nYou can download the datasets for the exercises from Moodle:\n\nPrePro1\nPrePro2\nPrePro3",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Preparation</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro1_Demo.html",
+    "href": "prepro/Prepro1_Demo.html",
+    "title": "Prepro 1: Demo",
+    "section": "",
+    "text": "Data types\nThis demo’s source code can also be downloaded as an R Script (right click → Save Target As..)",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Prepro 1: Demo</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro1_Demo.html#data-types",
+    "href": "prepro/Prepro1_Demo.html#data-types",
+    "title": "Prepro 1: Demo",
+    "section": "",
+    "text": "Doubles\nThere are two different numeric data types in R:\n\ndouble: floating-point number (e.g. 10.3, 7.3)\ninteger (e.g. 10, 7)\n\nA double / floating point number is assigned to a variable as follows:\n\nx &lt;- 10.3\n\nx\n\n[1] 10.3\n\nclass(x)\n\n[1] \"numeric\"\n\n\n\n\n\n\n\n\nNote\n\n\n\nEither &lt;- or = can be used. However, the latter is also easily confused with ==.\n\ny = 7.3\ny\n\n[1] 7.3\n\n\n\n\n\n\nInteger\nA number is only stored as an integer if it is explicitly defined as one (using as.integer() or L).\n\nd &lt;- 8L\n\nclass(d)\n\n[1] \"integer\"\n\n\n\n\nBoolean\n\nsunny &lt;- FALSE\ndry &lt;- TRUE\n\nsunny & dry\n\n[1] FALSE\n\n\n\ne &lt;- 3\nf &lt;- 6\n\ne &gt; f\n\n[1] FALSE\n\n\n\n\nCharacter\nCharacter strings contain text.\n\nfname &lt;- \"Andrea\"\nlname &lt;- \"Muster\"\nclass(fname)\n\n[1] \"character\"\n\n\nConnecting / concatenating character strings\n\npaste(fname, lname)\n\n[1] \"Andrea Muster\"\n\npaste(fname, lname, sep = \",\")\n\n[1] \"Andrea,Muster\"\n\n\n\n\n\nDate / time\nIn most parts of the world, we use the Gregorian Calendar to communicate a point in time. In this system, we track time as years, months, days, hours, minutes and seconds after a specific event (Anno Domini, “in the year of the Lord”).\nR, just as all other computer systems, do not store date / time information using years, months days etc. Instead, R stores the number of seconds after a given date (January 1st, 1970, which is also called unix epoch). This information is stored using the class POSIXct, which also helps us convert this number of seconds into more human readable information. On 01.02.2024 at 13:45, 1’706’791’500 have passed since the unix epoch, so to store this timestamp, R stores the number 1’706’791’500.\n\n# We may have a timestamp saved as a character string\ntoday_txt &lt;- \"2024-02-01 13:45:00\"\n\n# as.POSIXct converts the string to POSIXct:\ntoday_posixct &lt;- as.POSIXct(today_txt)\n\n# When printing a posixct date to the console, it is human readable\ntoday_posixct\n\n[1] \"2024-02-01 13:45:00 CET\"\n\n# To see the internally stored value (# of seconds), convert it to numeric:\nas.numeric(today_posixct)\n\n[1] 1706791500\n\n\nIf the character string is delivered in the above format (year-month-day hour:minute:second), as.POSIXct knows how to caluate the number of seconds since unix epoch. However, if the format is different, we have to tell R how to read our timestamp. This requires a special syntax, which is described in ?strptime.\n\ndate_txt &lt;- \"01.10.2017 15:15\"\n\n# converts character to POSIXct:\nas.POSIXct(date_txt)\n\nError in as.POSIXlt.character(x, tz, ...): character string is not in a standard unambiguous format\n\ndate_posix &lt;- as.POSIXct(date_txt, format = \"%d.%m.%Y %H:%M\")\n\ndate_posix\n\n[1] \"2017-10-01 15:15:00 CEST\"\n\n\nTheoretically, strftime can also be used to extract specific components from a date. However, the functions from lubridate are much simpler and we recommend you use these. Note how strftime always returns strings while lubridate returns more useful datatypes such as integers or factors.\n\n1strftime(date_posix, format = \"%m\")\n2strftime(date_posix, format = \"%b\")\n3strftime(date_posix, format = \"%B\")\n\n\n1\n\nextracts the month as a number\n\n2\n\nextracts the month by name (abbreviated)\n\n3\n\nextracts the month by name (full)\n\n\n\n\n\nlibrary(\"lubridate\")\n\n1month(date_posix)\n2month(date_posix, label = TRUE, abbr = TRUE)\n3month(date_posix, label = TRUE, abbr = FALSE)\n\n\n1\n\nextracts the month as a number\n\n2\n\nextracts the month by name (abbreviated)\n\n3\n\nextracts the month by name (full)\n\n\n\n\n\n\n\n\n\n\nTime is hard\n\n\n\nHandling date / time is tricky. We recommend the following practices to make life easier:\n\nAlways store time as POSIXct, not as text.\nAlways store time together with its according date, never separately.\nIf you must extract time (e.g. to analyse daily patterns), store it as decimal time (e.g. store 15:45 as 15.75) in a numeric data type.\nTry to be explicit about which timezone your data originates from\nIf your observation period is affected by switching to or from daylight saving time, think about converting time to UTC\nUse lubridate rather than strftime()",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Prepro 1: Demo</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro1_Demo.html#data-structures",
+    "href": "prepro/Prepro1_Demo.html#data-structures",
+    "title": "Prepro 1: Demo",
+    "section": "Data structures",
+    "text": "Data structures\n\nVectors\nUsing c(), a set of values of the same data type can be assigned to a variable (as a vector).\n\nvec &lt;- c(10, 20, 33, 42, 54, 66, 77)\nvec\n\n[1] 10 20 33 42 54 66 77\n\n# to extract the 5th element\nvec[5]\n\n[1] 54\n\n# to extract elements 2 to 4\nvec[2:4]\n\n[1] 20 33 42\n\n\n\n\nLists\nA list is a collection of objects that do not need to be the same data type.\n\nmylist &lt;- list(\"q\", TRUE, 3.14)\n\nThe individual elements in a list can also have assigned names.\n\nmylist2 &lt;- list(fav_letter = \"q\", fav_boolean = TRUE, fav_number = 3.14)\n\nmylist2\n\n$fav_letter\n[1] \"q\"\n\n$fav_boolean\n[1] TRUE\n\n$fav_number\n[1] 3.14\n\n\n\n\nData frames\nIf each entry in a list is the same length, this list can also be represented as a table, which is called a dataframe in R.\n\n# note how the names become column names\nas.data.frame(mylist2)\n\n  fav_letter fav_boolean fav_number\n1          q        TRUE       3.14\n\n\nThe data.frame function allows a table to be created without first having to create a list.\n\ndf &lt;- data.frame(\n  City = c(\"Zurich\", \"Geneva\", \"Basel\", \"Bern\", \"Lausanne\"),\n  Arrival = c(\n    \"1.1.2017 10:10\", \"5.1.2017 14:45\",\n    \"8.1.2017 13:15\", \"17.1.2017 18:30\", \"22.1.2017 21:05\"\n  )\n)\n\nstr(df)\n\n'data.frame':   5 obs. of  2 variables:\n $ City   : chr  \"Zurich\" \"Geneva\" \"Basel\" \"Bern\" ...\n $ Arrival: chr  \"1.1.2017 10:10\" \"5.1.2017 14:45\" \"8.1.2017 13:15\" \"17.1.2017 18:30\" ...\n\n\nThe $ symbol can be used to query data:\n\ndf$City\n\n[1] \"Zurich\"   \"Geneva\"   \"Basel\"    \"Bern\"     \"Lausanne\"\n\n\nNew columns can be added and existing ones can be changed:\n\ndf$Residents &lt;- c(400000, 200000, 175000, 14000, 130000)\n\n\n\n# A tibble: 5 × 3\n  City     Arrival         Residents\n  &lt;chr&gt;    &lt;chr&gt;               &lt;dbl&gt;\n1 Zurich   1.1.2017 10:10     400000\n2 Geneva   5.1.2017 14:45     200000\n3 Basel    8.1.2017 13:15     175000\n4 Bern     17.1.2017 18:30     14000\n5 Lausanne 22.1.2017 21:05    130000\n\n\nWe need to convert the Arrival time to a time format (POSIXct).\n\n# first, test the output of the \"as.POSIXct\"-function\nas.POSIXct(df$Arrival, format = \"%d.%m.%Y %H:%M\")\n\n[1] \"2017-01-01 10:10:00 CET\" \"2017-01-05 14:45:00 CET\"\n[3] \"2017-01-08 13:15:00 CET\" \"2017-01-17 18:30:00 CET\"\n[5] \"2017-01-22 21:05:00 CET\"\n\n# if it works, we can save the output to a new column\ndf$Arrival_ct &lt;- as.POSIXct(df$Arrival, format = \"%d.%m.%Y %H:%M\")\n\n\n# We *could* overwrite the old column, but this is a destructive operation!\n\nThese columns can now help to create convenience variables. E.g., the arrival time can be derived from the Arrival column.\n\ndf$Arrival_day &lt;- wday(df$Arrival_ct, label = TRUE, week_start = 1)\n\ndf$Arrival_day\n\n[1] Sun Thu Sun Tue Sun\nLevels: Mon &lt; Tue &lt; Wed &lt; Thu &lt; Fri &lt; Sat &lt; Sun",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Prepro 1: Demo</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro1_Uebung.html",
+    "href": "prepro/Prepro1_Uebung.html",
+    "title": "PrePro 1: Exercise",
+    "section": "",
+    "text": "Working with RStudio “Project”\nWe recommend using “Projects” within RStudio. RStudio then creates a folder for each project in which the project file is stored (file extension .rproj). If Rscripts are loaded or generated within the project, they are then also stored in the project folder. You can find out more about RStudio Projects here.\nThere are several benefits to using Projects. You can:",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>PrePro 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro1_Uebung.html#working-with-rstudio-project",
+    "href": "prepro/Prepro1_Uebung.html#working-with-rstudio-project",
+    "title": "PrePro 1: Exercise",
+    "section": "",
+    "text": "specify the Working Directory without using an explicit path (setwd()). This is useful because the path can change (when collaborating with other users, or executing the script at a later date)\nautomatically cache open scripts and restore open scripts in the next session\nset different project-specific options\nuse version control systems (e.g., git)",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>PrePro 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro1_Uebung.html#task-1",
+    "href": "prepro/Prepro1_Uebung.html#task-1",
+    "title": "PrePro 1: Exercise",
+    "section": "Task 1",
+    "text": "Task 1\nCreate a data.frame with the following data. Tipp: Create a vector for each column first.\n\n\n\n\n\nSpecies\nNumber\nWeight\nSex\nDescription\n\n\n\n\nFox\n2\n4.4\nm\nReddish\n\n\nBear\n5\n40.3\nf\nBrown, large\n\n\nRabbit\n1\n1.1\nm\nSmall, with long ears\n\n\nMoose\n3\n120.0\nm\nLong legs, shovel antlers",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>PrePro 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro1_Uebung.html#task-2",
+    "href": "prepro/Prepro1_Uebung.html#task-2",
+    "title": "PrePro 1: Exercise",
+    "section": "Task 2",
+    "text": "Task 2\nWhat types of data were automatically accepted in the last task? Check this using str(), see whether they make sense and convert where necessary.\n\n\n\n\n\n\nlibraries / packages\n\n\n\nLibraries (aka packages) are are “extensions” to the basic R functionality. R packages have become indispensable to using R. The vast majority of packages are hosted on CRAN and can be easily installed using install.packages(\"packagename\"). This installation is done once. To use the library, you must load it into the current R session using library(packagename).\nE.g. To import data, we recommend using the readr package1. Install the package using the command install.package(\"readr\"). To use the package, load it into the current R session using library(\"readr\").",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>PrePro 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro1_Uebung.html#task-3",
+    "href": "prepro/Prepro1_Uebung.html#task-3",
+    "title": "PrePro 1: Exercise",
+    "section": "Task 3",
+    "text": "Task 3\nOn Moodle, you will find a folder called Datasets. Download the file and move it in your project folder. Import the weather.csv file. If you use the RStudio GUI for this, save the import command in your R-Script. Please use a relative path (i.e., not a path starting with C:\\, or similar).)\n\n\n\n\n\nstn\ntime\ntre200h0\n\n\n\n\nABO\n2000010100\n-2.6\n\n\nABO\n2000010101\n-2.5\n\n\nABO\n2000010102\n-3.1\n\n\nABO\n2000010103\n-2.4\n\n\nABO\n2000010104\n-2.5\n\n\nABO\n2000010105\n-3.0\n\n\nABO\n2000010106\n-3.7\n\n\nABO\n2000010107\n-4.4\n\n\nABO\n2000010108\n-4.1\n\n\nABO\n2000010109\n-4.1",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>PrePro 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro1_Uebung.html#task-4",
+    "href": "prepro/Prepro1_Uebung.html#task-4",
+    "title": "PrePro 1: Exercise",
+    "section": "Task 4",
+    "text": "Task 4\nCheck the feedback from read_delim(). Have the data been interpreted correctly?",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>PrePro 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro1_Uebung.html#task-5",
+    "href": "prepro/Prepro1_Uebung.html#task-5",
+    "title": "PrePro 1: Exercise",
+    "section": "Task 5",
+    "text": "Task 5\nThe time column is a date/time with a format of YYYYMMDDHH ( see meta.txt). In order for R to recognise the data in this column as date/time, it must be in the correct format (POSIXct). Therefore, we must tell R what the current format is. Use as.POSIXct() to read the column into R, remembering to specify both format and tz.\n\n\n\n\n\n\nTip\n\n\n\n\nIf no time zone is set, as.POSIXct() sets a default (based on sys.timezone()). In our case, however, these are values in UTC (see metadata.csv)\nas.POSIXct requires a character input: If you receive the error message 'origin' must be supplied (or similar), you have probably tried to input a numeric into the function with.\n\n\n\n\n\n\nThe new table should look like this\n\n\nstn\ntime\ntre200h0\n\n\n\n\nABO\n2000-01-01 00:00:00\n-2.6\n\n\nABO\n2000-01-01 01:00:00\n-2.5\n\n\nABO\n2000-01-01 02:00:00\n-3.1\n\n\nABO\n2000-01-01 03:00:00\n-2.4\n\n\nABO\n2000-01-01 04:00:00\n-2.5\n\n\nABO\n2000-01-01 05:00:00\n-3.0\n\n\nABO\n2000-01-01 06:00:00\n-3.7\n\n\nABO\n2000-01-01 07:00:00\n-4.4\n\n\nABO\n2000-01-01 08:00:00\n-4.1\n\n\nABO\n2000-01-01 09:00:00\n-4.1",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>PrePro 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro1_Uebung.html#task-6",
+    "href": "prepro/Prepro1_Uebung.html#task-6",
+    "title": "PrePro 1: Exercise",
+    "section": "Task 6",
+    "text": "Task 6\nCreate two new columns for day of week (Monday, Tuesday, etc) and calendar week. Use the newly created POSIXct column and a suitable function from lubridate.\n\n\n\n\n\nstn\ntime\ntre200h0\nweekday\nweek\n\n\n\n\nABO\n2000-01-01 00:00:00\n-2.6\nSat\n1\n\n\nABO\n2000-01-01 01:00:00\n-2.5\nSat\n1\n\n\nABO\n2000-01-01 02:00:00\n-3.1\nSat\n1\n\n\nABO\n2000-01-01 03:00:00\n-2.4\nSat\n1\n\n\nABO\n2000-01-01 04:00:00\n-2.5\nSat\n1\n\n\nABO\n2000-01-01 05:00:00\n-3.0\nSat\n1\n\n\nABO\n2000-01-01 06:00:00\n-3.7\nSat\n1\n\n\nABO\n2000-01-01 07:00:00\n-4.4\nSat\n1\n\n\nABO\n2000-01-01 08:00:00\n-4.1\nSat\n1\n\n\nABO\n2000-01-01 09:00:00\n-4.1\nSat\n1",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>PrePro 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro1_Uebung.html#footnotes",
+    "href": "prepro/Prepro1_Uebung.html#footnotes",
+    "title": "PrePro 1: Exercise",
+    "section": "",
+    "text": "Advantages of read_delim over read.csv: https://stackoverflow.com/a/60374974/4139249↩︎",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>PrePro 1: Exercise</span>"
+    ]
+  },
+  {
     "objectID": "References.html",
     "href": "References.html",
     "title": "References",
     "section": "",
     "text": "Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023.\nR for Data Science: Import, Tidy, Transform, Visualize, and Model\nData. 2nd Edition. O’Reilly. https://r4ds.hadley.nz/.",
     "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>References</span>"
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>References</span>"
     ]
   }
 ]
