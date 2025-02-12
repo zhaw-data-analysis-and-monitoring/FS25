@@ -151,7 +151,18 @@
     "href": "prepro/Prepro1_Uebung.html#task-2",
     "title": "PrePro 1: Exercise",
     "section": "Task 2",
-    "text": "Task 2\nWhat types of data were automatically accepted in the last task? Check this using str(), see whether they make sense and convert where necessary.\n\n\n\n\n\n\nlibraries / packages\n\n\n\nLibraries (aka packages) are are “extensions” to the basic R functionality. R packages have become indispensable to using R. The vast majority of packages are hosted on CRAN and can be easily installed using install.packages(\"packagename\"). This installation is done once. To use the library, you must load it into the current R session using library(packagename).\nE.g. To import data, we recommend using the readr package1. Install the package using the command install.package(\"readr\"). To use the package, load it into the current R session using library(\"readr\").",
+    "text": "Task 2\nWhat types of data were automatically accepted in the last task? Check this using str(), see whether they make sense and convert where necessary.",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>PrePro 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro1_Uebung.html#input-libraries-packages",
+    "href": "prepro/Prepro1_Uebung.html#input-libraries-packages",
+    "title": "PrePro 1: Exercise",
+    "section": "Input: Libraries / packages",
+    "text": "Input: Libraries / packages\nLibraries (aka packages) are are “extensions” to the basic R functionality. R packages have become indispensable to using R. The vast majority of packages are hosted on CRAN and can be easily installed using install.packages(\"packagename\"). This installation is done once. To use the library, you must load it into the current R session using library(packagename).\nE.g. To import data, we recommend using the readr package1. Install the package using the command install.package(\"readr\"). To use the package, load it into the current R session using library(\"readr\").",
     "crumbs": [
       "Pre-Processing",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>PrePro 1: Exercise</span>"
@@ -173,7 +184,7 @@
     "href": "prepro/Prepro1_Uebung.html#task-4",
     "title": "PrePro 1: Exercise",
     "section": "Task 4",
-    "text": "Task 4\nCheck the feedback from read_delim(). Have the data been interpreted correctly?",
+    "text": "Task 4\nHave a look at your dataset in the console. Have the data been interpreted correctly?",
     "crumbs": [
       "Pre-Processing",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>PrePro 1: Exercise</span>"

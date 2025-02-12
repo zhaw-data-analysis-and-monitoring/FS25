@@ -215,6 +215,7 @@ window.onload = function() {
   <li><a href="#working-with-rstudio-project" id="toc-working-with-rstudio-project" class="nav-link active" data-scroll-target="#working-with-rstudio-project">Working with RStudio “Project”</a></li>
   <li><a href="#task-1" id="toc-task-1" class="nav-link" data-scroll-target="#task-1">Task 1</a></li>
   <li><a href="#task-2" id="toc-task-2" class="nav-link" data-scroll-target="#task-2">Task 2</a></li>
+  <li><a href="#input-libraries-packages" id="toc-input-libraries-packages" class="nav-link" data-scroll-target="#input-libraries-packages">Input: Libraries / packages</a></li>
   <li><a href="#task-3" id="toc-task-3" class="nav-link" data-scroll-target="#task-3">Task 3</a></li>
   <li><a href="#task-4" id="toc-task-4" class="nav-link" data-scroll-target="#task-4">Task 4</a></li>
   <li><a href="#task-5" id="toc-task-5" class="nav-link" data-scroll-target="#task-5">Task 5</a></li>
@@ -313,20 +314,11 @@ window.onload = function() {
 <section id="task-2" class="level2">
 <h2 class="anchored" data-anchor-id="task-2">Task 2</h2>
 <p>What <em>types</em> of data were automatically accepted in the last task? Check this using <code>str()</code>, see whether they make sense and convert where necessary.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-libraries / packages
-</div>
-</div>
-<div class="callout-body-container callout-body">
+</section>
+<section id="input-libraries-packages" class="level2">
+<h2 class="anchored" data-anchor-id="input-libraries-packages">Input: Libraries / packages</h2>
 <p>Libraries (aka packages) are are “extensions” to the basic R functionality. R packages have become indispensable to using R. The vast majority of packages are hosted on <a href="https://cran.r-project.org/">CRAN</a> and can be easily installed using <code>install.packages("packagename")</code>. This installation is done <em>once</em>. To use the library, you must load it into the current R session using <code>library(packagename)</code>.</p>
 <p>E.g. To import data, we recommend using the <code>readr</code> package<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Install the package using the command <code>install.package("readr")</code>. To use the package, load it into the current R session using <code>library("readr")</code>.</p>
-</div>
-</div>
 </section>
 <section id="task-3" class="level2">
 <h2 class="anchored" data-anchor-id="task-3">Task 3</h2>
@@ -399,7 +391,7 @@ libraries / packages
 </section>
 <section id="task-4" class="level2">
 <h2 class="anchored" data-anchor-id="task-4">Task 4</h2>
-<p>Check the feedback from <code>read_delim()</code>. Have the data been interpreted correctly?</p>
+<p>Have a look at your dataset in the console. Have the data been interpreted correctly?</p>
 </section>
 <section id="task-5" class="level2">
 <h2 class="anchored" data-anchor-id="task-5">Task 5</h2>
