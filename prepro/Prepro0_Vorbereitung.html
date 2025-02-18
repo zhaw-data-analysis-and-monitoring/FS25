@@ -73,12 +73,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-66ab7fd5e73b7f0a764e0d49b3e29ab1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-7a0e04ec82617701cd34937292aa414e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a1bacad83237f0cccc39127c932b004f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-af4dfc69d03c9ef8c5feee07e21bcd70.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-fd65c9ef6d73c911b3fed0c8a805fd12.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-262be9792842c3b8bac3e26e444470e7.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -108,44 +106,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<!-- loads fontawesome, so that I can create a fontawesome button (see below) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer">
-<script>
-
-// the following function adds padding to all h2 elements, so that I can 
-// easily present the content of the page in a more readable way
-function presenter(){
-    var paragraphs = document.querySelectorAll("h2, h3");
-    paragraphs.forEach(function (paragraph) {
-        paragraph.classList.toggle("padding-top-500");
-    });
-}
-
-// once the page is loaded, the button is injected into the sidebar. This button
-// calls the presenter function (see above)
-window.onload = function() {
-    // create the button (similar to the buttons already availables)
-    const linkElement = document.createElement('a');
-
-    linkElement.classList.add('quarto-navigation-tool');
-    linkElement.classList.add('px-1');
-    linkElement.innerHTML = '<i class="fa-solid fa-person-chalkboard"></i>';
-    linkElement.href = '#';
-    linkElement.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent the default link behavior
-        presenter();
-    });
-
-    // Find the target element by its class name
-    const sidebar_tools = document.querySelector(".sidebar-tools-main")
-    sidebar_tools.appendChild(linkElement);
-};
-
-</script>
-
-
-<link rel="stylesheet" href="../custom.css">
-<link rel="stylesheet" href="../theme-custom.scss">
+<link rel="stylesheet" href="../aux/custom.css">
+<link rel="stylesheet" href="../aux/theme-custom.scss">
 </head>
 
 <body class="nav-sidebar floating">
@@ -278,9 +240,9 @@ window.onload = function() {
 </div>
 <p>You can download the datasets for the exercises from Moodle:</p>
 <ul>
-<li><p><a href="https://moodle.zhaw.ch/mod/folder/view.php?id=1185299">PrePro1</a></p></li>
-<li><p><a href="https://moodle.zhaw.ch/mod/folder/view.php?id=1185301">PrePro2</a></p></li>
-<li><p><a href="https://moodle.zhaw.ch/mod/folder/view.php?id=1185315">PrePro3</a></p></li>
+<li><p><a href="https://moodle.zhaw.ch/mod/folder/view.php?id=1500177">PrePro1</a></p></li>
+<li><p><a href="https://moodle.zhaw.ch/mod/folder/view.php?id=1500194">PrePro2</a></p></li>
+<li><p><a href="https://moodle.zhaw.ch/mod/folder/view.php?id=1500208">PrePro3</a></p></li>
 </ul>
 
 
@@ -422,7 +384,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  const darkModeDefault = true;
+  const darkModeDefault = false;
   let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
