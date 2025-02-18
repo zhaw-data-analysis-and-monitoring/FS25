@@ -7,18 +7,14 @@ index: 1
 
 # Infovis 1: Demo A
 
-```{r}
-library("readr")
-library("lubridate")
-library("dplyr")
-library("ggplot2")
-library("tidyr")
-```
 
 In this demonstration, we'll start by loading the dataset *temperature_SHA_ZER.csv*, a refined version of the data from our previous lessons, PrePro1 and PrePro2. You can download this data from moodle: {{<var datasets.InfoVis1>}}
 
 ```{r}
-temperature <- read_delim("datasets/infovis/temperature_SHA_ZER.csv", ",")
+
+library("readr")
+
+temperature <- read_delim("/datasets/infovis/temperature_SHA_ZER.csv", ",")
 ```
 
 ```{r}
@@ -40,6 +36,9 @@ lines(temperature$time, temperature$ZER, col = "blue")
 In `ggplot`, the approach is more nuanced. A plot begins with `ggplot()`. This command specifies the dataset (`data =`) and the variables within the dataset that influence the plot (`mapping = aes()`).
 
 ```{r}
+library("ggplot2")
+
+
 # Dataset: "temperature" | Influencing variables: "time" and "temp"
 ggplot(data = temperature, mapping = aes(time, SHA))
 ```
@@ -65,6 +64,10 @@ ggplot(temperature, aes(time, SHA)) +
 As mentioned in PrePro 2, `ggplot2` is designed for *long tables*. Therefore, we need to transform the wide table into a long format:
 
 ```{r}
+
+library("tidyr")
+
+
 temperature_long <- pivot_longer(temperature, -time, names_to = "station", values_to = "temp")
 ```
 
@@ -105,6 +108,9 @@ ggplot(temperature_long, aes(time, temp, colour = station)) +
 In our plot, the hourly data points are too detailed for a two-year visualisation. Using the *Split Apply Combine* technique (covered in PrePro 3), we can adjust the data resolution:
 
 ```{r}
+library("dplyr")
+
+
 temperature_day <- temperature_long |>
   mutate(time = as.Date(time))
 
