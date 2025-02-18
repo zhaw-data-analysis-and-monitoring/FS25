@@ -165,7 +165,7 @@ date_posix
 Theoretically, `strftime` can also be used to extract specific components from a date. However, the functions from `lubridate` are much simpler and we recommend you use these. Note how `strftime` always returns strings while `lubridate` returns more useful datatypes such as integers or factors.
 
 ```{r}
-#| collapse: true
+#| output: false
 
 strftime(date_posix, format = "%m")           # <1>
 strftime(date_posix, format = "%b")           # <2>
@@ -177,7 +177,7 @@ strftime(date_posix, format = "%B")           # <3>
 
 
 ```{r}
-#| collapse: true
+#| output: false
 
 library("lubridate")
 

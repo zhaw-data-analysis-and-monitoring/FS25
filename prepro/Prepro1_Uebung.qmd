@@ -4,8 +4,8 @@ lesson: PrePro1
 topic: Data Types
 index: 2
 execute:
-  echo: true # set to true to show sample solution
-  output: true # set to true to show sample solution
+  echo: false # set to true to show sample solution
+  output: false # set to true to show sample solution
 code-fold: true
 code-summary: "Sample Solution"
 ---
@@ -30,25 +30,15 @@ There are several benefits to using Projects. You can:
 - set different project-specific options
 - use version control systems (e.g., *git*)
 
-## Working with libraries / packages
 
-R packages have become indispensable. The vast majority of packages are hosted on [CRAN](https://cran.r-project.org/) and can be easily installed using `install.packages()`. A very important collection of packages is being developed by RStudio. [Tidyverse](https://www.tidyverse.org/) offers a range of packages that make everyday life enormously easier. We will discuss the "Tidy" universe in more detail later. For now, we can simply install the most important packages from `tidyverse` (we will only be using a small selection of them today).
 
-There are two ways to use a `package` in R:
 
-- either you load it at the beginning of the R-session by means of `library("dplyr")` (without quotation marks).
-- or you call a `function` by prefixing it with the package name and two colons. `dplyr::filter()` calls the `filter()` function from the `dplyr` package.
 
-The second method is particularly useful if two different functions with the same name exist in different packages. For example, `filter()` exists as a function in both the `dplyr` and `stats` packages. This is called masking.
-
-To get started, we'll load the necessary packages:
 
 ```{r}
 #| echo: true
 #| code-fold: false
 
-library("readr")
-library("lubridate")
 ```
 
 ## Task 1
@@ -89,18 +79,31 @@ df$Sex <- factor(df$Sex, levels = c("m","f"))
 ```
 
 
+
+## Input: Libraries / packages
+
+Libraries (aka packages) are are "extensions" to the basic R functionality. 
+R packages have become indispensable to using R. The vast majority of packages are hosted on [CRAN](https://cran.r-project.org/) and can be easily installed using `install.packages("packagename")`. This installation is done *once*. To use the library, you must load it into the current R session using `library(packagename)`.
+
+E.g. To import data, we recommend using the `readr` package[^readr]. Install the package using the command `install.package("readr")`. To use the package, load it into the current R session using `library("readr")`. 
+
+
+[^readr]: Advantages of `read_delim` over `read.csv`: <https://stackoverflow.com/a/60374974/4139249>
+
 ## Task 3
 
 On Moodle, you will find a folder called *Datasets*. Download the file and move it **in your project folder**. Import the `weather.csv` file. If you use the RStudio GUI for this, save the import command in your R-Script. Please use a relative path (i.e., **not** a path starting with `C:\`, or similar).)
 
-:::{.callout-note}
-I use `readr` to import csv files and the `read_delim` function (with *underscore*) as an alternative to `read.csv` or `read.delim` (with a *dot*). However, this is a personal preference[^readr], and it is up to you which function you use. Remember that the two functions require slightly different parameters.
-:::
 
-[^readr]: Advantages of `read_delim` over `read.csv`: <https://stackoverflow.com/a/60374974/4139249>
+
 
 ```{r}
+
+library("readr")
+
+
 weather <- read_delim("datasets/prepro/weather.csv", ",")
+
 ```
 
 ```{r}
@@ -113,7 +116,7 @@ knitr::kable(head(weather, 10))
 
 ## Task 4
 
-Check the feedback from `read_delim()`. Have the data been interpreted correctly?
+Have a look at your dataset in the console. Have the data been interpreted correctly?
 
 ```{r}
 # The 'time' column was interpreted as 'integer'. However, it is 
@@ -146,6 +149,10 @@ knitr::kable(head(weather, 10), caption = "The new table should look like this")
 Create two new columns for day of week (Monday, Tuesday, etc) and calendar week. Use the newly created `POSIXct` column and a suitable function from `lubridate`.
 
 ```{r}
+
+library("lubridate")
+
+
 weather$weekday <- wday(weather$time, label = T)
 weather$week <- week(weather$time)
 ```
