@@ -224,13 +224,167 @@
     ]
   },
   {
+    "objectID": "prepro/Prepro2_Demo.html",
+    "href": "prepro/Prepro2_Demo.html",
+    "title": "Prepro 2: Demo",
+    "section": "",
+    "text": "Piping\nThe code for this demo can also be downloaded as an R Script (right click → Save Target As..)\nWe want to extract the temperature data from a character string (temperature), and then convert the Kelvin value into Celsius according to the following formula, before finally calculating the mean of all the values:\n\\[°C = K - 273.15\\]\n# these temperature are in Kelvin:\ntemperature &lt;- c(\"310\",\"322\",\"348\")\n\ntemperature\n## [1] \"310\" \"322\" \"348\"\nTranslated into R-code, this results in the following operation:\nsubtract &lt;- function(x,y){x-y} # helperfunction to subtract y from x\n\noutput &lt;- mean(subtract(as.integer(temperature), 273.15))\n#                             \\_1_/\n#                       \\_______2_____________/\n#              \\________________3______________________/\n#         \\_____________________4_______________________/\n\n# 1. Take temperature\n# 2. Convert \"character\" → \"integer\"\n# 4. Subtract 273.15\n# 5. Calculate the mean\nThe whole operation is easier to read if it is written down sequentially:\ntmp &lt;- as.integer(temperature)   # 2\ntmp &lt;- subtract(tmp, 273.15)     # 3\noutput &lt;- mean(tmp)              # 4\noutput\n## [1] 53.51667\nThe fact that the intermediate results must always be saved and retrieved again in the subsequent operation makes this somewhat cumbersome. This is where “piping” comes into play: It makes the output of one function the first parameter of the subsequent function.\ntemperature |&gt;        # 1\n  as.integer() |&gt;     # 2\n  subtract(273.15) |&gt; # 3\n  mean()              # 4\n## [1] 53.51667",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Prepro 2: Demo</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro2_Demo.html#piping",
+    "href": "prepro/Prepro2_Demo.html#piping",
+    "title": "Prepro 2: Demo",
+    "section": "",
+    "text": "Important\n\n\n\n\nthe |&gt; pipe operator was first introduced in R 4.1\nIn addition to the base R pipe operator, there is also a very similar1 pipe operator, %&gt;%, in the magrittr package.\nThe Ctrl +Shift+M keyboard shortcut in RStudio inserts a pipe operator.\nBy checking the Use native pipe operator setting in RStudio Settings Tools → Global Options → Code, you can control which pipe operator, |&gt; or %&gt;%, is inserted with the above key combination.\nWe recommend using the base-R pipe operator |&gt;",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Prepro 2: Demo</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro2_Demo.html#joins",
+    "href": "prepro/Prepro2_Demo.html#joins",
+    "title": "Prepro 2: Demo",
+    "section": "Joins",
+    "text": "Joins\n\nstudents &lt;- data.frame(\n  Matriculation_No = c(100002, 100003, 200003),\n  Student = c(\"Patrick\", \"Manuela\", \"Eva\"),\n  ZIP = c(8006, 8001, 8820)\n)\n\nstudents\n##   Matriculation_No Student  ZIP\n## 1           100002 Patrick 8006\n## 2           100003 Manuela 8001\n## 3           200003     Eva 8820\n\nlocalities &lt;- data.frame(\n  ZIP = c(8003, 8006, 8810, 8820),\n  LocalityName = c(\"Zurich\", \"Zurich\", \"Horgen\", \"Wadenswil\")\n)\n\nlocalities\n##    ZIP LocalityName\n## 1 8003       Zurich\n## 2 8006       Zurich\n## 3 8810       Horgen\n## 4 8820    Wadenswil\n\n\n# Load library\nlibrary(\"dplyr\")\n\ninner_join(students, localities, by = \"ZIP\")\n##   Matriculation_No Student  ZIP LocalityName\n## 1           100002 Patrick 8006       Zurich\n## 2           200003     Eva 8820    Wadenswil\n\nleft_join(students, localities, by = \"ZIP\")\n##   Matriculation_No Student  ZIP LocalityName\n## 1           100002 Patrick 8006       Zurich\n## 2           100003 Manuela 8001         &lt;NA&gt;\n## 3           200003     Eva 8820    Wadenswil\n\nright_join(students, localities, by = \"ZIP\")\n##   Matriculation_No Student  ZIP LocalityName\n## 1           100002 Patrick 8006       Zurich\n## 2           200003     Eva 8820    Wadenswil\n## 3               NA    &lt;NA&gt; 8003       Zurich\n## 4               NA    &lt;NA&gt; 8810       Horgen\n\nfull_join(students, localities, by = \"ZIP\")\n##   Matriculation_No Student  ZIP LocalityName\n## 1           100002 Patrick 8006       Zurich\n## 2           100003 Manuela 8001         &lt;NA&gt;\n## 3           200003     Eva 8820    Wadenswil\n## 4               NA    &lt;NA&gt; 8003       Zurich\n## 5               NA    &lt;NA&gt; 8810       Horgen\n\n\nstudents &lt;- data.frame(\n  Matriculation_No = c(100002, 100003, 200003),\n  Student = c(\"Patrick\", \"Manuela\", \"Pascal\"),\n  Residence = c(8006, 8001, 8006)\n)\n\nleft_join(students, localities, by = c(\"Residence\" = \"ZIP\"))\n##   Matriculation_No Student Residence LocalityName\n## 1           100002 Patrick      8006       Zurich\n## 2           100003 Manuela      8001         &lt;NA&gt;\n## 3           200003  Pascal      8006       Zurich",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Prepro 2: Demo</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro2_Demo.html#footnotes",
+    "href": "prepro/Prepro2_Demo.html#footnotes",
+    "title": "Prepro 2: Demo",
+    "section": "",
+    "text": "see https://stackoverflow.com/q/67633022/4139249↩︎",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Prepro 2: Demo</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro2_Uebung_A.html",
+    "href": "prepro/Prepro2_Uebung_A.html",
+    "title": "Prepro 2: Exercise A",
+    "section": "",
+    "text": "Task 1\nRead the weather data from last week weather.csv (source MeteoSchweiz) into R. Make sure that the columns are formatted correctly (stn as a factor, time as POSIXct, tre200h0 as a numeric).",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prepro 2: Exercise A</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro2_Uebung_A.html#task-2",
+    "href": "prepro/Prepro2_Uebung_A.html#task-2",
+    "title": "Prepro 2: Exercise A",
+    "section": "Task 2",
+    "text": "Task 2\nRead in the metadata.csv dataset as a csv.\n\n\n\n\n\n\nTip\n\n\n\nIf umlauts and special characters are not displayed correctly (e.g. the è in Gèneve), this probably has something to do with the character encoding. The file is currently encoded in UTF-8. If special characters are not correctly displayed, R has not recognised this encoding and it must be specified in the import function. How this is done depends on the import function used:\n\nPackage functions: readr: locale = locale(encoding = \"UTF-8\")\nBase-R functions: fileEncoding = \"UTF-8\"\n\nNote: If you have a file where you do not know how a file is encoded, the following instructions for Windows, Mac and Linux will help.",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prepro 2: Exercise A</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro2_Uebung_A.html#task-3",
+    "href": "prepro/Prepro2_Uebung_A.html#task-3",
+    "title": "Prepro 2: Exercise A",
+    "section": "Task 3",
+    "text": "Task 3\nNow we want to enrich the weather data set with information from metadata. However, we are only interested in the station abbreviation, the name, the x/y coordinates and the sea level. Select these columns.",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prepro 2: Exercise A</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro2_Uebung_A.html#task-4",
+    "href": "prepro/Prepro2_Uebung_A.html#task-4",
+    "title": "Prepro 2: Exercise A",
+    "section": "Task 4",
+    "text": "Task 4\nNow the metadata can be connected to the weather data set. Which join should we use to do this? And, which attribute can we join?\nUse the join options in dplyr (help via? dplyr::join) to connect the weather data set and the metadata.",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prepro 2: Exercise A</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro2_Uebung_A.html#task-5",
+    "href": "prepro/Prepro2_Uebung_A.html#task-5",
+    "title": "Prepro 2: Exercise A",
+    "section": "Task 5",
+    "text": "Task 5\nCreate a new month column (from time). To do this, use the lubridate::month() function.",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prepro 2: Exercise A</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro2_Uebung_A.html#task-6",
+    "href": "prepro/Prepro2_Uebung_A.html#task-6",
+    "title": "Prepro 2: Exercise A",
+    "section": "Task 6",
+    "text": "Task 6\nUse the month column to calculate the average temperature per month.",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Prepro 2: Exercise A</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro2_Uebung_B.html",
+    "href": "prepro/Prepro2_Uebung_B.html",
+    "title": "Prepro 2: Exercise B",
+    "section": "",
+    "text": "Task 1\nYou have data from three sensors (sensor1.csv, sensor2.csv, sensor3.csv). Read in the data sets using the library readr.",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Prepro 2: Exercise B</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro2_Uebung_B.html#task-2",
+    "href": "prepro/Prepro2_Uebung_B.html#task-2",
+    "title": "Prepro 2: Exercise B",
+    "section": "Task 2",
+    "text": "Task 2\nFrom the 3 data frames, create a single data frame that looks like the one shown below. Use two joins from dplyr to connect 3 data.frames. Then tidy up the column names (how can we do that?).\n\n\n\n\n\nDatetime\nsensor1\nsensor2\nsensor3\n\n\n\n\n16102017_1800\n23.5\n13.5\n26.5\n\n\n17102017_1800\n25.4\n24.4\n24.4\n\n\n18102017_1800\n12.4\n22.4\n13.4\n\n\n19102017_1800\n5.4\n12.4\n7.4\n\n\n23102017_1800\n23.5\n13.5\nNA\n\n\n24102017_1800\n21.3\n11.3\nNA",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Prepro 2: Exercise B</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro2_Uebung_B.html#task-3",
+    "href": "prepro/Prepro2_Uebung_B.html#task-3",
+    "title": "Prepro 2: Exercise B",
+    "section": "Task 3",
+    "text": "Task 3\nImport the sensor_fail.csv file into R.\nsensor_fail.csv has a variable SensorStatus: 1 means the sensor is measuring, 0 means the sensor is not measuring. If sensor status = 0, the Temp = 0 value is incorrect. It should be NA (not available). Correct the dataset accordingly.\n\n\n\n\n\nSensor\nTemp\nHum_%\nDatetime\nSensorStatus\n\n\n\n\nSen102\n0.6\n98\n16102017_1800\n1\n\n\nSen102\n0.3\n96\n17102017_1800\n1\n\n\nSen102\n0.0\n87\n18102017_1800\n1\n\n\nSen102\n0.0\n86\n19102017_1800\n0\n\n\nSen102\n0.0\n98\n23102017_1800\n0\n\n\nSen102\n0.0\n98\n24102017_1800\n0\n\n\nSen102\n0.0\n96\n25102017_1800\n1\n\n\nSen103\n-0.3\n87\n26102017_1800\n1\n\n\nSen103\n-0.7\n98\n27102017_1800\n1\n\n\nSen103\n-1.2\n98\n28102017_1800\n1",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Prepro 2: Exercise B</span>"
+    ]
+  },
+  {
+    "objectID": "prepro/Prepro2_Uebung_B.html#task-4",
+    "href": "prepro/Prepro2_Uebung_B.html#task-4",
+    "title": "Prepro 2: Exercise B",
+    "section": "Task 4",
+    "text": "Task 4\nWhy does it matter if 0 or NA is recorded? Calculate the mean of the temperature / humidity after you have corrected the dataset.",
+    "crumbs": [
+      "Pre-Processing",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Prepro 2: Exercise B</span>"
+    ]
+  },
+  {
     "objectID": "References.html",
     "href": "References.html",
     "title": "References",
     "section": "",
     "text": "Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023.\nR for Data Science: Import, Tidy, Transform, Visualize, and Model\nData. 2nd Edition. O’Reilly. https://r4ds.hadley.nz/.",
     "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>References</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>References</span>"
     ]
   }
 ]
