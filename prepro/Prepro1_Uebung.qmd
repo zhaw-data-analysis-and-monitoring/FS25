@@ -4,8 +4,8 @@ lesson: PrePro1
 topic: Data Types
 index: 2
 execute:
-  echo: false # set to true to show sample solution
-  output: false # set to true to show sample solution
+  echo: true # set to true to show sample solution
+  output: true # set to true to show sample solution
 code-fold: true
 code-summary: "Sample Solution"
 ---
@@ -125,7 +125,7 @@ Have a look at your dataset in the console. Have the data been interpreted corre
 
 ## Task 5
 
-The `time` column is a date/time with a format of YYYYMMDDHH ( see *meta.txt*). In order for R to recognise the data in this column as date/time, it must be in the correct format (`POSIXct`). Therefore, we must tell R what the current format is. Use `as.POSIXct()` to read the column into R, remembering to specify both `format` and `tz`.
+The `time` column is a date/time with a format of YYYYMMDDHH. In order for R to recognise the data in this column as date/time, it must be in the correct format (`POSIXct`). Therefore, we must tell R what the current format is. Use `as.POSIXct()` to read the column into R, remembering to specify both `format` and `tz`.
 
 :::{.callout-tip}
 - If no time zone is set, `as.POSIXct()` sets a default (based on `sys.timezone()`). In our case, however, these are values in UTC (see *metadata.csv*)

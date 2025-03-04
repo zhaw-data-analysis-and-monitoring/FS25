@@ -4,8 +4,8 @@ lesson: PrePro2
 topic: Piping / Joins
 index: 3
 execute:
-  echo: false # set to true to show sample solution
-  output: false # set to true to show sample solution
+  echo: true # set to true to show sample solution
+  output: true # set to true to show sample solution
 code-fold: true
 code-summary: "Sample Solution"
 knitr:
@@ -15,20 +15,16 @@ knitr:
 
 # Prepro 2: Exercise B
 
-```{r}
-#| echo: true
-#| code-fold: false
-
-# Required Packages
-library("dplyr")
-library("readr")
-```
 
 ## Task 1
 
-You have data from three sensors (*sensor1.csv*, *sensor2.csv*, *sensor3.csv*). Read in the data sets.
+You have data from three sensors (*sensor1.csv*, *sensor2.csv*, *sensor3.csv*). Read in the data sets using the library `readr`.
 
 ```{r}
+
+library("readr")
+
+
 sensor1 <- read_delim("datasets/prepro/sensor1.csv", ";")
 sensor2 <- read_delim("datasets/prepro/sensor2.csv", ";")
 sensor3 <- read_delim("datasets/prepro/sensor3.csv", ";")
@@ -39,6 +35,10 @@ sensor3 <- read_delim("datasets/prepro/sensor3.csv", ";")
 From the 3 data frames, create a single data frame that looks like the one shown below. Use two joins from `dplyr` to connect 3 `data.frames`. Then tidy up the column names ([how can we do that?](https://www.statology.org/how-to-rename-data-frame-columns-in-r/)).
 
 ```{r}
+
+library("dplyr")
+
+
 sensor1_2 <- full_join(sensor1, sensor2, "Datetime")
 
 sensor1_2 <- rename(sensor1_2, sensor1 = Temp.x, sensor2 = Temp.y)

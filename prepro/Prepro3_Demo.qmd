@@ -16,31 +16,56 @@ In this demo, we will introduce other tools from the Tidyverse and explain them 
 
 We cannot show you all the possibilities of tidyverse. Therefore, we will focus on the most important components and also introduce additional functionalities that we often use but may not yet be known to you. If you want to delve deeper into the topic, you should read @wickham2023, which is available online: <https://r4ds.hadley.nz/>
 
-We will need the following packages:
 
 ```{r}
-library("dplyr")
-library("tidyr")
-library("lubridate")
-library("readr")
-library("ggplot2")
-```
 
-<!-- ## Split Apply Combine -->
+```
 
 ## Load data
 
 Lets load the weather data (source MeteoSchweiz) from the last exercise.
 
 ```{r}
+
+library("readr")
+
 weather <- read_delim("datasets/prepro/weather.csv", ",")
 
-weather <- weather |>
-  mutate(
-    stn = as.factor(stn),
-    time = as.POSIXct(as.character(time), format = "%Y%m%d%H")
-  )
+
+weather$stn <- as.factor(weather$stn)
+
+# only overwrite "time" if you are sure it worked!
+weather$time2 <- as.POSIXct(as.character(weather$time), format = "%Y%m%d%H", tz = "UTC")
 ```
+
+Translated into English, the above operation is as follows:
+
+1) Take the column `time` from the `weather` dataset
+2) Convert it to character
+3) Convert it to POSIXct using a specified *format* and *timezone*
+
+The translation from R → English looks different because we read the operation in a *concatenated form* in English (operation 1 → 2 → 3) while the computer reads it as a *nested* operation 3(2(1)). To make R closer to English, you can use the `|>` operator [see @wickham2023, Chapter 4.3].
+
+
+```{r}
+
+weather$time2 <- weather$time |> 
+  as.character() |> 
+  as.POSIXct(format = "%Y%m%d%H", tz = "UTC")
+
+```
+
+Once we are sure the conversion worked, we can overwrite `time` and remove `time2`
+
+```{r}
+weather$time <- weather$time2
+
+weather$time2 <- NULL
+```
+
+
+Now, let's look at another example.
+
 
 ## Calculate values
 
@@ -50,7 +75,7 @@ We would like to calculate the average of all measured temperature values. To do
 mean(weather$tre200h0, na.rm = TRUE)
 ```
 
-The option `na.rm = T` means that NA values should be excluded from the calculation.
+The option `na.rm = TRUE` means that NA values should be excluded from the calculation.
 
 Various values can be calculated using the same approach (e.g. the maximum (`max()`), minimum (`min()`), median (`median()`) and much more).
 
@@ -60,15 +85,20 @@ This approach only works well if we want to calculate values across *all* observ
 
 To solve this task, the month must first be extracted (the month is the *convenience variable*). For this we need the `lubridate::month()` function.
 
-Now the month **convenience variable** can be created. Without using `dpylr`, a new column can be added as follows:
+Now the month **convenience variable** can be created. Without using `dplyr`, a new column can be added as follows:
 
 ```{r}
+library("lubridate")
+
 weather$month <- month(weather$time)
 ```
 
 With `dplyr` the same command looks like this:
 
 ```{r}
+library("dplyr")
+
+
 weather <- mutate(weather, month = month(time))
 ```
 
@@ -90,13 +120,13 @@ summarise(group_by(weather, month), temp_average = mean(tre200h0, na.rm = TRUE))
 
 ## Concatenate vs. Nest
 
-Translated into English, the above operation is as follows:
+Again, translated into English, the above operation is as follows:
 
 1) Take the `weather` dataset
 2) Form groups per year  (`group_by(weather, year)`)
 3) Calculate the mean temperature (`mean(tre200h0)`)
 
-The translation from R -> English looks different because we read the operation in a *concatenated form* in English (operation 1 → 2 → 3) while the computer reads it as a *nested* operation 3(2(1)). To make R closer to English, you can use the `|>` operator [see @wickham2023, Chapter 4.3].
+The translation from R → English looks different because we read the operation in a *concatenated form* in English (operation 1 → 2 → 3) while the computer reads it as a *nested* operation 3(2(1)). To make R closer to English, you can use the `|>` operator [see @wickham2023, Chapter 4.3].
 
 ```{r}
 #| eval: false
@@ -141,79 +171,3 @@ weather_summary
 ```
 
 
-<!-- 
-## Reshaping data
-
-## Wide → long
-
-Tables can be transformed from *wide* to* long* using `tidyr` (see ^[ https://r4ds.had.co.nz/tidy-data.html#pivoting]). This package also works perfectly with piping (`|>`).
-
-```{r}
-weather_summary |>
-  pivot_longer(c(temp_max, temp_min))
-```
-
-In the `pivot_longer()` command, we have to define which columns should be summarised (in this case: `temp_max`, `temp_min`, `temp_mean`). Alternatively, we can specify which columns we do *not* want to summarise:
-
-```{r}
-weather_summary |>
-  pivot_longer(-day)
-```
-
-If we want to set the names of new columns (instead of `name` and `value`), this can be achieved by using `names_to` or `values_to`:
-
-```{r}
-weather_summary_long <- weather_summary |>
-  pivot_longer(-day, names_to = "MeasurementType", values_to = "MeasurementValue")
-```
-
-The first 6 lines of `weather_summary_long`:
-
-```{r}
-#| echo: false
-#| purl: false
-
-knitr::kable(head(weather_summary_long))
-```
-
-The first 6 lines of `weather_sry`:
-
-```{r}
-#| echo: false
-#| purl: false
-
-knitr::kable(head(weather_summary, 6))
-```
-
-Note: `weather_summary_long` comprises 62 observations (rows), which is twice as much as `weather_summary`, because we have combined two of the columns.
-
-```{r}
-nrow(weather_summary)
-nrow(weather_summary_long)
-```
-
-Long tables are more practical in many situations. For example, visualising using `ggplot2` (you will learn about this package in the "InfoVis" block) is much easier with *long tables*.
-
-```{r}
-ggplot(weather_summary_long, aes(day, MeasurementValue, colour = MeasurementType)) +
-  geom_line()
-```
-
-## Long → wide
-
-The counterpart to `pivot_longer` is `pivot_wider`. This function allows us to convert a *long* table into a *wide* one. To do this, we must specify in `names_from` which column the new column names should be created from (`names_from`) and  which column the values should originate from (`values_from`):
-
-```{r}
-weather_summary_long |>
-  pivot_wider(names_from = MeasurementType, values_from = MeasurementValue)
-```
-
-For comparison: We have to plot each column individually in `ggplot2` for a *wide* table. While this is not a problem when we are only working with a few variables, like here, with a high number this quickly becomes tedious.
-
-```{r}
-ggplot(weather_summary) +
-  geom_line(aes(day, temp_max)) +
-  geom_line(aes(day, temp_min))
-```
-
--->

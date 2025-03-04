@@ -4,8 +4,8 @@ lesson: PrePro3
 topic: Split-Apply-Combine
 index: 2
 execute:
-  echo: false # set to true to show sample solution
-  output: false # set to true to show sample solution
+  echo: true # set to true to show sample solution
+  output: true # set to true to show sample solution
 code-fold: true
 code-summary: "Sample Solution"
 knitr:
@@ -13,14 +13,14 @@ knitr:
     collapse: true
 ---
 
+
 # Prepro 3: Exercise
 
 ## Task 1
 
 You have a dataset, *sensors_long.csv*, with temperature values from three different sensors. Import it as a csv into R (as `sensors_long`).
 
-<!-- Introduce the next line in FS25, if datetime ins sensors_long is *not* a standard format -->
-<!-- Reformat the `datetime` column to `POSIXct`. Use the *as.POSIXct* function (read it in using`?strftime())` to determine the specific format (the template). -->
+Reformat the `datetime` column to `POSIXct`. Use the *as.POSIXct* function (read it in using`?strftime())` to determine the specific format (the template).
 
 ```{r}
 library("readr")
@@ -29,31 +29,7 @@ sensors_long <- read_delim("datasets/prepro/sensors_long.csv", ",")
 
 ```
 
-<!--
-## Task 2
 
-Convert the table to a *long* format (use the `pivot_longer` function from `tidyr`) and save the output as `sensors_long`.
-
-Tips:
-
-- In the `cols` argument, you can list the columns that should be pivoted.
-- Alternatively, you can indicate (by placing a minus sign in front, `-`) the column that should *not* be pivoted.
-- In either case, you do not need to put the columns in quotation marks or end them with the `$`sign.
-
-```{r}
-#| eval: false # uncommenting via html comments does not suffice
-#| 
-library("tidyr")
-
-# Option 1 (Deselect columns)
-sensors_long <- pivot_longer(sensors_long, -Datetime)
-
-# Option 2 (Select columns)
-sensors_long <- pivot_longer(sensors_long, c(sensor1:sensor3))
-```
-
-
--->
 
 ## Task 2
 
@@ -86,12 +62,20 @@ sensors_long |>
 
 ## Task 4
 
-Now download the *weather.csv* dataset (source MeteoSwiss) and import it as a .csv with the correct column types (time` as `POSIXct`, `tre200h0` as `double`).
+Now import the *weather.csv* dataset (source MeteoSwiss) with the correct column types (`time` as `POSIXct`, `tre200h0` as `double`). You can download the file from moodle if you havent done so yet.
 
 ```{r}
 weather <- read_delim("datasets/prepro/weather.csv")
 
-weather$time2 <- as.POSIXct(weather$time, format = "%Y%m%d%H", tz = "UTC")
+
+weather$time2 <- weather$time |> 
+  as.character() |> 
+  as.POSIXct(format = "%Y%m%d%H", tz = "UTC")
+  
+
+weather$time <- weather$time2
+weather$time2 <- NULL
+
 ```
 
 ## Task 5
@@ -100,7 +84,7 @@ Now create a *convenience variable* for the calendar week for each measurement (
 
 ```{r}
 weather_summary <- weather |>
-  mutate(week = isoweek(time2)) |>
+  mutate(week = isoweek(time)) |>
   group_by(week) |>
   summarise(
     temp_mean = mean(tre200h0, na.rm = TRUE)
@@ -113,6 +97,7 @@ Next, you can visualise the result using the following function:
 #| results: asis
 #| fig.show: asis
 #| echo: true
+#| code-fold: false
 
 plot(weather_summary$week, weather_summary$temp_mean, type = "l")
 ```
@@ -133,6 +118,7 @@ weather_summary2 <- weather |>
   )
 ```
 
+
 ```{r}
 #| label: fig-baseplot-ex7
 #| fig.cap: Base plot does not like long tables and makes a continuous line out of the two years
@@ -143,26 +129,3 @@ plot(weather_summary2$week, weather_summary2$temp_mean, type = "l")
 
 
 
-<!--
-
-## Task 8
-
-Transfer the output from the last exercise to a *wide table*. Now the two years can be compared much more easily.
-
-```{r}
-#| eval: false # uncommenting via html comments does not suffice
-
-
-weather_summary2 <- weather_summary2 |>
-  pivot_wider(names_from = year, values_from = temp_mean,names_prefix = "year")
-```
-
-```{r}
-#| output: true
-#| eval: false # uncommenting via html comments does not suffice
-
-plot(weather_summary2$week, weather_summary2$year2000, type = "l",col = "blue")
-lines(weather_summary2$week, weather_summary2$year2001, type = "l",col = "red")
-```
-
--->
