@@ -22,47 +22,32 @@ rversion_minimal <- function(version_string){
 heute <- paste(month(Sys.Date(), TRUE, FALSE, "C"), year(Sys.Date()), sep = ", ")
 ```
 
-## Install or update R
+## Install R
 
-If you haven't installed R yet, do so now by getting the newest version from [CRAN](https://cran.r-project.org/). If you do have R installed, check your Version of R by opening RStudio and typing the following command into the console. 
+If you haven't installed R yet, do so now by getting the newest version from [CRAN](https://cran.r-project.org/). 
 
-```{r}
-R.version.string
-```
 
-This returns the version number of your R installation, whereas the first digit (``r rve[1]``) indicates the number of the *major release*, the second digit  (``r rve[2]``) indicates the *minor release* and the last digit (``r rve[3]``) refers to the *patch release*. As a general rule of thumb, you will want to update R if you
 
-- don't have the current *major* version or
-- are lagging two (or more) versions behind the current *minor release*
+## Install RStudio
 
-In the time of writing (`r heute`), the current R Version is `r rv$version` (released on `r strftime(rv$date, "%d.%m.%Y")`, see [cran.r-project.org](https://cran.r-project.org/)). Your installation should therefore not be older than `r rversion_minimal(rv$version)`. If it is, make sure that you have updated R before the course. Check [these instructions on how to update R](https://www.linkedin.com/pulse/3-methods-update-r-rstudio-windows-mac-woratana-ngarmtrakulchol/)
+[RStudio](https://posit.co/download/rstudio-desktop/) is the IDE (integrated development environment) we use in our course to interact with R. Download and install it on your computer.
 
-## Install or update RStudio
-
-[RStudio](https://posit.co/download/rstudio-desktop/) is the IDE (integrated development environment) we use in our course to interact with R. There are good alternatives you can use, RStudio simply seems to be the most popular choice. If you want to use your own IDE, please feel free to do so. However, we don't recommend this if you are a beginner.
-
-We recommend updating RStudio to the newest version before the course: check if this is the case by clicking on *help > check for updates*. 
 
 ## Configure RStudio{#configure-rstudio}
 
 Now we will set some RStudio Global options. But first, **close all instances of RStudio and restart it (!!!)**. Then go to Tools > Global options. 
 
 - **R General**
-  - Deactivate the option "Restore .RData into workspace at startup"[^restore]
-  - Set "Save workspace to .RData on exit " to "Never"[^saveworkspace]
+  - Deactivate the option "Restore .RData into workspace at startup"
+  - Set "Save workspace to .RData on exit " to "Never"
 - **Code**
   - Activate the option "Use native pipe operator, |> (requires R 4.1+)"
 - **R Markdown**
   - Deactivate the option "Show output inline for all R Markdown documents"
 
-<!--
-- **Terminal**
-  - Set option "New terminals open with" to "Git Bash" 
--->
+
 Click on "Ok" to apply the change and close the options menu.
 
-[^restore]: We recommend that you start each RStudio session with a blank slate, as recommended by @wickham2023
-[^saveworkspace]: If we don't restore the workspace at startup, there is no need to save it on exit.
 
 ### Folder structure for this course {#folder-structure}
 

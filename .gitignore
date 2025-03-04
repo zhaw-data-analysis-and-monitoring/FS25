@@ -3,3 +3,4 @@ _book
 .~lock*
 .Rproj.user
 .Rhistory
+_freeze
