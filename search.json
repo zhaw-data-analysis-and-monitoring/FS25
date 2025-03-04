@@ -448,7 +448,7 @@
     "href": "prepro/Prepro3_Uebung.html",
     "title": "Prepro 3: Exercise",
     "section": "",
-    "text": "Task 1\nYou have a dataset, sensors_long.csv, with temperature values from three different sensors. Import it as a csv into R (as sensors_long).\nReformat the datetime column to POSIXct. Use the as.POSIXct function (read it in using?strftime()) to determine the specific format (the template).",
+    "text": "Task 1\nYou have a dataset, sensors_long.csv, with temperature values from three different sensors. Import it as a csv into R (as sensors_long).\nReformat the datetime column to POSIXct. Use the as.POSIXct function (read it in using?strftime()) to determine the specific format (the template).\nSample Solution\nlibrary(\"readr\")\n\nsensors_long &lt;- read_delim(\"datasets/prepro/sensors_long.csv\", \",\")",
     "crumbs": [
       "Pre-Processing",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Prepro 3: Exercise</span>"
@@ -459,7 +459,7 @@
     "href": "prepro/Prepro3_Uebung.html#task-2",
     "title": "Prepro 3: Exercise",
     "section": "Task 2",
-    "text": "Task 2\nGroup sensors_long according to the column name where the sensor information is contained, using the function group_by, and calculate the average temperature for each sensor (summarise). Note: Both functions are part of the dplyr package.\nThe output will look like this:\n\n## # A tibble: 3 × 2\n##   name    temp_mean\n##   &lt;chr&gt;       &lt;dbl&gt;\n## 1 sensor1      14.7\n## 2 sensor2      12.0\n## 3 sensor3      14.4",
+    "text": "Task 2\nGroup sensors_long according to the column name where the sensor information is contained, using the function group_by, and calculate the average temperature for each sensor (summarise). Note: Both functions are part of the dplyr package.\nThe output will look like this:\n\n\nSample Solution\nlibrary(\"dplyr\")\n\nsensors_long |&gt;\n  group_by(name) |&gt;\n  summarise(temp_mean = mean(value, na.rm = TRUE))\n## # A tibble: 3 × 2\n##   name    temp_mean\n##   &lt;chr&gt;       &lt;dbl&gt;\n## 1 sensor1      14.7\n## 2 sensor2      12.0\n## 3 sensor3      14.4",
     "crumbs": [
       "Pre-Processing",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Prepro 3: Exercise</span>"
@@ -470,7 +470,7 @@
     "href": "prepro/Prepro3_Uebung.html#task-3",
     "title": "Prepro 3: Exercise",
     "section": "Task 3",
-    "text": "Task 3\nCreate a new convenience variable, month, for sensors_long (Tip: use the month function from lubridate). Now group by month and sensor and calculate the mean temperature.",
+    "text": "Task 3\nCreate a new convenience variable, month, for sensors_long (Tip: use the month function from lubridate). Now group by month and sensor and calculate the mean temperature.\n\n\nSample Solution\nlibrary(\"lubridate\")\n\nsensors_long |&gt;\n  mutate(month = month(Datetime)) |&gt;\n  group_by(month, name) |&gt;\n  summarise(temp_mean = mean(value, na.rm = TRUE))\n## # A tibble: 6 × 3\n## # Groups:   month [2]\n##   month name    temp_mean\n##   &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;\n## 1    10 sensor1     14.7 \n## 2    10 sensor2     12.7 \n## 3    10 sensor3     14.4 \n## 4    11 sensor1    NaN   \n## 5    11 sensor2      8.87\n## 6    11 sensor3    NaN",
     "crumbs": [
       "Pre-Processing",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Prepro 3: Exercise</span>"
@@ -481,7 +481,7 @@
     "href": "prepro/Prepro3_Uebung.html#task-4",
     "title": "Prepro 3: Exercise",
     "section": "Task 4",
-    "text": "Task 4\nNow import the weather.csv dataset (source MeteoSwiss) with the correct column types (time as POSIXct, tre200h0 as double). You can download the file from moodle if you havent done so yet.",
+    "text": "Task 4\nNow import the weather.csv dataset (source MeteoSwiss) with the correct column types (time as POSIXct, tre200h0 as double). You can download the file from moodle if you havent done so yet.\n\n\nSample Solution\nweather &lt;- read_delim(\"datasets/prepro/weather.csv\")\n\n\nweather$time2 &lt;- weather$time |&gt; \n  as.character() |&gt; \n  as.POSIXct(format = \"%Y%m%d%H\", tz = \"UTC\")\n  \n\nweather$time &lt;- weather$time2\nweather$time2 &lt;- NULL",
     "crumbs": [
       "Pre-Processing",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Prepro 3: Exercise</span>"
@@ -492,7 +492,7 @@
     "href": "prepro/Prepro3_Uebung.html#task-5",
     "title": "Prepro 3: Exercise",
     "section": "Task 5",
-    "text": "Task 5\nNow create a convenience variable for the calendar week for each measurement (lubridate::isoweek). Then calculate the average temperature value for each calendar week.\nNext, you can visualise the result using the following function:\nplot(weather_summary$week, weather_summary$temp_mean, type = \"l\")",
+    "text": "Task 5\nNow create a convenience variable for the calendar week for each measurement (lubridate::isoweek). Then calculate the average temperature value for each calendar week.\n\n\nSample Solution\nweather_summary &lt;- weather |&gt;\n  mutate(week = isoweek(time)) |&gt;\n  group_by(week) |&gt;\n  summarise(\n    temp_mean = mean(tre200h0, na.rm = TRUE)\n  )\n\n\nNext, you can visualise the result using the following function:\nplot(weather_summary$week, weather_summary$temp_mean, type = \"l\")",
     "crumbs": [
       "Pre-Processing",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Prepro 3: Exercise</span>"
@@ -503,7 +503,7 @@
     "href": "prepro/Prepro3_Uebung.html#task-6",
     "title": "Prepro 3: Exercise",
     "section": "Task 6",
-    "text": "Task 6\nIn the previous task, we calculated the average temperature per calendar week over all years (2000 and 2001). However, if we want to compare the years with each other, we have to create the year as an additional convenience variable and group it accordingly. Try this with the weather data and then visualise the output.\n\n\n\n\n\n\n\n\nFigure 9.1: Base plot does not like long tables and makes a continuous line out of the two years",
+    "text": "Task 6\nIn the previous task, we calculated the average temperature per calendar week over all years (2000 and 2001). However, if we want to compare the years with each other, we have to create the year as an additional convenience variable and group it accordingly. Try this with the weather data and then visualise the output.\n\n\nSample Solution\nweather_summary2 &lt;- weather |&gt;\n  mutate(\n    week = week(time),\n    year = year(time)\n    ) |&gt;\n  group_by(year, week) |&gt;\n  summarise(\n    temp_mean = mean(tre200h0, na.rm = TRUE)\n  )\n\n\n\n\nSample Solution\nplot(weather_summary2$week, weather_summary2$temp_mean, type = \"l\")\n\n\n\n\n\n\n\n\nFigure 9.1: Base plot does not like long tables and makes a continuous line out of the two years",
     "crumbs": [
       "Pre-Processing",
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Prepro 3: Exercise</span>"
