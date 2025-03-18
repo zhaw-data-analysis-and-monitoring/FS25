@@ -23,7 +23,8 @@ knitr:
 
 
 ```
-You can download the datasets for the exercises from Moodle: {{< var datasets.SpatAn1 >}}
+
+You can download the datasets for the exercises from Moodle- 
 
 
 ## Task 1: Import vector data

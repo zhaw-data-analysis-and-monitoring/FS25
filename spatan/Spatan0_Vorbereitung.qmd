@@ -22,7 +22,4 @@ pacman::p_install(
   )
 ```
 
-You can download the datasets for the exercises from Moodle:
-
-- {{< var datasets.SpatAn1 >}}
-- {{< var datasets.SpatAn2 >}}
+You can download the datasets for the exercises from Moodle.

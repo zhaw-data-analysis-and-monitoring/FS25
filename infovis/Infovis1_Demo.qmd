@@ -8,7 +8,8 @@ index: 1
 # Infovis 1: Demo A
 
 
-In this demonstration, we'll start by loading the dataset *temperature_SHA_ZER.csv*, a refined version of the data from our previous lessons, PrePro1 and PrePro2. You can download this data from moodle: {{<var datasets.InfoVis1>}}
+
+In this demonstration, we'll start by loading the dataset *temperature_SHA_ZER.csv*, a refined version of the data from our previous lessons, PrePro1 and PrePro2. You can download this data from moodle:
 
 ```{r}
 
