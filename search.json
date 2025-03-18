@@ -510,13 +510,253 @@
     ]
   },
   {
+    "objectID": "InfoVis.html",
+    "href": "InfoVis.html",
+    "title": "Information Visualisation",
+    "section": "",
+    "text": "InfoVis 1\nConventional inferential statistics are typically employed to confirm hypotheses. These hypotheses are derived from established theories and are then tested through experiments to determine whether they should be accepted or rejected. Conversely, Exploratory Data Analysis (EDA) takes an antagonistic approach, by first seeking out patterns and relationships within the data, which can subsequently inform the development of hypotheses for testing. This module presents the traditional five-step process of Exploratory Data Analysis as established by Tukey in 1980, culminating in a transition to its contemporary application through Visual Analytics.",
+    "crumbs": [
+      "Information Visualisation"
+    ]
+  },
+  {
+    "objectID": "InfoVis.html#infovis-2",
+    "href": "InfoVis.html#infovis-2",
+    "title": "Information Visualisation",
+    "section": "InfoVis 2",
+    "text": "InfoVis 2\nInformation visualisation stands out as a flexible, powerful, and efficient tool for exploratory data analysis. Beyond the well-known scatter plots and histograms, there are innovative visualisation techniques like parallel coordinate plots, tree maps, and chord diagrams that provide unique perspectives for analysing increasingly large and complex datasets. In this lesson, students get to know a number of information visualisation types, learn to design them in a targeted manner and to create them themselves.",
+    "crumbs": [
+      "Information Visualisation"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis0_Vorbereitung.html",
+    "href": "infovis/Infovis0_Vorbereitung.html",
+    "title": "Preparation",
+    "section": "",
+    "text": "As part of InfoVis 1 - 2, we will need several R packages. We recommend installing these before the first lesson. Individual packages are typically installed as follows:\n\ninstall.packages(c(\"dplyr\", \"ggplot2\", \"lubridate\", \"readr\", \"scales\", \"tidyr\"))\n\nHowever, this will re-install packages that you might have already installed. The package pacman helps with this: it checks if the package is already installed before downloading it:\n\n# install packman (this is necessary only once)\ninstall.packages(\"pacman\")\n\n\npacman::p_install(\n  \"dplyr\", \"ggplot2\", \"lubridate\", \"readr\", \"scales\", \"tidyr\",\n  force = FALSE,\n  character.only = TRUE\n  )\n\nYou can download the datasets for the exercises from Moodle:\n\nInfoVis1\nInfoVis2",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Preparation</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Demo.html",
+    "href": "infovis/Infovis1_Demo.html",
+    "title": "Infovis 1: Demo A",
+    "section": "",
+    "text": "Base-plot vs. ggplot\nIn this demonstration, we’ll start by loading the dataset temperature_SHA_ZER.csv, a refined version of the data from our previous lessons, PrePro1 and PrePro2. You can download this data from moodle: InfoVis1\nWe can create a scatterplot in “Base-R” to compare dates and temperatures as follows:\nplot(temperature$time, temperature$SHA, type = \"l\", col = \"red\")\nlines(temperature$time, temperature$ZER, col = \"blue\")\nIn ggplot, the approach is more nuanced. A plot begins with ggplot(). This command specifies the dataset (data =) and the variables within the dataset that influence the plot (mapping = aes()).\nlibrary(\"ggplot2\")\n\n\n# Dataset: \"temperature\" | Influencing variables: \"time\" and \"temp\"\nggplot(data = temperature, mapping = aes(time, SHA))\nIn ggplot, at least one “layer” is required to represent data, such as geom_point() for scatterplots, using the + operator. Unlike “piping” (|&gt;), a layer is added with +.\nggplot(data = temperature, mapping = aes(time, SHA)) +\n  # Layer: \"geom_point\" corresponds to points in a scatterplot\n  geom_point()\nSince inputs are expected in the order of data = followed by mapping = in ggplot, we can omit these specifications.\nggplot(temperature, aes(time, SHA)) +\n  geom_point()",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Infovis 1: Demo A</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Demo.html#long-vs.-wide",
+    "href": "infovis/Infovis1_Demo.html#long-vs.-wide",
+    "title": "Infovis 1: Demo A",
+    "section": "Long vs. wide",
+    "text": "Long vs. wide\nAs mentioned in PrePro 2, ggplot2 is designed for long tables. Therefore, we need to transform the wide table into a long format:\n\nlibrary(\"tidyr\")\n\n\ntemperature_long &lt;- pivot_longer(temperature, -time, names_to = \"station\", values_to = \"temp\")\n\nTo colour-code different weather stations, we define variables that will influence the graphic, which are incorporated in the aes() function:\n\nggplot(temperature_long, aes(time, temp, colour = station)) +\n  geom_point()\n\n\n\n\n\n\n\n\nWe can also add additional layers with lines:\n\nggplot(temperature_long, aes(time, temp, colour = station)) +\n  geom_point() +\n  geom_line()",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Infovis 1: Demo A</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Demo.html#labels",
+    "href": "infovis/Infovis1_Demo.html#labels",
+    "title": "Infovis 1: Demo A",
+    "section": "Labels",
+    "text": "Labels\nNext, we’ll refine our plot by adding axis labels and a title. Additionally, we’ve chosen to remove the points (geom_point()) as they don’t align with my preferred visualisation style.\n\nggplot(temperature_long, aes(time, temp, colour = station)) +\n  geom_line() +\n  labs(\n    x = \"Time\",\n    y = \"Temperature in degrees C°\",\n    title = \"Temperature Data Switzerland\",\n    subtitle = \"2001 to 2002\",\n    colour = \"Station\"\n  )",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Infovis 1: Demo A</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Demo.html#split-apply-combine",
+    "href": "infovis/Infovis1_Demo.html#split-apply-combine",
+    "title": "Infovis 1: Demo A",
+    "section": "Split Apply Combine",
+    "text": "Split Apply Combine\nIn our plot, the hourly data points are too detailed for a two-year visualisation. Using the Split Apply Combine technique (covered in PrePro 3), we can adjust the data resolution:\n\nlibrary(\"dplyr\")\n\n\ntemperature_day &lt;- temperature_long |&gt;\n  mutate(time = as.Date(time))\n\ntemperature_day\n\n# A tibble: 35,088 × 3\n   time       station  temp\n   &lt;date&gt;     &lt;chr&gt;   &lt;dbl&gt;\n 1 2000-01-01 SHA       0.2\n 2 2000-01-01 ZER      -8.8\n 3 2000-01-01 SHA       0.3\n 4 2000-01-01 ZER      -8.7\n 5 2000-01-01 SHA       0.3\n 6 2000-01-01 ZER      -9  \n 7 2000-01-01 SHA       0.3\n 8 2000-01-01 ZER      -8.7\n 9 2000-01-01 SHA       0.4\n10 2000-01-01 ZER      -8.5\n# ℹ 35,078 more rows\n\ntemperature_day &lt;- temperature_day |&gt;\n  group_by(station, time) |&gt;\n  summarise(temp = mean(temp))\n\ntemperature_day\n\n# A tibble: 1,462 × 3\n# Groups:   station [2]\n   station time        temp\n   &lt;chr&gt;   &lt;date&gt;     &lt;dbl&gt;\n 1 SHA     2000-01-01  1.25\n 2 SHA     2000-01-02  1.73\n 3 SHA     2000-01-03  1.59\n 4 SHA     2000-01-04  1.78\n 5 SHA     2000-01-05  4.66\n 6 SHA     2000-01-06  3.49\n 7 SHA     2000-01-07  3.87\n 8 SHA     2000-01-08  3.28\n 9 SHA     2000-01-09  3.24\n10 SHA     2000-01-10  3.24\n# ℹ 1,452 more rows",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Infovis 1: Demo A</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Demo.html#adjusting-the-xy-axes",
+    "href": "infovis/Infovis1_Demo.html#adjusting-the-xy-axes",
+    "title": "Infovis 1: Demo A",
+    "section": "Adjusting the X/Y Axes",
+    "text": "Adjusting the X/Y Axes\nYou can also influence the x/y axes. You first have to determine what type of axis the plot has (in its default setting, ggplot automatically selects the axis type based on the nature of the data).\nFor our y-axis, which consists of numerical data, ggplot uses scale_y_continuous(). Other axis types can be found at ggplot2.tidyverse.org (scale_x_something or scale_y_something).\n\nggplot(temperature_day, aes(time, temp, colour = station)) +\n  geom_line() +\n  labs(\n    x = \"Time\",\n    y = \"Temperature in degrees C\",\n    title = \"Temperature Data Switzerland\",\n    subtitle = \"2001 to 2002\",\n    color = \"Station\"\n  ) +\n  scale_y_continuous(limits = c(-30, 30)) # determine y-axis section\n\n\n\n\n\n\n\n\nThis can also be done for the x-axis. Our x-axis consists of date information. ggplot calls this: scale_x_date().\n\nggplot(temperature_day, aes(time, temp, colour = station)) +\n  geom_line() +\n  labs(\n    x = \"Time\",\n    y = \"Temperature in degrees C\",\n    title = \"Temperature Data Switzerland\",\n    subtitle = \"2001 to 2002\",\n    color = \"Station\"\n  ) +\n  scale_y_continuous(limits = c(-30, 30)) +\n  scale_x_date(\n    date_breaks = \"3 months\",\n    date_labels = \"%b\"\n  )",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Infovis 1: Demo A</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Demo.html#customising-themes",
+    "href": "infovis/Infovis1_Demo.html#customising-themes",
+    "title": "Infovis 1: Demo A",
+    "section": "Customising Themes",
+    "text": "Customising Themes\nThe theme function in ggplot allows us to alter the general layout of plots. For instance, theme_classic() changes the plot’s style to a more traditional look, which is ideal for formal reports or publications. This theme can be applied either to individual plots or set as a default for all plots within a session.\nApplying to a single Plot:\n\nggplot(temperature_day, aes(time, temp, colour = station)) +\n  geom_line() +\n  theme_classic()\n\nGlobal setting (for all subsequent plots in the current session):\n\ntheme_set(theme_classic())",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Infovis 1: Demo A</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Demo.html#facets-small-multiples",
+    "href": "infovis/Infovis1_Demo.html#facets-small-multiples",
+    "title": "Infovis 1: Demo A",
+    "section": "Facets / Small Multiples",
+    "text": "Facets / Small Multiples\nggplot also offers powerful functions for creating “Small multiples” using facet_wrap() (or facet_grid(), more on this later). These functions divide the main plot into smaller subplots based on a specified variable, denoted by the tilde symbol “~”.\n\nggplot(temperature_day, aes(time, temp, colour = station)) +\n  geom_line() +\n  labs(\n    x = \"Time\",\n    y = \"Temperature in °C\",\n    title = \"Temperature Data of Switzerland\",\n    subtitle = \"2001 to 2002\",\n    colour = \"Station\"\n  ) +\n  scale_y_continuous(limits = c(-30, 30)) +\n  scale_x_date(\n    date_breaks = \"3 months\",\n    date_labels = \"%b\"\n  ) +\n  facet_wrap(~station)\n\n\n\n\n\n\n\n\nfacet_wrap can also be customised further, such as by setting the number of facets per row with ncol =.\nIn addition, since the station names are displayed above each facet, we no longer require the legend. This is achieved with theme(legend.position=\"none\").\n\nggplot(temperature_day, aes(time, temp, colour = station)) +\n  geom_line() +\n  labs(\n    x = \"Time\",\n    y = \"Temperature in °C\",\n    title = \"Temperature Data of Switzerland\",\n    subtitle = \"2001 to 2002\"\n  ) +\n  scale_y_continuous(limits = c(-30, 30)) +\n  scale_x_date(\n    date_breaks = \"3 months\",\n    date_labels = \"%b\"\n  ) +\n  facet_wrap(~station, ncol = 1) +\n  theme(legend.position = \"none\")",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Infovis 1: Demo A</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Demo.html#storing-and-exporting-plots",
+    "href": "infovis/Infovis1_Demo.html#storing-and-exporting-plots",
+    "title": "Infovis 1: Demo A",
+    "section": "Storing and Exporting Plots",
+    "text": "Storing and Exporting Plots\nLike data.frames and other objects, a complete ggplot plot can be stored in a variable. This is useful for exporting the plot (as PNG, JPG, etc.) or for progressively enhancing it, as shown in this example.\n\np &lt;- ggplot(temperature_day, aes(time, temp, colour = station)) +\n  geom_line() +\n  labs(\n    x = \"Zeit\",\n    y = \"Temperatur in Grad C°\",\n    title = \"Temperaturdaten Schweiz\",\n    subtitle = \"2001 bis 2002\"\n  ) +\n  scale_y_continuous(limits = c(-30, 30)) +\n  scale_x_date(\n    date_breaks = \"3 months\",\n    date_labels = \"%b\"\n  ) +\n  facet_wrap(~station, ncol = 1)\n# At this point, theme(legend.position=\"none\") was removed\n\nTo save the plot as a PNG file (without specifying “plot =”, the last plot is simply saved):\n\nggsave(filename = \"plot.png\", plot = p)\n\nTo add a layer or option to an existing plot stored in a variable:\n\np +\n  theme(legend.position = \"none\")\n\nAs is typical with R, the modification made to the plot is not automatically saved; it only shows the outcome of the change. To permanently incorporate this change into my plot stored in the variable, we need to overwrite the variable with the updated plot:\n\np &lt;- p +\n  theme(legend.position = \"none\")",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Infovis 1: Demo A</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Demo.html#smoothing",
+    "href": "infovis/Infovis1_Demo.html#smoothing",
+    "title": "Infovis 1: Demo A",
+    "section": "Smoothing",
+    "text": "Smoothing\nThe geom_smooth() function in ggplot can add trend lines to scatter plots. It is possible to select the underlying statistical method that is applied, yet by default, for datasets with fewer than 1,000 observations, ggplot defaults to using the stats::loess method. For larger datasets, it switches to mgcv::gam.\n\np &lt;- p +\n  geom_smooth(colour = \"black\")\np",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Infovis 1: Demo A</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Uebung.html",
+    "href": "infovis/Infovis1_Uebung.html",
+    "title": "Infovis 1: Exercise",
+    "section": "",
+    "text": "Task 1\nThis exercise involves recreating the graphics from the Kovic (2014) blog post. Since the original blog post is no longer available, we’ve hosted a copy on the following website:\nhttps://researchmethods-zhaw.github.io/blog.tagesanzeiger.ch/\nPlease review the graphics in the blog post. The default settings for ggplot2 were used in the blog post, which makes recreating the graphics easier. The links in the text refer to the original graphics, while the embedded plots have been recreated.\nFirst, let’s import the dataset tagi_data_kanton.csv.\nYour first task is to recreate the following plot from Kovic (2014) using ggplot and the tagi_data_kanton.csv dataset:\nHere’s are some tips to get you started:",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Infovis 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Uebung.html#task-1",
+    "href": "infovis/Infovis1_Uebung.html#task-1",
+    "title": "Infovis 1: Exercise",
+    "section": "",
+    "text": "Create a ggplot object with ggplot(canton, aes(auslanderanteil, ja_anteil)), then add a point layer with geom_point().\nUse coord_fixed() to set a fixed ratio (1:1) between the axes.\nOptionally, you can:\n\nSet the axis limits with scale_x_continuous (or scale_y_continuous).\nManually set the breaks (0.0, 0.1 0.3 etc) within scale_x_continuous (or scale_y_continuous)\nUse labs() to label the axes.",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Infovis 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Uebung.html#task-2",
+    "href": "infovis/Infovis1_Uebung.html#task-2",
+    "title": "Infovis 1: Exercise",
+    "section": "Task 2",
+    "text": "Task 2\nNext, replicate the following plot from Kovic (2014) using ggplot:\nHere’s a tip:\n\nUse geom_smooth.",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Infovis 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Uebung.html#task-3",
+    "href": "infovis/Infovis1_Uebung.html#task-3",
+    "title": "Infovis 1: Exercise",
+    "section": "Task 3",
+    "text": "Task 3\nNow, let’s import the municipal data tagi_data_gemeinden.csv.\nReplicate the following plot from Kovic (2014) using ggplot and the tagi_data_gemeinden.csv dataset:\nHere are some tips:\n\nUse geom_point().\nUse labs().\nUse coord_fixed().",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Infovis 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Uebung.html#task-4",
+    "href": "infovis/Infovis1_Uebung.html#task-4",
+    "title": "Infovis 1: Exercise",
+    "section": "Task 4",
+    "text": "Task 4\nReplicate the following plot from Kovic (2014) using ggplot and the tagi_data_gemeinden.csv dataset:\nHere’s a tip:\n\nUse geom_smooth.",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Infovis 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Uebung.html#task-5",
+    "href": "infovis/Infovis1_Uebung.html#task-5",
+    "title": "Infovis 1: Exercise",
+    "section": "Task 5",
+    "text": "Task 5\nReplicate the following plot from Kovic (2014) using ggplot and the tagi_data_gemeinden.csv dataset:\nHere’s a tip:\n\nUse facet_wrap to display a separate plot for each canton.",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Infovis 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Uebung.html#task-6",
+    "href": "infovis/Infovis1_Uebung.html#task-6",
+    "title": "Infovis 1: Exercise",
+    "section": "Task 6",
+    "text": "Task 6\nReplicate the following plot from Kovic (2014) using ggplot and the tagi_data_gemeinden.csv dataset:\nHere’s a tip:\n\nUse geom_smooth.",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Infovis 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Uebung.html#task-7",
+    "href": "infovis/Infovis1_Uebung.html#task-7",
+    "title": "Infovis 1: Exercise",
+    "section": "Task 7",
+    "text": "Task 7\nReplicate the following plot from Kovic (2014) using ggplot and the tagi_data_gemeinden.csv dataset:\nHere’s a tip:\n\nUse facet_wrap",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Infovis 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Uebung.html#task-8",
+    "href": "infovis/Infovis1_Uebung.html#task-8",
+    "title": "Infovis 1: Exercise",
+    "section": "Task 8",
+    "text": "Task 8\nReplicate the following plot from Kovic (2014) using ggplot and the tagi_data_gemeinden.csv dataset:\nHere’s a tip:\n\nUse geom_smooth.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nKovic, Marko. 2014. “Je Weniger Ausländer, Desto Mehr Ja-Stimmen? Wirklich?” Tagesanzeiger Datenblog. https://blog.tagesanzeiger.ch/datenblog/index.php/668/je-weniger-auslaender-desto-mehr-ja-stimmen-wirklich.",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Infovis 1: Exercise</span>"
+    ]
+  },
+  {
+    "objectID": "infovis/Infovis1_Script_eda.html",
+    "href": "infovis/Infovis1_Script_eda.html",
+    "title": "Infovis 1: EDA Script",
+    "section": "",
+    "text": "library(\"ggplot2\")\nlibrary(\"dplyr\")\nlibrary(\"scales\")\n\n# create some data about age and height of people\npeople &lt;- data.frame(\n  ID = c(1:30),\n  age = c(\n    5.0, 7.0, 6.5, 9.0, 8.0, 5.0, 8.6, 7.5, 9.0, 6.0,\n    63.5, 65.7, 57.6, 98.6, 76.5, 78.0, 93.4, 77.5, 256.6, 512.3,\n    15.5, 18.6, 18.5, 22.8, 28.5, 39.5, 55.9, 50.3, 31.9, 41.3\n  ),\n  height = c(\n    0.85, 0.93, 1.1, 1.25, 1.33, 1.17, 1.32, 0.82, 0.89, 1.13,\n    1.62, 1.87, 1.67, 1.76, 1.56, 1.71, 1.65, 1.55, 1.87, 1.69,\n    1.49, 1.68, 1.41, 1.55, 1.84, 1.69, 0.85, 1.65, 1.94, 1.80\n  ),\n  weight = c(\n    45.5, 54.3, 76.5, 60.4, 43.4, 36.4, 50.3, 27.8, 34.7, 47.6,\n    84.3, 90.4, 76.5, 55.6, 54.3, 83.2, 80.7, 55.6, 87.6, 69.5,\n    48.0, 55.6, 47.6, 60.5, 54.3, 59.5, 34.5, 55.4, 100.4, 110.3\n  )\n)\n\n# build a scatterplot for a first inspection\nggplot(people, aes(x = age, y = height)) +\n  geom_point()\n\n\n\n\n\n\n\n\n\nggplot(people, aes(x = age, y = height)) +\n  geom_point() +\n  scale_y_continuous(limits = c(0.75, 2))\n\n\n\n\n\n\n\n# Go to help page: http://docs.ggplot2.org/current/ -&gt; Search for icon of fit-line\n# http://docs.ggplot2.org/current/geom_smooth.html\n\n\n# build a scatterplot for a first inspection, with regression line\nggplot(people, aes(x = age, y = height)) +\n  geom_point() +\n  scale_y_continuous(limits = c(0, 2.0)) +\n  geom_smooth()\n\n\n\n\n\n\n\n\n\n# stem and leaf plot\nstem(people$height)\n## \n##   The decimal point is 1 digit(s) to the left of the |\n## \n##    8 | 25593\n##   10 | 037\n##   12 | 523\n##   14 | 19556\n##   16 | 255789916\n##   18 | 04774\nstem(people$height, scale = 2)\n## \n##   The decimal point is 1 digit(s) to the left of the |\n## \n##    8 | 2559\n##    9 | 3\n##   10 | \n##   11 | 037\n##   12 | 5\n##   13 | 23\n##   14 | 19\n##   15 | 556\n##   16 | 2557899\n##   17 | 16\n##   18 | 0477\n##   19 | 4\n\n\n# explore the two variables with box-whiskerplots\nsummary(people$age)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n##    5.00    8.70   30.20   59.14   65.15  512.30\nboxplot(people$age)\n\n\n\n\n\n\n\n\n\nsummary(people$height)\n##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n##   0.820   1.190   1.555   1.455   1.690   1.940\nboxplot(people$height)\n\n\n\n\n\n\n\n\n\n# explore data with a histogram\nggplot(people, aes(x = age)) +\n  geom_histogram(binwidth = 20)\n\n\n\n\n\n\n\n\n\ndensity(x = people$height)\n## \n## Call:\n##  density.default(x = people$height)\n## \n## Data: people$height (30 obs.);   Bandwidth 'bw' = 0.1576\n## \n##        x                y           \n##  Min.   :0.3472   Min.   :0.001593  \n##  1st Qu.:0.8636   1st Qu.:0.102953  \n##  Median :1.3800   Median :0.510601  \n##  Mean   :1.3800   Mean   :0.483553  \n##  3rd Qu.:1.8964   3rd Qu.:0.722660  \n##  Max.   :2.4128   Max.   :1.216350\n\n# re-expression: use log or sqrt axes\n#\n# Find here guideline about scaling axes\n# http://www.cookbook-r.com/Graphs/Axes_(ggplot2)/\n# http://docs.ggplot2.org/0.9.3.1/scale_continuous.html\n\n\n# logarithmic axis: respond to skewness in the data, e.g. log10\nggplot(people, aes(x = age, y = height)) +\n  geom_point() +\n  scale_y_continuous(limits = c(0, 2.0)) +\n  geom_smooth() +\n  scale_x_log10()\n\n\n\n\n\n\n\n\n\n# outliers: Remove very small and very old people\n\npeopleClean &lt;- people |&gt;\n  filter(ID != 27) |&gt; # This person was too short.\n  filter(age &lt; 100) # Error in age recorded.\n\n\nggplot(peopleClean, aes(x = age)) +\n  geom_histogram(binwidth = 10)\n\n\n\n\n\n\n\n\n\nggplot(peopleClean, aes(x = age, y = height)) +\n  geom_point() +\n  scale_y_continuous(limits = c(0, 2.0)) +\n  geom_smooth()\n\n\n\n\n\n\n\n\n\n# with custom binwidth\nggplot(peopleClean, aes(x = age)) +\n  geom_histogram(binwidth = 10) +\n  theme_bw() # specifying the theme\n\n\n\n\n\n\n\n\n\n# quadratic axis\nggplot(peopleClean, aes(x = age, y = height)) +\n  geom_point() +\n  scale_y_continuous(limits = c(0, 2.0)) +\n  geom_smooth(method = \"lm\", fill = \"lightblue\", size = 0.5, alpha = 0.5) +\n  scale_x_sqrt()\n\n\n\n\n\n\n\n\n\n# filter \"teenies\": No trend\nfilter(peopleClean, age &lt; 15) |&gt;\n  ggplot(aes(x = age, y = height)) +\n  geom_point() +\n  scale_y_continuous(limits = c(0, 2.0)) +\n  geom_smooth(method = \"lm\", fill = \"lightblue\", size = 0.5, alpha = 0.5)\n\n\n\n\n\n\n\n\n\n# filter \"teens\": No trend\npeopleClean |&gt;\n  filter(age &gt; 55) |&gt;\n  ggplot(aes(x = age, y = height)) +\n  geom_point() +\n  scale_y_continuous(limits = c(0, 2.0)) +\n  geom_smooth(method = \"lm\", fill = \"lightblue\", size = 0.5, alpha = 0.5)\n\n\n\n\n\n\n\n\n\n# Onwards towards multidimensional data\n\n# Finally, make a scatterplot matrix\npairs(peopleClean[, 2:4], panel = panel.smooth)\n\n\n\n\n\n\n\n\n\npairs(peopleClean[, 2:4], panel = panel.smooth)",
+    "crumbs": [
+      "Information Visualisation",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Infovis 1: EDA Script</span>"
+    ]
+  },
+  {
     "objectID": "References.html",
     "href": "References.html",
     "title": "References",
     "section": "",
-    "text": "Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023.\nR for Data Science: Import, Tidy, Transform, Visualize, and Model\nData. 2nd Edition. O’Reilly. https://r4ds.hadley.nz/.",
+    "text": "Kovic, Marko. 2014. “Je Weniger Ausländer, Desto Mehr Ja-Stimmen?\nWirklich?” Tagesanzeiger Datenblog. https://blog.tagesanzeiger.ch/datenblog/index.php/668/je-weniger-auslaender-desto-mehr-ja-stimmen-wirklich.\n\n\nWickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023.\nR for Data Science: Import, Tidy, Transform, Visualize, and Model\nData. 2nd Edition. O’Reilly. https://r4ds.hadley.nz/.",
     "crumbs": [
-      "<span class='chapter-number'>10</span>  <span class='chapter-title'>References</span>"
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>References</span>"
     ]
   }
 ]
