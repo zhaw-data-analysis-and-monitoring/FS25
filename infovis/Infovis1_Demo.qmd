@@ -14,7 +14,7 @@ In this demonstration, we'll start by loading the dataset *temperature_SHA_ZER.c
 
 library("readr")
 
-temperature <- read_delim("/datasets/infovis/temperature_SHA_ZER.csv", ",")
+temperature <- read_delim("datasets/infovis/temperature_SHA_ZER.csv", ",")
 ```
 
 ```{r}

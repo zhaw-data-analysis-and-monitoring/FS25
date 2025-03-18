@@ -13,6 +13,7 @@ knitr:
     collapse: true
 ---
 
+
 # Infovis 1: Exercise
 
 This exercise involves recreating the graphics from the @kovic2014 blog post. Since the original blog post is no longer available, we’ve hosted a copy on the following website:

@@ -61,13 +61,13 @@ book:
       - --
       - prepro/Prepro3_Demo.qmd
       - prepro/Prepro3_Uebung.qmd
-    # - part: InfoVis.qmd
-      # chapters:
-    #   - infovis/Infovis0_Vorbereitung.qmd
-    #   - --
-      # - infovis/Infovis1_Demo.qmd
-    #   - infovis/Infovis1_Uebung.qmd
-    #   - infovis/Infovis1_Script_eda.qmd
+    - part: InfoVis.qmd
+      chapters:
+      - infovis/Infovis0_Vorbereitung.qmd
+      - --
+      - infovis/Infovis1_Demo.qmd
+      - infovis/Infovis1_Uebung.qmd
+      - infovis/Infovis1_Script_eda.qmd
     #   - --
     #   - infovis/Infovis2_Uebung_A.qmd
     #   - infovis/Infovis2_Uebung_B.qmd
