@@ -10,19 +10,19 @@ format:
   html:
     theme:
       light: [flatly]
-      dark: [flatly, "aux/custom-presenter.scss"]  
+      dark: [flatly, "auxiliary/custom-presenter.scss"]  
     css: 
-      - aux/custom.css
-      - aux/theme-custom.scss
+      - auxiliary/custom.css
+      - auxiliary/theme-custom.scss
     highlight-style:
-      light: aux/arrow-light.theme
-      dark: aux/arrow-light.theme
+      light: auxiliary/arrow-light.theme
+      dark: auxiliary/arrow-light.theme
     bibliography: bibliography.bib
     number-sections: false
     code-tools:
       source: false
     # include-in-header:
-    #   - aux/script.html
+    #   - auxiliary/script.html
 
 execute:
   freeze: true
