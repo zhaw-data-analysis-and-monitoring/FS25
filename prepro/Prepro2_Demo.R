@@ -7,10 +7,10 @@ temperature
 subtract <- function(x,y){x-y} # helperfunction to subtract y from x
 
 output <- mean(subtract(as.integer(temperature), 273.15))
-#                             \_1_/
-#                       \_______2_____________/
-#              \________________3______________________/
-#         \_____________________4_______________________/
+#                                 \___1_____/
+#                       \_____________2_______/
+#              \______________________3________________/
+#         \___________________________4_________________/
 
 # 1. Take temperature
 # 2. Convert "character" → "integer"

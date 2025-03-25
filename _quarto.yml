@@ -71,15 +71,15 @@ book:
     #   - --
     #   - infovis/Infovis2_Uebung_A.qmd
     #   - infovis/Infovis2_Uebung_B.qmd
-    # - part: Statistic.qmd
-    #   chapters: 
-    #     - statistic/Stat0_Vorbereitung.qmd
-    #     - --
-    #     - statistic/Stat1_Uebung.qmd
-    #     - --
-    #     - statistic/Stat2_Uebung.qmd
-    #     - --
-    #     - statistic/Stat3_Uebung.qmd
+    - part: Statistic.qmd
+      chapters: 
+      - statistic/Stat0_Vorbereitung.qmd
+      - --
+      - statistic/Stat1_Uebung.qmd
+      - --
+      - statistic/Stat2_Uebung.qmd
+      - --
+      - statistic/Stat3_Uebung.qmd
     # - part: SpatAn.qmd
     #   chapters:
     #   - spatan/Spatan0_Vorbereitung.qmd

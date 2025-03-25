@@ -60,7 +60,6 @@ today_posixct
 as.numeric(today_posixct)
 
 
-try({
 date_txt <- "01.10.2017 15:15"
 
 # converts character to POSIXct:
@@ -69,7 +68,6 @@ as.POSIXct(date_txt)
 date_posix <- as.POSIXct(date_txt, format = "%d.%m.%Y %H:%M")
 
 date_posix
-})
 
 strftime(date_posix, format = "%m")           # <1>
 strftime(date_posix, format = "%b")           # <2>
