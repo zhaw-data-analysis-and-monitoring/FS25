@@ -1,11 +1,11 @@
 ---
-date: 2024-04-02
+date: 2025-04-01
 lesson: stat1
 topic: Statistic 1
 index: 1
 execute:
-  echo: true # set to true to show sample solution 
-  output: true # set to true to show sample solution
+  echo: false # set to true to show sample solution 
+  output: false # set to true to show sample solution
 code-fold: true
 code-summary: "Sample Solution"
 knitr:
@@ -13,11 +13,11 @@ knitr:
     collapse: true  
 ---
 
-## Statistics 1: The Basics of Statistics
+# Statistics 1: The Basics of Statistics
 
 ## Exercise I: Descriptive Statistics
 
-## Exercise 1  
+### Exercise 1  
 
 Use the data in WAGE1.RAW for this exercise.
 
@@ -56,7 +56,7 @@ nrow(wage1[wage1$female == 0, ])
 
 ```
 
-## Exercise 2  
+### Exercise 2  
 
 Use the data in BWGHT.RAW to answer this question.  
 
@@ -94,7 +94,7 @@ sd(bwght$faminc)
 
 ```
 
-## Exercise 3  
+### Exercise 3  
 
 The data in MEAP01.RAW are for the state of Michigan in the year 2001. Use these data to answer the following questions.  
 
@@ -140,7 +140,7 @@ sd(meap01$exppp)
 
 ```
 
-## Exercise 4  
+### Exercise 4  
 
 The data in JTRAIN2.RAW come from a job training experiment conducted for low-income men during 1976–1977.  
 
@@ -174,7 +174,7 @@ jtrain2 %>% filter(train==1) %>% summarise(mean(re78))
 
 ```
 
-## Exercise 5  
+### Exercise 5  
 
 The data in FERTIL2.DTA were collected on women living in the Republic of Botswana in 1988. The variable children refers to the number of living children. The variable electric is a binary indicator equal to one if the woman’s home has electricity, and zero if not.  
 
@@ -208,7 +208,7 @@ fertil2 %>% filter(electric==1) %>% summarise(mean(children))
 
 ## Exercise II: The Simple Linear Regression Model
 
-## Exercise 6
+### Exercise 6
 
 The data in 401K.RAW are a subset of data analyzed by Papke (1995) to study the relationship between participation in a 401(k) pension plan and the generosity of the plan. The variable `prate` is the percentage of eligible workers with an active account; this is the variable we would like to explain. The measure of generosity is the plan match rate, `mrate`. This variable gives the average amount the firm contributes to each worker’s plan for each \$1 contribution by the worker. For example, if `mrate` = 0.50, then a \$1 contribution by the worker is matched by a 50¢ contribution by the firm.
 
@@ -248,7 +248,7 @@ summary(LinMod)
 
 ```
 
-## Exercise 7
+### Exercise 7
 
 The data set in CEOSAL2.RAW contains information on chief executive officers for U.S. corporations. The variable salary is annual compensation, in thousands of dollars, and ceoten is prior number of years as company CEO.
 
@@ -279,7 +279,7 @@ summary(LinMod)
 
 ```
 
-## Exercise 8
+### Exercise 8
 
 Use the data in SLEEP75.RAW from Biddle and Hamermesh (1990) to study whether there is a tradeoff between the time spent sleeping per week and the time spent in paid work. We could use either variable as the dependent variable. For concreteness, estimate the model $sleep = \beta_0 + \beta_1totwrk + u,$ where `sleep` is minutes spent sleeping at night per week and `totwrk` is total minutes worked during the week.
 
@@ -301,7 +301,7 @@ summary(LinMod)
 
 ```
 
-## Exercise 9
+### Exercise 9
 
 For the population of firms in the chemical industry, let `rd` denote annual expenditures on research and development, and let `sales` denote annual sales (both are in millions of dollars).
 
