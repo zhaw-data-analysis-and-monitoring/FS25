@@ -1,5 +1,5 @@
 ---
-date: 2024-04-16
+date: 2025-04-15
 lesson: stat3
 topic: Statistic 3
 index: 1
