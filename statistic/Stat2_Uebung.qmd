@@ -151,7 +151,7 @@ data('vote1')
 ?vote1
 
 #1)
-#beta_1 measures the percentage point candidate A votes increases when candidate A expenditures increase by 100%
+#beta_1 measures the percentage point candidate A votes increases when candidate A expenditures increase by 1%
 
 #2)
 #H_0: \beta_1 + \beta_2 = 0

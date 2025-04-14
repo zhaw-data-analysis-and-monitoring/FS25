@@ -53,7 +53,8 @@ mean(wage1$wage)*218.056/56.9
 #5)
 nrow(wage1[wage1$female == 1, ])
 nrow(wage1[wage1$female == 0, ])
-
+#another possibility
+summary(wage1$female==1)
 ```
 
 ### Exercise 2  
@@ -164,12 +165,14 @@ jtrain2 %>% filter(train==0) %>% summarise(mean(re78))
 jtrain2 %>% filter(train==1) %>% summarise(mean(re78))
 
 #3)
-(nrow(jtrain2[(jtrain2$train==1), ]) - (jtrain2 %>% filter(train==1) %>% summarise(sum(unem78))))/nrow(jtrain2[(jtrain2$train==1), ])
+    
+jtrain2 %>% filter(train==1) %>% summarise(sum(unem78))/jtrain2 %>% filter(train==1) %>% nrow()
 
-(nrow(jtrain2[(jtrain2$train==0), ]) - (jtrain2 %>% filter(train==0) %>% summarise(sum(unem78))))/nrow(jtrain2[(jtrain2$train==0), ])
+jtrain2 %>% filter(train==0) %>% summarise(sum(unem78))/jtrain2 %>% filter(train==0) %>% nrow()
+
 
 #4)
-#No
+#yes
 #To make a linear regression to find if there is evidence on the fact that the training does not have any effects on the employement rate
 
 ```
@@ -241,6 +244,7 @@ summary(LinMod)
 #if mrate increase by 1% then prate increases by 5.86%
 
 #4)
+83.08+5.86*3.5
 #No
 
 #5)
@@ -271,6 +275,7 @@ mean(ceosal2$ceoten)
 
 #2)
 max(ceosal2$ceoten)
+ceosal2 %>% filter(ceoten==0) %>% nrow
 nrow(ceosal2[(ceosal2$ceoten==0), ])
 
 #3)
