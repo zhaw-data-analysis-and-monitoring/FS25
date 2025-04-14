@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.13">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-04-02">
+<meta name="dcterms.date" content="2025-04-01">
 
 <title>Statistics 1: The Basics of Statistics – Data Analysis and Monitoring</title>
 <style>
@@ -67,18 +67,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="../">
 <link href="../statistic/Stat2_Uebung.html" rel="next">
 <link href="../statistic/Stat0_Vorbereitung.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-66ab7fd5e73b7f0a764e0d49b3e29ab1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-66ab7fd5e73b7f0a764e0d49b3e29ab1.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-2f5df379a58b258e96c21c0638c20c03.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a1bacad83237f0cccc39127c932b004f.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-adb579cf75499b2b4829a9bba504122b.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-d5d78c9e45e9a5253a6059031ce5ea1b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-3efd842f9a9de62e04caa0a87d1af74a.min.css" rel="prefetch" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -317,44 +316,6 @@ window.Quarto = {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a href="../SpatAn.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Spatial Analysis</span></a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="false" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../spatan/Spatan0_Vorbereitung.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Preparation</span></a>
-  </div>
-</li>
-          <li class="px-0"><hr class="sidebar-divider hi "></li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../spatan/Spatan1_Uebung_A.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">SpatAn 1: Exercise A</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../spatan/Spatan1_Uebung_B.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">SpatAn 1: Exercise B</span></a>
-  </div>
-</li>
-          <li class="px-0"><hr class="sidebar-divider hi "></li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../spatan/Spatan2_Uebung_A.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">SpatAn 2: Exercise A</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../spatan/Spatan2_Uebung_B.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">SpatAn 2: Exercise B</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../References.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">References</span></a>
@@ -370,17 +331,21 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#exercise-i-descriptive-statistics" id="toc-exercise-i-descriptive-statistics" class="nav-link active" data-scroll-target="#exercise-i-descriptive-statistics">Exercise I: Descriptive Statistics</a></li>
+  <li><a href="#exercise-i-descriptive-statistics" id="toc-exercise-i-descriptive-statistics" class="nav-link active" data-scroll-target="#exercise-i-descriptive-statistics">Exercise I: Descriptive Statistics</a>
+  <ul class="collapse">
   <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1">Exercise 1</a></li>
   <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2">Exercise 2</a></li>
   <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3">Exercise 3</a></li>
   <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4">Exercise 4</a></li>
   <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5">Exercise 5</a></li>
-  <li><a href="#exercise-ii-the-simple-linear-regression-model" id="toc-exercise-ii-the-simple-linear-regression-model" class="nav-link" data-scroll-target="#exercise-ii-the-simple-linear-regression-model">Exercise II: The Simple Linear Regression Model</a></li>
+  </ul></li>
+  <li><a href="#exercise-ii-the-simple-linear-regression-model" id="toc-exercise-ii-the-simple-linear-regression-model" class="nav-link" data-scroll-target="#exercise-ii-the-simple-linear-regression-model">Exercise II: The Simple Linear Regression Model</a>
+  <ul class="collapse">
   <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6">Exercise 6</a></li>
   <li><a href="#exercise-7" id="toc-exercise-7" class="nav-link" data-scroll-target="#exercise-7">Exercise 7</a></li>
   <li><a href="#exercise-8" id="toc-exercise-8" class="nav-link" data-scroll-target="#exercise-8">Exercise 8</a></li>
   <li><a href="#exercise-9" id="toc-exercise-9" class="nav-link" data-scroll-target="#exercise-9">Exercise 9</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -400,7 +365,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 2, 2024</p>
+      <p class="date">April 1, 2025</p>
     </div>
   </div>
   
@@ -414,9 +379,8 @@ window.Quarto = {
 
 <section id="exercise-i-descriptive-statistics" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-i-descriptive-statistics">Exercise I: Descriptive Statistics</h2>
-</section>
-<section id="exercise-1" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-1">Exercise 1</h2>
+<section id="exercise-1" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-1">Exercise 1</h3>
 <p>Use the data in WAGE1.RAW for this exercise.</p>
 <ol type="1">
 <li>Find the average education level in the sample. What are the lowest and highest years of education?</li>
@@ -458,8 +422,8 @@ window.Quarto = {
 </details>
 </div>
 </section>
-<section id="exercise-2" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-2">Exercise 2</h2>
+<section id="exercise-2" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2">Exercise 2</h3>
 <p>Use the data in BWGHT.RAW to answer this question.</p>
 <ol type="1">
 <li>How many women are in the sample, and how many report smoking during pregnancy?<br>
@@ -501,8 +465,8 @@ window.Quarto = {
 </details>
 </div>
 </section>
-<section id="exercise-3" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-3">Exercise 3</h2>
+<section id="exercise-3" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3">Exercise 3</h3>
 <p>The data in MEAP01.RAW are for the state of Michigan in the year 2001. Use these data to answer the following questions.</p>
 <ol type="1">
 <li>Find the largest and smallest values of <code>math4</code>. Does the range make sense? Explain.<br>
@@ -554,8 +518,8 @@ window.Quarto = {
 </details>
 </div>
 </section>
-<section id="exercise-4" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-4">Exercise 4</h2>
+<section id="exercise-4" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4">Exercise 4</h3>
 <p>The data in JTRAIN2.RAW come from a job training experiment conducted for low-income men during 1976–1977.</p>
 <ol type="1">
 <li>Use the indicator variable <code>train</code> to determine the fraction of men receiving job training.<br>
@@ -591,8 +555,8 @@ window.Quarto = {
 </details>
 </div>
 </section>
-<section id="exercise-5" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-5">Exercise 5</h2>
+<section id="exercise-5" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-5">Exercise 5</h3>
 <p>The data in FERTIL2.DTA were collected on women living in the Republic of Botswana in 1988. The variable children refers to the number of living children. The variable electric is a binary indicator equal to one if the woman’s home has electricity, and zero if not.</p>
 <ol type="1">
 <li>Find the smallest and largest values of <code>children</code> in the sample. What is the average of <code>children</code>?<br>
@@ -627,11 +591,11 @@ window.Quarto = {
 </details>
 </div>
 </section>
+</section>
 <section id="exercise-ii-the-simple-linear-regression-model" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-ii-the-simple-linear-regression-model">Exercise II: The Simple Linear Regression Model</h2>
-</section>
-<section id="exercise-6" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-6">Exercise 6</h2>
+<section id="exercise-6" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-6">Exercise 6</h3>
 <p>The data in 401K.RAW are a subset of data analyzed by Papke (1995) to study the relationship between participation in a 401(k) pension plan and the generosity of the plan. The variable <code>prate</code> is the percentage of eligible workers with an active account; this is the variable we would like to explain. The measure of generosity is the plan match rate, <code>mrate</code>. This variable gives the average amount the firm contributes to each worker’s plan for each $1 contribution by the worker. For example, if <code>mrate</code> = 0.50, then a $1 contribution by the worker is matched by a 50¢ contribution by the firm.</p>
 <ol type="1">
 <li>Find the average participation rate and the average match rate in the sample of plans.</li>
@@ -667,8 +631,8 @@ window.Quarto = {
 </details>
 </div>
 </section>
-<section id="exercise-7" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-7">Exercise 7</h2>
+<section id="exercise-7" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-7">Exercise 7</h3>
 <p>The data set in CEOSAL2.RAW contains information on chief executive officers for U.S. corporations. The variable salary is annual compensation, in thousands of dollars, and ceoten is prior number of years as company CEO.</p>
 <ol type="1">
 <li>Find the average salary and the average tenure in the sample.</li>
@@ -696,8 +660,8 @@ window.Quarto = {
 </details>
 </div>
 </section>
-<section id="exercise-8" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-8">Exercise 8</h2>
+<section id="exercise-8" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-8">Exercise 8</h3>
 <p>Use the data in SLEEP75.RAW from Biddle and Hamermesh (1990) to study whether there is a tradeoff between the time spent sleeping per week and the time spent in paid work. We could use either variable as the dependent variable. For concreteness, estimate the model <span class="math inline">\(sleep = \beta_0 + \beta_1totwrk + u,\)</span> where <code>sleep</code> is minutes spent sleeping at night per week and <code>totwrk</code> is total minutes worked during the week.</p>
 <ol type="1">
 <li>Report your results in equation form along with the number of observations and R-squared. What does the intercept in this equation mean?</li>
@@ -719,8 +683,8 @@ window.Quarto = {
 </details>
 </div>
 </section>
-<section id="exercise-9" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-9">Exercise 9</h2>
+<section id="exercise-9" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-9">Exercise 9</h3>
 <p>For the population of firms in the chemical industry, let <code>rd</code> denote annual expenditures on research and development, and let <code>sales</code> denote annual sales (both are in millions of dollars).</p>
 <ol type="1">
 <li>Write down a model (not an estimated equation) that implies a constant elasticity between rd and sales. Which parameter is the elasticity?</li>
@@ -743,6 +707,7 @@ window.Quarto = {
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
