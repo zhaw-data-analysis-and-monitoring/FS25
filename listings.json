@@ -16,5 +16,11 @@
       "/statistic/Stat2_Uebung.html",
       "/statistic/Stat3_Uebung.html"
     ]
+  },
+  {
+    "listing": "/SpatAn.html",
+    "items": [
+      "/spatan/Spatan0_Vorbereitung.html"
+    ]
   }
 ]
