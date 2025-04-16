@@ -4,8 +4,8 @@ lesson: SpatAn2
 topic: Vector Data
 index: 3
 execute:
-  echo: false # set to true to show sample solution
-  output: false # set to true to show sample solution
+  echo: true # set to true to show sample solution
+  output: true # set to true to show sample solution
 code-fold: true
 code-summary: "Sample Solution"
 knitr:
