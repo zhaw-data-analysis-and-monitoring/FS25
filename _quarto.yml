@@ -80,15 +80,15 @@ book:
       - statistic/Stat2_Uebung.qmd
       - --
       - statistic/Stat3_Uebung.qmd
-    # - part: SpatAn.qmd
-    #   chapters:
-    #   - spatan/Spatan0_Vorbereitung.qmd
-    #   - --
-    #   - spatan/Spatan1_Uebung_A.qmd
-    #   - spatan/Spatan1_Uebung_B.qmd
-    #   - --
-    #   - spatan/Spatan2_Uebung_A.qmd
-    #   - spatan/Spatan2_Uebung_B.qmd
+    - part: SpatAn.qmd
+      chapters:
+      - spatan/Spatan0_Vorbereitung.qmd
+      - --
+      - spatan/Spatan1_Uebung_A.qmd
+      - spatan/Spatan1_Uebung_B.qmd
+      - --
+      - spatan/Spatan2_Uebung_A.qmd
+      - spatan/Spatan2_Uebung_B.qmd
     - "References.qmd"
 
 
